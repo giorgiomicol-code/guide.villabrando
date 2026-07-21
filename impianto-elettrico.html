@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Villa Brando — Impianto Elettrico</title>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#0E3A66; --pine-2:#154C82; --stone:#FFFFFF; --stone-2:#E5F0FA;
+    --paper:#FFFFFF; --brass:#2E86C1; --brass-light:#8FCBEF; --sea:#1F6F9C; --clay:#3E7CB1;
+    --ink:#122436; --ink-soft:#5A7288; --line:rgba(14,58,102,0.12);
+    --shadow: 0 10px 30px -14px rgba(14,58,102,0.30); --radius: 18px;
+    --ok:#1F8A4C; --ok-2:#0F5C31;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{ background:var(--stone); font-family:'Comfortaa', sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased; min-height:100svh; }
+  h1,h2,h3{ font-family:'Comfortaa', sans-serif; font-weight:500; letter-spacing:-0.01em; }
+  .app{ max-width:560px; margin:0 auto; min-height:100svh; background:var(--stone); display:flex; flex-direction:column; }
+  @media (min-width:600px){
+    body{ background: linear-gradient(180deg,#DCE8F5, #C7DCF0 60%, #b7d0ea); padding:28px 0; }
+    .app{ border-radius:34px; overflow:hidden; min-height:calc(100svh - 56px); box-shadow: 0 30px 80px -20px rgba(14,58,102,0.35); }
+  }
+
+  header.top{
+    position:relative; overflow:hidden; padding:18px 20px 30px; min-height:210px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    background: linear-gradient(150deg, #EAF4FC 0%, #BFE0F7 55%, #8FCBEF 100%);
+  }
+  header.top .fx{ position:absolute; inset:0; z-index:0; }
+  .top-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; position:relative; z-index:2; }
+  .back-link{ display:flex; align-items:center; gap:6px; color:var(--pine); text-decoration:none; font-size:13px; font-weight:700; }
+  .back-link svg{ width:16px; height:16px; }
+  .lang-select{ position:relative; flex-shrink:0; z-index:20; }
+  .lang-current{
+    display:flex; align-items:center; gap:6px; background:rgba(14,58,102,0.08); border:1px solid rgba(14,58,102,0.16);
+    border-radius:999px; padding:8px 12px; color:var(--pine); font-family:'Comfortaa'; font-weight:700; font-size:12px; cursor:pointer;
+  }
+  .lang-current svg{ width:13px; height:13px; transition:transform .2s; }
+  .lang-current.open svg{ transform:rotate(180deg); }
+  .lang-menu{
+    position:fixed; background:#fff; border-radius:14px;
+    box-shadow:0 14px 34px -10px rgba(14,58,102,0.4); border:1px solid var(--line);
+    padding:6px; display:none; min-width:160px; max-height:70vh; overflow-y:auto;
+    z-index:999;
+  }
+  .lang-menu.open{ display:block; }
+  .lang-menu button{
+    display:flex; align-items:center; gap:10px; width:100%; text-align:left; border:none; background:none;
+    padding:9px 10px; border-radius:9px; font-family:'Comfortaa'; font-weight:600; font-size:13px;
+    color:var(--ink); cursor:pointer;
+  }
+  .lang-menu button:hover{ background:var(--stone-2); }
+  .lang-menu button.active{ background:var(--brass); color:#0A2540; }
+  .lang-menu button .code{
+    width:24px; height:18px; border-radius:4px; background:var(--stone-2); color:var(--sea);
+    font-size:9.5px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .lang-menu button.active .code{ background:rgba(10,37,64,0.15); color:#0A2540; }
+  h1.page-title{ margin:0; font-size:24px; color:var(--pine); position:relative; z-index:2; }
+  .eyebrow{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--sea); font-weight:700; margin-bottom:4px; display:block; position:relative; z-index:2; }
+  .header-bottom{ position:relative; z-index:2; }
+
+  main{ flex:1; padding:22px 20px 40px; }
+  .intro-text{ background:var(--stone-2); border-radius:var(--radius); padding:18px 20px; font-size:14.5px; line-height:1.6; color:var(--ink); margin-bottom:22px; }
+  .intro-text b{ color:var(--pine); }
+
+  .section-header{ display:flex; align-items:center; gap:8px; margin:26px 0 14px; }
+  .section-header:first-of-type{ margin-top:0; }
+  .section-header .dot{ width:7px; height:7px; border-radius:50%; background:var(--brass); flex-shrink:0; }
+  .section-header .label{ font-size:12px; text-transform:uppercase; letter-spacing:.1em; font-weight:700; color:var(--sea); }
+
+  .info-card{
+    display:flex; gap:14px; background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:18px;
+  }
+  .info-card .ic{
+    width:48px; height:48px; border-radius:14px; flex-shrink:0; color:#fff;
+    background:linear-gradient(160deg, #4FB3E8 0%, #1F6F9C 100%);
+    display:flex; align-items:center; justify-content:center; box-shadow:0 8px 18px -8px rgba(31,111,156,0.5);
+  }
+  .info-card .ic svg{ width:23px; height:23px; }
+  .info-card .txt h3{ margin:0 0 5px; font-size:14.5px; color:var(--ink); font-weight:700; }
+  .info-card .txt p{ margin:0; font-size:12.5px; color:var(--ink-soft); line-height:1.55; }
+
+  .steps{ display:flex; flex-direction:column; gap:10px; }
+  .step-card{ display:flex; gap:14px; background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:14px 16px; }
+  .step-card .num{
+    width:30px; height:30px; border-radius:10px; flex-shrink:0; color:#fff; font-size:13px; font-weight:700;
+    background:linear-gradient(160deg, #4FB3E8 0%, #1F6F9C 100%);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .step-card p{ margin:0; font-size:13px; color:var(--ink); line-height:1.5; }
+  .step-card p b{ color:var(--pine); }
+
+  .safety-box{
+    margin-top:20px; background:linear-gradient(135deg, #FFF6E8 0%, #FDEBD0 100%); border:1px solid rgba(196,140,20,0.25);
+    border-radius:16px; padding:16px 18px; display:flex; gap:12px; align-items:flex-start;
+  }
+  .safety-box svg{ width:20px; height:20px; color:#B8860B; flex-shrink:0; margin-top:1px; }
+  .safety-box p{ margin:0; font-size:12.5px; color:#7A5A10; line-height:1.55; }
+
+  .sos-card{
+    display:flex; align-items:center; gap:14px;
+    background: linear-gradient(160deg, var(--pine) 0%, #0A2A4A 100%);
+    border-radius:var(--radius); padding:16px 18px; color:#fff; margin:24px 0 6px;
+    box-shadow:var(--shadow); text-decoration:none;
+  }
+  .sos-card .ic{ width:44px; height:44px; border-radius:12px; background:rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .sos-card .ic svg{ width:22px; height:22px; }
+  .sos-card .txt p.t{ margin:0 0 2px; font-size:14px; font-weight:700; }
+  .sos-card .txt p.s{ margin:0; font-size:12.5px; color:rgba(255,255,255,0.75); }
+
+  .link-card{
+    display:flex; align-items:center; gap:12px; padding:14px 16px; margin-top:12px;
+    background:var(--paper); border:1px solid var(--line); border-radius:16px; text-decoration:none;
+  }
+  .link-card .ic{ width:38px; height:38px; border-radius:11px; background:var(--stone-2); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--pine); }
+  .link-card .ic svg{ width:19px; height:19px; }
+  .link-card .txt{ flex:1; }
+  .link-card .txt p.t{ margin:0 0 2px; font-size:13.5px; font-weight:700; color:var(--ink); }
+  .link-card .txt p.s{ margin:0; font-size:12px; color:var(--ink-soft); line-height:1.4; }
+  .link-card .chev{ width:15px; height:15px; color:var(--ink-soft); flex-shrink:0; }
+
+  footer.brand{ text-align:center; padding:18px 20px 26px; color:var(--ink-soft); font-size:12px; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="top" id="page-header">
+    <svg class="fx" viewBox="0 0 400 210" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="glowWhite" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.65"/>
+          <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle cx="340" cy="30" r="90" fill="url(#glowWhite)"/>
+      <circle cx="40" cy="190" r="70" fill="url(#glowWhite)"/>
+      <g opacity="0.4" stroke="#ffffff" stroke-width="1">
+        <path d="M230 190 L245 150 L232 150 L248 110" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      </g>
+      <g opacity="0.22" stroke="#0E3A66" stroke-width="0.6">
+        <line x1="0" y1="35" x2="400" y2="35"/>
+        <line x1="0" y1="80" x2="400" y2="80"/>
+        <line x1="0" y1="125" x2="400" y2="125"/>
+        <line x1="0" y1="170" x2="400" y2="170"/>
+        <line x1="60" y1="0" x2="60" y2="210"/>
+        <line x1="150" y1="0" x2="150" y2="210"/>
+        <line x1="240" y1="0" x2="240" y2="210"/>
+        <line x1="330" y1="0" x2="330" y2="210"/>
+      </g>
+      <!-- large friendly lightning bolt motif -->
+      <g transform="translate(322,118)">
+        <circle r="54" fill="#ffffff" opacity="0.35"/>
+        <circle r="54" fill="none" stroke="#1F6F9C" stroke-width="1.4" opacity="0.4"/>
+        <path d="M8,-34 L-22,6 L-2,6 L-10,34 L24,-8 L2,-8 Z" fill="#1F6F9C"/>
+        <path d="M8,-34 L-22,6 L-2,6 L-10,34 L24,-8 L2,-8 Z" fill="none" stroke="#0E3A66" stroke-width="1.2" stroke-linejoin="round"/>
+      </g>
+      <g opacity="0.8">
+        <circle cx="60" cy="40" r="1.6" fill="#1F6F9C"/>
+        <circle cx="110" cy="20" r="1" fill="#fff"/>
+        <circle cx="200" cy="55" r="1.3" fill="#1F6F9C"/>
+        <circle cx="30" cy="140" r="1.2" fill="#1F6F9C"/>
+      </g>
+    </svg>
+
+    <div class="top-row">
+      <a class="back-link" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+        <span data-i18n="back">Guest Guide</span>
+      </a>
+      <div class="lang-select" id="langSelect">
+        <button class="lang-current" id="langCurrentBtn" onclick="toggleLangMenu()">
+          <span id="langCurrentLabel">IT</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="lang-menu" id="langMenu">
+          <button data-lang="it" class="active" onclick="setLang('it')"><span class="code">IT</span>Italiano</button>
+          <button data-lang="en" onclick="setLang('en')"><span class="code">EN</span>English</button>
+          <button data-lang="de" onclick="setLang('de')"><span class="code">DE</span>Deutsch</button>
+          <button data-lang="es" onclick="setLang('es')"><span class="code">ES</span>Español</button>
+          <button data-lang="pl" onclick="setLang('pl')"><span class="code">PL</span>Polski</button>
+          <button data-lang="hu" onclick="setLang('hu')"><span class="code">HU</span>Magyar</button>
+          <button data-lang="ro" onclick="setLang('ro')"><span class="code">RO</span>Română</button>
+        </div>
+      </div>
+    </div>
+    <div class="header-bottom">
+      <span class="eyebrow" data-i18n="eyebrow">Servizi</span>
+      <h1 class="page-title" data-i18n="title">Impianto Elettrico</h1>
+    </div>
+  </header>
+
+  <main>
+    <div class="intro-text" data-i18n="intro">
+      La villa è dotata di un quadro elettrico generale che alimenta tutti gli ambienti. In caso di sovraccarico o interruzione dell'energia, ecco dove si trova e come ripristinarla in autonomia.
+    </div>
+
+    <div class="section-header">
+      <span class="dot"></span>
+      <span class="label" data-i18n="whereLabel">Dove si Trova</span>
+    </div>
+    <div class="info-card">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="11" rx="2"/><path d="M8 9V6a4 4 0 0 1 8 0v3"/><circle cx="12" cy="14" r="1.6" fill="currentColor" stroke="none"/></svg></div>
+      <div class="txt">
+        <h3 data-i18n="whereTitle">Locale Tecnico</h3>
+        <p data-i18n="whereDesc">Il quadro elettrico generale si trova nel locale tecnico di fronte alla cucina. All'interno, subito dietro la porta, è visibile il pannello con tutti gli interruttori.</p>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <span class="dot"></span>
+      <span class="label" data-i18n="stepsLabel">In Caso di Interruzione</span>
+    </div>
+    <div class="steps">
+      <div class="step-card">
+        <div class="num">1</div>
+        <p data-i18n="step1">Verifica se qualche elettrodomestico ha dato segni di malfunzionamento e scollegalo.</p>
+      </div>
+      <div class="step-card">
+        <div class="num">2</div>
+        <p data-i18n="step2">Controlla se sono accesi troppi dispositivi o luci contemporaneamente.</p>
+      </div>
+      <div class="step-card">
+        <div class="num">3</div>
+        <p data-i18n="step3">Vai al locale tecnico di fronte alla cucina e individua il Quadro Elettrico Generale.</p>
+      </div>
+      <div class="step-card">
+        <div class="num">4</div>
+        <p data-i18n="step4"><b>Solleva la leva blu</b> per riarmare il quadro. Se è già alzata, solleva gli altri interruttori per ripristinare la zona disattivata.</p>
+      </div>
+    </div>
+
+    <div class="safety-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+      <p data-i18n="safetyNote">Non intervenire su cavi o componenti elettrici oltre al semplice riarmo del quadro. Per qualsiasi dubbio, contatta subito il Host.</p>
+    </div>
+
+    <a class="sos-card" href="tel:+393519768732">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L7.9 9.9a16 16 0 0 0 6 6l1.4-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.9 2.2Z"/></svg></div>
+      <div class="txt">
+        <p class="t" data-i18n="sosTitle">Il problema persiste?</p>
+        <p class="s" data-i18n="sosSub">Chiama il Host: +39 351 976 8732</p>
+      </div>
+    </a>
+
+    <a class="link-card" href="risoluzione-problemi.html">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 1-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 1 5.4-5.4L21 6l-3-3-3.3 3.3Z"/></svg></div>
+      <div class="txt">
+        <p class="t" data-i18n="troubleTitle">Risoluzione Problemi</p>
+        <p class="s" data-i18n="troubleSub">Altri piccoli inconvenienti e come risolverli.</p>
+      </div>
+      <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+    </a>
+  </main>
+
+  <footer class="brand">Villa Brando · Sabaudia, Lazio</footer>
+</div>
+
+<script>
+const I18N = {
+  it:{
+    back:'Guest Guide', eyebrow:'Servizi', title:'Impianto Elettrico',
+    intro:'La villa è dotata di un quadro elettrico generale che alimenta tutti gli ambienti. In caso di sovraccarico o interruzione dell\u2019energia, ecco dove si trova e come ripristinarla in autonomia.',
+    whereLabel:'Dove si Trova', whereTitle:'Locale Tecnico',
+    whereDesc:'Il quadro elettrico generale si trova nel locale tecnico di fronte alla cucina. All\u2019interno, subito dietro la porta, è visibile il pannello con tutti gli interruttori.',
+    stepsLabel:'In Caso di Interruzione',
+    step1:'Verifica se qualche elettrodomestico ha dato segni di malfunzionamento e scollegalo.',
+    step2:'Controlla se sono accesi troppi dispositivi o luci contemporaneamente.',
+    step3:'Vai al locale tecnico di fronte alla cucina e individua il Quadro Elettrico Generale.',
+    step4:'<b>Solleva la leva blu</b> per riarmare il quadro. Se è già alzata, solleva gli altri interruttori per ripristinare la zona disattivata.',
+    safetyNote:'Non intervenire su cavi o componenti elettrici oltre al semplice riarmo del quadro. Per qualsiasi dubbio, contatta subito il Host.',
+    sosTitle:'Il problema persiste?', sosSub:'Chiama il Host: +39 351 976 8732',
+    troubleTitle:'Risoluzione Problemi', troubleSub:'Altri piccoli inconvenienti e come risolverli.'
+  },
+  en:{
+    back:'Guest Guide', eyebrow:'Services', title:'Electrical System',
+    intro:'The villa is equipped with a general electrical panel that powers all areas. In case of overload or power outage, here\u2019s where to find it and how to restore power yourself.',
+    whereLabel:'Where It Is', whereTitle:'Technical Room',
+    whereDesc:'The general electrical panel is located in the technical room facing the kitchen. Right behind the door, you\u2019ll see the panel with all the switches.',
+    stepsLabel:'In Case of a Power Outage',
+    step1:'Check whether any appliance has shown signs of malfunction and unplug it.',
+    step2:'Check whether too many devices or lights are on at the same time.',
+    step3:'Go to the technical room facing the kitchen and locate the General Electrical Panel.',
+    step4:'<b>Lift the blue lever</b> to rearm the panel. If it\u2019s already up, lift the other switches to restore the deactivated area.',
+    safetyNote:'Do not attempt any work on wiring or electrical components beyond simply rearming the panel. If in doubt, contact the Host right away.',
+    sosTitle:'Still having issues?', sosSub:'Call the Host: +39 351 976 8732',
+    troubleTitle:'Trouble Solutions', troubleSub:'Other small hiccups and how to fix them.'
+  },
+  de:{
+    back:'Guest Guide', eyebrow:'Services', title:'Elektroanlage',
+    intro:'Die Villa verfügt über einen zentralen Sicherungskasten, der alle Bereiche versorgt. Bei Überlastung oder Stromausfall erfahren Sie hier, wo er sich befindet und wie Sie den Strom selbst wiederherstellen können.',
+    whereLabel:'Wo er sich befindet', whereTitle:'Technikraum',
+    whereDesc:'Der zentrale Sicherungskasten befindet sich im Technikraum gegenüber der Küche. Direkt hinter der Tür sehen Sie die Tafel mit allen Schaltern.',
+    stepsLabel:'Bei einem Stromausfall',
+    step1:'Prüfen Sie, ob ein Gerät Anzeichen einer Fehlfunktion zeigt, und trennen Sie es vom Netz.',
+    step2:'Prüfen Sie, ob zu viele Geräte oder Lichter gleichzeitig eingeschaltet sind.',
+    step3:'Gehen Sie zum Technikraum gegenüber der Küche und suchen Sie den zentralen Sicherungskasten.',
+    step4:'<b>Heben Sie den blauen Hebel an</b>, um die Tafel zurückzusetzen. Ist er bereits oben, heben Sie die anderen Schalter an, um den deaktivierten Bereich wiederherzustellen.',
+    safetyNote:'Führen Sie keine Arbeiten an Kabeln oder elektrischen Bauteilen durch, die über das einfache Zurücksetzen der Tafel hinausgehen. Kontaktieren Sie im Zweifel sofort den Host.',
+    sosTitle:'Besteht das Problem weiterhin?', sosSub:'Rufen Sie den Host an: +39 351 976 8732',
+    troubleTitle:'Problemlösungen', troubleSub:'Weitere kleine Störungen und wie man sie behebt.'
+  },
+  es:{
+    back:'Guest Guide', eyebrow:'Servicios', title:'Instalación Eléctrica',
+    intro:'La villa cuenta con un cuadro eléctrico general que alimenta todas las estancias. En caso de sobrecarga o corte de luz, aquí puedes ver dónde se encuentra y cómo restablecerlo tú mismo.',
+    whereLabel:'Dónde se Encuentra', whereTitle:'Cuarto Técnico',
+    whereDesc:'El cuadro eléctrico general se encuentra en el cuarto técnico frente a la cocina. Justo detrás de la puerta verás el panel con todos los interruptores.',
+    stepsLabel:'En Caso de Corte de Luz',
+    step1:'Comprueba si algún electrodoméstico ha mostrado signos de mal funcionamiento y desconéctalo.',
+    step2:'Comprueba si hay demasiados dispositivos o luces encendidos al mismo tiempo.',
+    step3:'Ve al cuarto técnico frente a la cocina y localiza el Cuadro Eléctrico General.',
+    step4:'<b>Levanta la palanca azul</b> para rearmar el cuadro. Si ya está levantada, levanta los demás interruptores para restablecer la zona desactivada.',
+    safetyNote:'No manipules cables ni componentes eléctricos más allá del simple rearme del cuadro. Ante cualquier duda, contacta de inmediato con el Host.',
+    sosTitle:'¿El problema persiste?', sosSub:'Llama al Host: +39 351 976 8732',
+    troubleTitle:'Resolución de Problemas', troubleSub:'Otros pequeños inconvenientes y cómo resolverlos.'
+  },
+  pl:{
+    back:'Guest Guide', eyebrow:'Usługi', title:'Instalacja Elektryczna',
+    intro:'Willa wyposażona jest w główną tablicę elektryczną zasilającą wszystkie pomieszczenia. W razie przeciążenia lub przerwy w dostawie prądu, tutaj dowiesz się, gdzie ją znaleźć i jak samodzielnie przywrócić zasilanie.',
+    whereLabel:'Gdzie się Znajduje', whereTitle:'Pomieszczenie Techniczne',
+    whereDesc:'Główna tablica elektryczna znajduje się w pomieszczeniu technicznym naprzeciwko kuchni. Zaraz za drzwiami widoczna jest tablica ze wszystkimi wyłącznikami.',
+    stepsLabel:'W Razie Przerwy w Dostawie Prądu',
+    step1:'Sprawdź, czy któreś urządzenie nie wykazuje oznak awarii i odłącz je.',
+    step2:'Sprawdź, czy zbyt wiele urządzeń lub świateł nie jest włączonych jednocześnie.',
+    step3:'Udaj się do pomieszczenia technicznego naprzeciwko kuchni i znajdź Główną Tablicę Elektryczną.',
+    step4:'<b>Podnieś niebieską dźwignię</b>, aby zresetować tablicę. Jeśli jest już podniesiona, podnieś pozostałe wyłączniki, aby przywrócić zasilanie wyłączonej strefy.',
+    safetyNote:'Nie wykonuj żadnych czynności przy przewodach ani elementach elektrycznych poza prostym zresetowaniem tablicy. W razie wątpliwości natychmiast skontaktuj się z Gospodarzem.',
+    sosTitle:'Problem nadal występuje?', sosSub:'Zadzwoń do Gospodarza: +39 351 976 8732',
+    troubleTitle:'Rozwiązywanie Problemów', troubleSub:'Inne drobne usterki i sposoby ich rozwiązania.'
+  },
+  hu:{
+    back:'Guest Guide', eyebrow:'Szolgáltatások', title:'Elektromos Rendszer',
+    intro:'A villa egy központi elosztótáblával rendelkezik, amely minden helyiséget ellát árammal. Túlterhelés vagy áramkimaradás esetén itt találja meg, hol van, és hogyan állíthatja helyre saját maga az áramellátást.',
+    whereLabel:'Hol Található', whereTitle:'Gépészeti Helyiség',
+    whereDesc:'A központi elosztótábla a konyhával szemközti gépészeti helyiségben található. Közvetlenül az ajtó mögött látható a panel az összes kapcsolóval.',
+    stepsLabel:'Áramkimaradás Esetén',
+    step1:'Ellenőrizze, hogy valamelyik készülék nem mutat-e meghibásodásra utaló jeleket, és húzza ki.',
+    step2:'Ellenőrizze, hogy nincs-e egyszerre túl sok készülék vagy lámpa bekapcsolva.',
+    step3:'Menjen a konyhával szemközti gépészeti helyiségbe, és keresse meg a Központi Elosztótáblát.',
+    step4:'<b>Emelje fel a kék kart</b> a tábla visszaállításához. Ha már fel van emelve, emelje fel a többi kapcsolót a kikapcsolt zóna helyreállításához.',
+    safetyNote:'Ne végezzen semmilyen beavatkozást a vezetékeken vagy elektromos alkatrészeken a tábla egyszerű visszaállításán túl. Kétség esetén azonnal forduljon a Házigazdához.',
+    sosTitle:'Továbbra is fennáll a probléma?', sosSub:'Hívja a Házigazdát: +39 351 976 8732',
+    troubleTitle:'Hibaelhárítás', troubleSub:'További apró problémák és megoldásuk.'
+  },
+  ro:{
+    back:'Guest Guide', eyebrow:'Servicii', title:'Instalația Electrică',
+    intro:'Vila este dotată cu un tablou electric general care alimentează toate spațiile. În caz de suprasarcină sau întrerupere a curentului, aici aflați unde se află și cum îl puteți reporni singuri.',
+    whereLabel:'Unde se Află', whereTitle:'Camera Tehnică',
+    whereDesc:'Tabloul electric general se află în camera tehnică din fața bucătăriei. Chiar în spatele ușii veți vedea panoul cu toate întrerupătoarele.',
+    stepsLabel:'În Caz de Întrerupere a Curentului',
+    step1:'Verificați dacă vreun electrocasnic a prezentat semne de funcționare defectuoasă și deconectați-l.',
+    step2:'Verificați dacă nu sunt prea multe dispozitive sau lumini aprinse simultan.',
+    step3:'Mergeți la camera tehnică din fața bucătăriei și localizați Tabloul Electric General.',
+    step4:'<b>Ridicați maneta albastră</b> pentru a rearma tabloul. Dacă este deja ridicată, ridicați celelalte întrerupătoare pentru a restabili zona dezactivată.',
+    safetyNote:'Nu interveniți asupra cablurilor sau componentelor electrice dincolo de simpla rearmare a tabloului. În caz de dubiu, contactați imediat Gazda.',
+    sosTitle:'Problema persistă?', sosSub:'Sunați Gazda: +39 351 976 8732',
+    troubleTitle:'Rezolvarea Problemelor', troubleSub:'Alte mici probleme și cum să le rezolvați.'
+  }
+};
+
+let LANG = 'it';
+
+const LANG_LABELS = { it:'IT', en:'EN', de:'DE', es:'ES', pl:'PL', hu:'HU', ro:'RO' };
+
+function toggleLangMenu(){
+  const menu = document.getElementById('langMenu');
+  const btn = document.getElementById('langCurrentBtn');
+  const isOpen = menu.classList.contains('open');
+  if(!isOpen){
+    const rect = btn.getBoundingClientRect();
+    menu.style.top = (rect.bottom + 8) + 'px';
+    const rightEdge = window.innerWidth - rect.right;
+    menu.style.right = rightEdge + 'px';
+    menu.style.left = 'auto';
+  }
+  menu.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+document.addEventListener('click', function(e){
+  const sel = document.getElementById('langSelect');
+  if(sel && !sel.contains(e.target)){
+    document.getElementById('langMenu').classList.remove('open');
+    document.getElementById('langCurrentBtn').classList.remove('open');
+  }
+});
+
+function applyI18n(){
+  document.querySelectorAll('[data-i18n]').forEach(elm=>{
+    const key = elm.getAttribute('data-i18n');
+    if(I18N[LANG][key]) elm.innerHTML = I18N[LANG][key];
+  });
+  document.documentElement.lang = LANG;
+}
+
+function setLang(l){
+  LANG = l;
+  document.getElementById('langCurrentLabel').textContent = LANG_LABELS[l];
+  document.querySelectorAll('.lang-menu button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.lang === l);
+  });
+  document.getElementById('langMenu').classList.remove('open');
+  document.getElementById('langCurrentBtn').classList.remove('open');
+  applyI18n();
+}
+
+applyI18n();
+</script>
+</body>
+</html>
