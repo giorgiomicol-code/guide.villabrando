@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Villa Brando — Wi-Fi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#0E3A66;
+    --pine-2:#154C82;
+    --stone:#FFFFFF;
+    --stone-2:#E5F0FA;
+    --brass:#2E86C1;
+    --brass-light:#8FCBEF;
+    --ink:#122436;
+    --ink-soft:#5A7288;
+    --line:rgba(14,58,102,0.12);
+    --shadow: 0 10px 30px -14px rgba(14,58,102,0.30);
+    --radius: 18px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--stone);
+    font-family:'Comfortaa', sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100svh;
+  }
+  .app{
+    max-width:520px; margin:0 auto; min-height:100svh;
+    background:var(--stone); position:relative;
+    display:flex; flex-direction:column;
+    box-shadow:0 0 60px rgba(0,0,0,0.08);
+  }
+  @media (min-width:560px){
+    body{ background: linear-gradient(180deg,#DCD3BC, #C9BE9F 60%, #b9ad8c); padding:28px 0; }
+    .app{ border-radius:34px; overflow:hidden; min-height:calc(100svh - 56px); box-shadow: 0 30px 80px -20px rgba(20,26,20,0.55); }
+  }
+
+  header.top{
+    background:var(--pine); color:#fff; padding:18px 20px 20px; position:relative;
+  }
+  header.top::before{
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgba(143,203,239,0.35), transparent 55%),
+      radial-gradient(90% 90% at 0% 100%, rgba(14,58,102,0.35), transparent 55%);
+    pointer-events:none;
+  }
+  .back-row{ position:relative; z-index:1; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .back-link{
+    display:flex; align-items:center; gap:6px; color:#fff; text-decoration:none;
+    font-weight:600; font-size:13px; opacity:0.9;
+  }
+  .back-link svg{ width:16px; height:16px; }
+  h1.page-title{
+    position:relative; z-index:1; margin:14px 0 2px; font-size:22px; font-weight:500; color:#fff; line-height:1.15;
+  }
+  .page-sub{ position:relative; z-index:1; margin:0; font-size:12.5px; color:var(--brass-light); font-weight:600; letter-spacing:0.02em; }
+
+  .lang-select{ position:relative; z-index:20; flex-shrink:0; }
+  .lang-current{
+    display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.22);
+    border-radius:999px; padding:8px 12px; color:#fff; font-family:'Comfortaa'; font-weight:700; font-size:12px; cursor:pointer;
+  }
+  .lang-current svg{ width:13px; height:13px; transition:transform .2s; }
+  .lang-current.open svg{ transform:rotate(180deg); }
+  .lang-menu{
+    position:fixed; background:#fff; border-radius:14px;
+    box-shadow:0 14px 34px -10px rgba(14,58,102,0.4); border:1px solid var(--line);
+    padding:6px; display:none; min-width:160px; max-height:70vh; overflow-y:auto;
+    z-index:999;
+  }
+  .lang-menu.open{ display:block; }
+  .lang-menu button{
+    display:flex; align-items:center; gap:10px; width:100%; text-align:left; border:none; background:none;
+    padding:9px 10px; border-radius:9px; font-family:'Comfortaa'; font-weight:600; font-size:13px;
+    color:var(--ink); cursor:pointer;
+  }
+  .lang-menu button:hover{ background:var(--stone-2); }
+  .lang-menu button.active{ background:var(--brass); color:#0A2540; }
+  .lang-menu button .code{
+    width:24px; height:18px; border-radius:4px; background:var(--stone-2); color:var(--pine);
+    font-size:9.5px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .lang-menu button.active .code{ background:rgba(10,37,64,0.15); color:#0A2540; }
+
+  main{ flex:1; padding:22px 16px 28px; display:flex; flex-direction:column; align-items:center; }
+
+  .wifi-banner{
+    width:100%; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); border:1px solid var(--line);
+    background: radial-gradient(120% 160% at 30% 20%, #4FA8E8, #0E3A66 75%);
+    padding:34px 20px; text-align:center; margin-bottom:22px; position:relative;
+  }
+  .wifi-banner svg{ width:64px; height:64px; color:#fff; }
+  .wifi-banner .wb-label{ color:#fff; font-weight:700; font-size:15px; letter-spacing:0.06em; margin-top:10px; }
+
+  .qr-card{
+    background:#fff; border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:22px; display:flex; flex-direction:column; align-items:center; width:100%; margin-bottom:20px;
+  }
+  .qr-card img{ width:100%; max-width:260px; height:auto; border-radius:10px; }
+  .qr-hint{
+    margin:14px 0 0; font-size:12px; color:var(--ink-soft); text-align:center; line-height:1.5;
+  }
+
+  .creds{
+    width:100%; background:var(--stone-2); border-radius:14px; padding:16px 18px; margin-bottom:6px;
+  }
+  .creds .row{ display:flex; align-items:center; justify-content:space-between; padding:9px 0; border-bottom:1px solid rgba(14,58,102,0.10); }
+  .creds .row:last-child{ border-bottom:none; }
+  .creds .label{ font-size:11.5px; font-weight:700; color:var(--pine); text-transform:uppercase; letter-spacing:0.05em; }
+  .creds .value{ font-size:15px; font-weight:700; color:var(--ink); font-family:'Comfortaa'; }
+
+  footer.contact-bar{
+    background:var(--stone-2); padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .contact-bar .brandline{ font-size:13px; font-weight:700; color:var(--pine); }
+  .contact-bar .brandline small{ display:block; font-weight:500; color:var(--ink-soft); font-size:11px; }
+  .contact-bar a.phone{
+    display:flex; align-items:center; gap:8px; background:var(--pine); color:#fff; text-decoration:none;
+    padding:9px 14px; border-radius:999px; font-weight:700; font-size:12.5px;
+  }
+  .contact-bar a.phone svg{ width:14px; height:14px; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="top">
+    <div class="back-row">
+      <a class="back-link" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        Guest Guide
+      </a>
+      <div class="lang-select" id="langSelect">
+        <button class="lang-current" id="langCurrentBtn" onclick="toggleLangMenu()">
+          <span id="langCurrentLabel">IT</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="lang-menu" id="langMenu">
+          <button data-lang="it" class="active" onclick="setLang('it')"><span class="code">IT</span>Italiano</button>
+          <button data-lang="en" onclick="setLang('en')"><span class="code">EN</span>English</button>
+          <button data-lang="de" onclick="setLang('de')"><span class="code">DE</span>Deutsch</button>
+          <button data-lang="es" onclick="setLang('es')"><span class="code">ES</span>Español</button>
+          <button data-lang="hu" onclick="setLang('hu')"><span class="code">HU</span>Magyar</button>
+          <button data-lang="ro" onclick="setLang('ro')"><span class="code">RO</span>Română</button>
+          <button data-lang="pl" onclick="setLang('pl')"><span class="code">PL</span>Polski</button>
+        </div>
+      </div>
+    </div>
+    <h1 class="page-title" id="pageTitle">Wi-Fi</h1>
+    <p class="page-sub" id="pageSub">Connessione alla rete della villa</p>
+  </header>
+
+  <main>
+    <div class="wifi-banner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8.5a17 17 0 0 1 20 0"/><path d="M5 12.5a12 12 0 0 1 14 0"/><path d="M8.5 16.3a7 7 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1"/></svg>
+      <div class="wb-label" id="bannerLabel">WI-FI</div>
+    </div>
+
+    <div class="qr-card">
+      <img src="data:image/png;base64,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" alt="QR code Wi-Fi">
+      <p class="qr-hint" id="qrHint">Inquadra il codice con la fotocamera del telefono per connetterti automaticamente.</p>
+    </div>
+
+    <div class="creds">
+      <div class="row">
+        <span class="label" id="labelNetwork">Rete</span>
+        <span class="value">NETGEARGIO</span>
+      </div>
+      <div class="row">
+        <span class="label" id="labelPassword">Password</span>
+        <span class="value">9a9b9c9d9e</span>
+      </div>
+    </div>
+  </main>
+
+  <footer class="contact-bar">
+    <div class="brandline">Villa Brando<small>Guest Guide</small></div>
+    <a class="phone" href="tel:+393519768732">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      +39 351 976 8732
+    </a>
+  </footer>
+
+</div>
+
+<script>
+const LANG_LABELS = { it:'IT', en:'EN', de:'DE', es:'ES', hu:'HU', ro:'RO', pl:'PL' };
+
+const I18N = {
+  it: { title:"Wi-Fi", sub:"Connessione alla rete della villa", banner:"WI-FI", hint:"Inquadra il codice con la fotocamera del telefono per connetterti automaticamente.", network:"Rete", password:"Password" },
+  en: { title:"Wi-Fi", sub:"Connect to the villa's network", banner:"WI-FI", hint:"Point your phone's camera at the code to connect automatically.", network:"Network", password:"Password" },
+  de: { title:"Wi-Fi", sub:"Verbindung zum Netzwerk der Villa", banner:"WI-FI", hint:"Richte die Handykamera auf den Code, um dich automatisch zu verbinden.", network:"Netzwerk", password:"Passwort" },
+  es: { title:"Wi-Fi", sub:"Conexión a la red de la villa", banner:"WI-FI", hint:"Apunta la cámara del móvil al código para conectarte automáticamente.", network:"Red", password:"Contraseña" },
+  hu: { title:"Wi-Fi", sub:"Csatlakozás a villa hálózatához", banner:"WI-FI", hint:"Irányítsd a telefonod kameráját a kódra az automatikus csatlakozáshoz.", network:"Hálózat", password:"Jelszó" },
+  ro: { title:"Wi-Fi", sub:"Conectare la rețeaua vilei", banner:"WI-FI", hint:"Îndreaptă camera telefonului spre cod pentru a te conecta automat.", network:"Rețea", password:"Parolă" },
+  pl: { title:"Wi-Fi", sub:"Połączenie z siecią willi", banner:"WI-FI", hint:"Skieruj aparat telefonu na kod, aby połączyć się automatycznie.", network:"Sieć", password:"Hasło" }
+};
+
+const menu = document.getElementById('langMenu');
+const btn = document.getElementById('langCurrentBtn');
+
+function toggleLangMenu(){
+  const isOpen = menu.classList.contains('open');
+  if(!isOpen){
+    const rect = btn.getBoundingClientRect();
+    menu.style.top = (rect.bottom + 8) + 'px';
+    const rightEdge = window.innerWidth - rect.right;
+    menu.style.right = rightEdge + 'px';
+    menu.style.left = 'auto';
+  }
+  menu.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+document.addEventListener('click', function(e){
+  const sel = document.getElementById('langSelect');
+  if(sel && !sel.contains(e.target)){
+    menu.classList.remove('open');
+    btn.classList.remove('open');
+  }
+});
+
+function setLang(lang){
+  const d = I18N[lang];
+  document.getElementById('langCurrentLabel').textContent = LANG_LABELS[lang];
+  document.querySelectorAll('.lang-menu button').forEach(function(b){
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  menu.classList.remove('open');
+  btn.classList.remove('open');
+
+  document.getElementById('pageTitle').textContent = d.title;
+  document.getElementById('pageSub').textContent = d.sub;
+  document.getElementById('bannerLabel').textContent = d.banner;
+  document.getElementById('qrHint').textContent = d.hint;
+  document.getElementById('labelNetwork').textContent = d.network;
+  document.getElementById('labelPassword').textContent = d.password;
+
+  document.documentElement.lang = lang;
+}
+
+setLang('it');
+</script>
+
+</body>
+</html>
