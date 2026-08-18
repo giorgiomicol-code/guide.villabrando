@@ -845,7 +845,7 @@ function renderRulesHighlights(){
   el.innerHTML = RULES_HIGHLIGHTS[LANG].map(h=>`<li>${h}</li>`).join('');
 }
 
-let LANG = 'it';
+let LANG = localStorage.getItem('vbLang') || 'it';
 
 function rankClass(i, item){
   if(item && item.size) return item.size;
@@ -942,6 +942,7 @@ document.addEventListener('click', function(e){
 
 function setLang(l){
   LANG = l;
+  localStorage.setItem('vbLang', l);
   document.getElementById('langCurrentLabel').textContent = LANG_LABELS[l];
   document.querySelectorAll('.lang-menu button').forEach(b=>{
     b.classList.toggle('active', b.dataset.lang === l);
@@ -966,11 +967,7 @@ function setTab(tab){
 }
 
 /* init */
-renderStack('stack-general', DATA.general);
-renderStack('stack-activities', DATA.activities);
-renderStack('stack-services', DATA.services);
-renderRulesHighlights();
-applyI18n();
+setLang(LANG);
 </script>
 </body>
 </html>

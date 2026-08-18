@@ -272,7 +272,7 @@ window.addEventListener('resize', function(){ goToSlide(currentIndex, false); })
 
 updateCounter();
 updateStripActive();
-setLangUI('it');
+setLangUI(localStorage.getItem('vbLang') === 'it' ? 'it' : 'en');
 </script>
 
 </body>

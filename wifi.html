@@ -229,6 +229,7 @@ document.addEventListener('click', function(e){
 
 function setLang(lang){
   const d = I18N[lang];
+  localStorage.setItem('vbLang', lang);
   document.getElementById('langCurrentLabel').textContent = LANG_LABELS[lang];
   document.querySelectorAll('.lang-menu button').forEach(function(b){
     b.classList.toggle('active', b.dataset.lang === lang);
@@ -246,7 +247,7 @@ function setLang(lang){
   document.documentElement.lang = lang;
 }
 
-setLang('it');
+setLang(localStorage.getItem('vbLang') || 'it');
 </script>
 
 </body>
