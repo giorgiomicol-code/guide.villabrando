@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Villa Brando — Contatti</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#0E3A66;
+    --pine-2:#154C82;
+    --stone:#FFFFFF;
+    --stone-2:#E5F0FA;
+    --brass:#2E86C1;
+    --brass-light:#8FCBEF;
+    --violet:#7A3FC0;
+    --violet-2:#A473E0;
+    --ink:#122436;
+    --ink-soft:#5A7288;
+    --line:rgba(14,58,102,0.12);
+    --shadow: 0 10px 30px -14px rgba(14,58,102,0.30);
+    --radius: 18px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--stone);
+    font-family:'Comfortaa', sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100svh;
+  }
+  .app{
+    max-width:520px; margin:0 auto; min-height:100svh;
+    background:var(--stone); position:relative;
+    display:flex; flex-direction:column;
+    box-shadow:0 0 60px rgba(0,0,0,0.08);
+  }
+  @media (min-width:560px){
+    body{ background: linear-gradient(180deg,#DCD3BC, #C9BE9F 60%, #b9ad8c); padding:28px 0; }
+    .app{ border-radius:34px; overflow:hidden; min-height:calc(100svh - 56px); box-shadow: 0 30px 80px -20px rgba(20,26,20,0.55); }
+  }
+
+  header.top{
+    background:var(--pine); color:#fff; padding:18px 20px 30px; position:relative; overflow:hidden;
+  }
+  header.top::before{
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgba(164,115,224,0.30), transparent 55%),
+      radial-gradient(90% 90% at 0% 100%, rgba(14,58,102,0.35), transparent 55%);
+    pointer-events:none;
+  }
+  .back-row{ position:relative; z-index:1; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .back-link{
+    display:flex; align-items:center; gap:6px; color:#fff; text-decoration:none;
+    font-weight:600; font-size:13px; opacity:0.9;
+  }
+  .back-link svg{ width:16px; height:16px; }
+  h1.page-title{
+    position:relative; z-index:1; margin:16px 0 2px; font-size:24px; font-weight:500; color:#fff; line-height:1.15;
+  }
+  .page-sub{ position:relative; z-index:1; margin:0; font-size:12.5px; color:var(--brass-light); font-weight:600; letter-spacing:0.02em; max-width:320px; line-height:1.4; }
+
+  .lang-select{ position:relative; z-index:20; flex-shrink:0; }
+  .lang-current{
+    display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.22);
+    border-radius:999px; padding:8px 12px; color:#fff; font-family:'Comfortaa'; font-weight:700; font-size:12px; cursor:pointer;
+  }
+  .lang-current svg{ width:13px; height:13px; transition:transform .2s; }
+  .lang-current.open svg{ transform:rotate(180deg); }
+  .lang-menu{
+    position:fixed; background:#fff; border-radius:14px;
+    box-shadow:0 14px 34px -10px rgba(14,58,102,0.4); border:1px solid var(--line);
+    padding:6px; display:none; min-width:160px; max-height:70vh; overflow-y:auto;
+    z-index:999;
+  }
+  .lang-menu.open{ display:block; }
+  .lang-menu button{
+    display:flex; align-items:center; gap:10px; width:100%; text-align:left; border:none; background:none;
+    padding:9px 10px; border-radius:9px; font-family:'Comfortaa'; font-weight:600; font-size:13px;
+    color:var(--ink); cursor:pointer;
+  }
+  .lang-menu button:hover{ background:var(--stone-2); }
+  .lang-menu button.active{ background:var(--brass); color:#0A2540; }
+  .lang-menu button .code{
+    width:24px; height:18px; border-radius:4px; background:var(--stone-2); color:var(--pine);
+    font-size:9.5px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .lang-menu button.active .code{ background:rgba(10,37,64,0.15); color:#0A2540; }
+
+  main{ flex:1; padding:0 16px 28px; margin-top:-16px; position:relative; z-index:2; }
+
+  .contact-card{
+    background:#fff; border:1px solid var(--line); border-radius:20px; box-shadow:var(--shadow);
+    padding:22px 20px; margin-bottom:16px; position:relative; overflow:hidden;
+  }
+  .contact-card::before{
+    content:""; position:absolute; top:-40px; right:-40px; width:120px; height:120px; border-radius:50%;
+    background:var(--card-glow, radial-gradient(circle, rgba(164,115,224,0.14), transparent 70%));
+  }
+  .cc-top{ display:flex; align-items:center; gap:14px; position:relative; z-index:1; }
+  .cc-avatar{
+    width:56px; height:56px; border-radius:16px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--avatar-grad, linear-gradient(135deg,#A473E0,#7A3FC0));
+    box-shadow:0 8px 18px -6px rgba(122,63,192,0.5);
+  }
+  .cc-avatar svg{ width:26px; height:26px; color:#fff; }
+  .cc-name{ margin:0; font-size:18px; font-weight:700; color:var(--ink); }
+  .cc-role{
+    margin:2px 0 0; font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--role-color, var(--violet));
+  }
+  .cc-note{
+    margin:14px 0 16px; font-size:12.5px; color:var(--ink-soft); font-style:italic; line-height:1.5;
+    position:relative; z-index:1;
+  }
+  .cc-actions{ display:flex; gap:10px; position:relative; z-index:1; }
+  .cc-btn{
+    flex:1; display:flex; align-items:center; justify-content:center; gap:7px;
+    padding:11px 10px; border-radius:12px; text-decoration:none; font-weight:700; font-size:13px;
+    font-family:'Comfortaa'; transition:transform .15s;
+  }
+  .cc-btn:active{ transform:scale(0.97); }
+  .cc-btn svg{ width:16px; height:16px; flex-shrink:0; }
+  .cc-btn.call{ background:var(--btn-grad, linear-gradient(135deg,#A473E0,#7A3FC0)); color:#fff; }
+  .cc-btn.wa{ background:#E9F8EF; color:#1F9254; border:1px solid #BFE9CE; }
+  .cc-phone{ font-size:12px; color:var(--ink-soft); text-align:center; margin-top:10px; font-weight:600; letter-spacing:0.01em; }
+
+  .section-tag{
+    display:flex; align-items:center; gap:8px; margin:22px 4px 12px;
+    font-size:11.5px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft);
+  }
+  .section-tag::after{ content:""; flex:1; height:1px; background:var(--line); }
+
+  .other-row{
+    display:flex; align-items:center; gap:14px; background:var(--stone-2); border-radius:16px;
+    padding:14px 16px; margin-bottom:10px; text-decoration:none; color:inherit;
+  }
+  .other-icon{
+    width:42px; height:42px; border-radius:12px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    background:#fff; box-shadow:0 2px 8px rgba(14,58,102,0.10);
+  }
+  .other-icon svg{ width:19px; height:19px; color:var(--pine); }
+  .other-text .other-label{ margin:0; font-size:13px; font-weight:700; color:var(--ink); }
+  .other-text .other-value{ margin:1px 0 0; font-size:12px; color:var(--ink-soft); }
+
+  .tip-box{
+    display:flex; gap:10px; background:#FFF6E5; border:1px solid #F0C878; border-radius:14px;
+    padding:13px 15px; margin-top:18px;
+  }
+  .tip-box svg{ width:19px; height:19px; flex-shrink:0; color:#B8791A; }
+  .tip-box p{ margin:0; font-size:12.5px; color:#6b5228; line-height:1.5; }
+
+  footer.contact-bar{
+    background:var(--stone-2); padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .contact-bar .brandline{ font-size:13px; font-weight:700; color:var(--pine); }
+  .contact-bar .brandline small{ display:block; font-weight:500; color:var(--ink-soft); font-size:11px; }
+  .contact-bar a.phone{
+    display:flex; align-items:center; gap:8px; background:var(--pine); color:#fff; text-decoration:none;
+    padding:9px 14px; border-radius:999px; font-weight:700; font-size:12.5px;
+  }
+  .contact-bar a.phone svg{ width:14px; height:14px; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="top">
+    <div class="back-row">
+      <a class="back-link" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        Guest Guide
+      </a>
+      <div class="lang-select" id="langSelect">
+        <button class="lang-current" id="langCurrentBtn" onclick="toggleLangMenu()">
+          <span id="langCurrentLabel">IT</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="lang-menu" id="langMenu">
+          <button data-lang="it" class="active" onclick="setLang('it')"><span class="code">IT</span>Italiano</button>
+          <button data-lang="en" onclick="setLang('en')"><span class="code">EN</span>English</button>
+          <button data-lang="de" onclick="setLang('de')"><span class="code">DE</span>Deutsch</button>
+          <button data-lang="es" onclick="setLang('es')"><span class="code">ES</span>Español</button>
+          <button data-lang="hu" onclick="setLang('hu')"><span class="code">HU</span>Magyar</button>
+          <button data-lang="ro" onclick="setLang('ro')"><span class="code">RO</span>Română</button>
+          <button data-lang="pl" onclick="setLang('pl')"><span class="code">PL</span>Polski</button>
+        </div>
+      </div>
+    </div>
+    <h1 class="page-title" id="pageTitle">Contatti</h1>
+    <p class="page-sub" id="pageSub">Siamo qui per aiutarti in ogni momento del tuo soggiorno.</p>
+  </header>
+
+  <main>
+    <div class="contact-card" style="--card-glow: radial-gradient(circle, rgba(164,115,224,0.16), transparent 70%);">
+      <div class="cc-top">
+        <div class="cc-avatar" style="--avatar-grad: linear-gradient(135deg,#A473E0,#7A3FC0);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div>
+          <p class="cc-name">Francesco</p>
+          <p class="cc-role" style="--role-color:#7A3FC0;" id="role1">Guest Assistant</p>
+        </div>
+      </div>
+      <p class="cc-note" id="note1">Per ogni necessità durante il soggiorno.</p>
+      <div class="cc-actions">
+        <a class="cc-btn call" style="--btn-grad: linear-gradient(135deg,#A473E0,#7A3FC0);" href="tel:+393516219226">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span id="callLabel1">Chiama</span>
+        </a>
+        <a class="cc-btn wa" href="https://wa.me/393516219226" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+      <p class="cc-phone">+39 351 621 9226</p>
+    </div>
+
+    <div class="contact-card" style="--card-glow: radial-gradient(circle, rgba(46,134,193,0.16), transparent 70%);">
+      <div class="cc-top">
+        <div class="cc-avatar" style="--avatar-grad: linear-gradient(135deg,#4FA8E8,#0E3A66);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 9h1"/><path d="M14 9h1"/><path d="M9 13h1"/><path d="M14 13h1"/><path d="M9 21v-4h6v4"/></svg>
+        </div>
+        <div>
+          <p class="cc-name">Giorgio</p>
+          <p class="cc-role" style="--role-color:#0E3A66;" id="role2">Villa Manager</p>
+        </div>
+      </div>
+      <p class="cc-note" id="note2">Per informazioni sulla prenotazione e sulla villa.</p>
+      <div class="cc-actions">
+        <a class="cc-btn call" style="--btn-grad: linear-gradient(135deg,#4FA8E8,#0E3A66);" href="tel:+393519768732">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span id="callLabel2">Chiama</span>
+        </a>
+        <a class="cc-btn wa" href="https://wa.me/393519768732" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+      <p class="cc-phone">+39 351 976 8732</p>
+    </div>
+
+    <div class="section-tag" id="otherTag">Altri contatti</div>
+
+    <a class="other-row" href="mailto:villabrando.italy@gmail.com">
+      <div class="other-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      </div>
+      <div class="other-text">
+        <p class="other-label">Email</p>
+        <p class="other-value">villabrando.italy@gmail.com</p>
+      </div>
+    </a>
+
+    <a class="other-row" href="https://www.instagram.com/villabrando.holidayhome/" target="_blank" rel="noopener">
+      <div class="other-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      </div>
+      <div class="other-text">
+        <p class="other-label">Instagram</p>
+        <p class="other-value">@villabrando.holidayhome</p>
+      </div>
+    </a>
+
+    <div class="tip-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+      <p id="tipText">Per problemi in casa (Wi‑Fi, elettricità, serratura, ecc.) scrivi prima a Francesco: risponde più in fretta.</p>
+    </div>
+  </main>
+
+  <footer class="contact-bar">
+    <div class="brandline">Villa Brando<small>Guest Guide</small></div>
+    <a class="phone" href="tel:+393519768732">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      +39 351 976 8732
+    </a>
+  </footer>
+
+</div>
+
+<script>
+const LANG_LABELS = { it:'IT', en:'EN', de:'DE', es:'ES', hu:'HU', ro:'RO', pl:'PL' };
+
+const I18N = {
+  it: {
+    title:"Contatti", sub:"Siamo qui per aiutarti in ogni momento del tuo soggiorno.",
+    role1:"Guest Assistant", note1:"Per ogni necessità durante il soggiorno.",
+    role2:"Villa Manager", note2:"Per informazioni sulla prenotazione e sulla villa.",
+    call:"Chiama", otherTag:"Altri contatti",
+    tip:"Per problemi in casa (Wi‑Fi, elettricità, serratura, ecc.) scrivi prima a Francesco: risponde più in fretta."
+  },
+  en: {
+    title:"Contacts", sub:"We're here to help you throughout your stay.",
+    role1:"Guest Assistant", note1:"For all house issues during your stay.",
+    role2:"Villa Manager", note2:"For booking and villa information.",
+    call:"Call", otherTag:"Other contacts",
+    tip:"For house issues (Wi‑Fi, electricity, lock, etc.) write to Francesco first: he replies faster."
+  },
+  de: {
+    title:"Kontakte", sub:"Wir sind während Ihres gesamten Aufenthalts für Sie da.",
+    role1:"Gästebetreuer", note1:"Für alle Anliegen rund um das Haus.",
+    role2:"Villa-Manager", note2:"Für Buchungs- und Villa-Informationen.",
+    call:"Anrufen", otherTag:"Weitere Kontakte",
+    tip:"Bei Problemen im Haus (Wi‑Fi, Strom, Schloss usw.) schreiben Sie zuerst Francesco: er antwortet schneller."
+  },
+  es: {
+    title:"Contactos", sub:"Estamos aquí para ayudarte durante toda tu estancia.",
+    role1:"Asistente de Huéspedes", note1:"Para cualquier necesidad de la casa.",
+    role2:"Gestor de la Villa", note2:"Para información sobre la reserva y la villa.",
+    call:"Llamar", otherTag:"Otros contactos",
+    tip:"Para problemas en la casa (Wi‑Fi, electricidad, cerradura, etc.) escribe primero a Francesco: responde más rápido."
+  },
+  hu: {
+    title:"Kapcsolatok", sub:"Az egész tartózkodásod alatt itt vagyunk, hogy segítsünk.",
+    role1:"vendégasszisztens", note1:"Bármilyen, a házzal kapcsolatos igény esetén.",
+    role2:"villakezelő", note2:"Foglalással és a villával kapcsolatos információkért.",
+    call:"Hívás", otherTag:"További elérhetőségek",
+    tip:"Ház körüli problémák esetén (Wi‑Fi, áram, zár stb.) először írj Francescónak: gyorsabban válaszol."
+  },
+  ro: {
+    title:"Contacte", sub:"Suntem aici să te ajutăm pe tot parcursul șederii tale.",
+    role1:"Asistent pentru Oaspeți", note1:"Pentru orice nevoie legată de casă.",
+    role2:"Administrator Vilă", note2:"Pentru informații despre rezervare și vilă.",
+    call:"Sună", otherTag:"Alte contacte",
+    tip:"Pentru probleme în casă (Wi‑Fi, electricitate, yală etc.) scrie mai întâi lui Francesco: răspunde mai repede."
+  },
+  pl: {
+    title:"Kontakty", sub:"Jesteśmy tu, aby pomóc Ci przez cały pobyt.",
+    role1:"opiekun gości", note1:"W każdej sprawie związanej z domem.",
+    role2:"zarządca willi", note2:"W sprawach rezerwacji i informacji o willi.",
+    call:"Zadzwoń", otherTag:"Inne kontakty",
+    tip:"W przypadku problemów w domu (Wi‑Fi, prąd, zamek itp.) napisz najpierw do Francesco: odpowiada szybciej."
+  }
+};
+
+const menu = document.getElementById('langMenu');
+const btn = document.getElementById('langCurrentBtn');
+
+function toggleLangMenu(){
+  const isOpen = menu.classList.contains('open');
+  if(!isOpen){
+    const rect = btn.getBoundingClientRect();
+    menu.style.top = (rect.bottom + 8) + 'px';
+    const rightEdge = window.innerWidth - rect.right;
+    menu.style.right = rightEdge + 'px';
+    menu.style.left = 'auto';
+  }
+  menu.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+document.addEventListener('click', function(e){
+  const sel = document.getElementById('langSelect');
+  if(sel && !sel.contains(e.target)){
+    menu.classList.remove('open');
+    btn.classList.remove('open');
+  }
+});
+
+function setLang(lang){
+  const d = I18N[lang];
+  document.getElementById('langCurrentLabel').textContent = LANG_LABELS[lang];
+  document.querySelectorAll('.lang-menu button').forEach(function(b){
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  menu.classList.remove('open');
+  btn.classList.remove('open');
+
+  document.getElementById('pageTitle').textContent = d.title;
+  document.getElementById('pageSub').textContent = d.sub;
+  document.getElementById('role1').textContent = d.role1;
+  document.getElementById('note1').textContent = d.note1;
+  document.getElementById('role2').textContent = d.role2;
+  document.getElementById('note2').textContent = d.note2;
+  document.getElementById('callLabel1').textContent = d.call;
+  document.getElementById('callLabel2').textContent = d.call;
+  document.getElementById('otherTag').textContent = d.otherTag;
+  document.getElementById('tipText').textContent = d.tip;
+
+  document.documentElement.lang = lang;
+}
+
+setLang('it');
+</script>
+
+</body>
+</html>
