@@ -145,6 +145,7 @@
         <div class="lang-menu" id="langMenu">
           <button data-lang="it" class="active" onclick="setLang('it')"><span class="code">IT</span>Italiano</button>
           <button data-lang="en" onclick="setLang('en')"><span class="code">EN</span>English</button>
+          <button data-lang="fr" onclick="setLang('fr')"><span class="code">FR</span>Français</button>
           <button data-lang="de" onclick="setLang('de')"><span class="code">DE</span>Deutsch</button>
           <button data-lang="es" onclick="setLang('es')"><span class="code">ES</span>Español</button>
           <button data-lang="hu" onclick="setLang('hu')"><span class="code">HU</span>Magyar</button>
@@ -191,7 +192,7 @@
 </div>
 
 <script>
-const LANG_LABELS = { it:'IT', en:'EN', de:'DE', es:'ES', hu:'HU', ro:'RO', pl:'PL' };
+const LANG_LABELS = { it:'IT', en:'EN', fr:'FR', de:'DE', es:'ES', hu:'HU', ro:'RO', pl:'PL' };
 
 const I18N = {
   it: { title:"Wi-Fi", sub:"Connessione alla rete della villa", banner:"WI-FI", hint:"Inquadra il codice con la fotocamera del telefono per connetterti automaticamente.", network:"Rete", password:"Password" },
@@ -200,7 +201,8 @@ const I18N = {
   es: { title:"Wi-Fi", sub:"Conexión a la red de la villa", banner:"WI-FI", hint:"Apunta la cámara del móvil al código para conectarte automáticamente.", network:"Red", password:"Contraseña" },
   hu: { title:"Wi-Fi", sub:"Csatlakozás a villa hálózatához", banner:"WI-FI", hint:"Irányítsd a telefonod kameráját a kódra az automatikus csatlakozáshoz.", network:"Hálózat", password:"Jelszó" },
   ro: { title:"Wi-Fi", sub:"Conectare la rețeaua vilei", banner:"WI-FI", hint:"Îndreaptă camera telefonului spre cod pentru a te conecta automat.", network:"Rețea", password:"Parolă" },
-  pl: { title:"Wi-Fi", sub:"Połączenie z siecią willi", banner:"WI-FI", hint:"Skieruj aparat telefonu na kod, aby połączyć się automatycznie.", network:"Sieć", password:"Hasło" }
+  pl: { title:"Wi-Fi", sub:"Połączenie z siecią willi", banner:"WI-FI", hint:"Skieruj aparat telefonu na kod, aby połączyć się automatycznie.", network:"Sieć", password:"Hasło" },
+  fr: { title:"Wi-Fi", sub:"Connexion au réseau de la villa", banner:"WI-FI", hint:"Pointez l'appareil photo de votre téléphone vers le code pour vous connecter automatiquement.", network:"Réseau", password:"Mot de passe" }
 };
 
 const menu = document.getElementById('langMenu');

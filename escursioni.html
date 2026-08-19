@@ -203,6 +203,7 @@
         <div class="lang-menu" id="langMenu">
           <button data-lang="it" class="active" onclick="setLang('it')"><span class="code">IT</span>Italiano</button>
           <button data-lang="en" onclick="setLang('en')"><span class="code">EN</span>English</button>
+          <button data-lang="fr" onclick="setLang('fr')"><span class="code">FR</span>Français</button>
           <button data-lang="de" onclick="setLang('de')"><span class="code">DE</span>Deutsch</button>
           <button data-lang="es" onclick="setLang('es')"><span class="code">ES</span>Español</button>
           <button data-lang="hu" onclick="setLang('hu')"><span class="code">HU</span>Magyar</button>
@@ -480,11 +481,18 @@ const I18N = {
     intro:'Villa Brando to idealne miejsce na luksusowy wypoczynek, otoczone zielenią, blisko Rzymu, morza i Sabaudii. Okolica oferuje mnóstwo atrakcji — wybierz swoje ulubione, zrelaksuj się i ciesz się jedną z najpiękniejszych oaz na wybrzeżu Lacjum.',
     'feature.t':'Wydarzenia w Latinie, Sabaudii i Okolicy', 'feature.s':'Festyny, koncerty i imprezy w okolicy.',
     'res.title':'Więcej Informacji', 'res.infoturistiche':'Informacje Turystyczne', 'res.nellevicinanze':'W Okolicy',
-    helper:'Wszystkie linki prowadzą do stron zewnętrznych, niezarządzanych przez Villa Brando: godziny i dostępność mogą się zmieniać — zawsze sprawdź przed wyjazdem.' }
+    helper:'Wszystkie linki prowadzą do stron zewnętrznych, niezarządzanych przez Villa Brando: godziny i dostępność mogą się zmieniać — zawsze sprawdź przed wyjazdem.' },
+  fr: {
+    back:'Guest Guide', eyebrow:'Activités', title:'Excursions', pagesub:'Gastronomie, saveurs & culture de la côte pontine, dans le Latium.',
+    intro:"Villa Brando est votre destination idéale pour des vacances de luxe, nichée dans la verdure à deux pas de Rome, de la mer et de Sabaudia. La région offre un large éventail d'activités : choisissez vos préférées, détendez-vous et profitez d'une des plus belles retraites de la côte du Latium.",
+    'feature.t':'Événements à Latina, Sabaudia & environs', 'feature.s':'Festivals, concerts et événements à proximité.',
+    'res.title':'Plus de Ressources', 'res.infoturistiche':'Infos Touristiques', 'res.nellevicinanze':'À Proximité',
+    helper:"Tous les liens ouvrent des sites externes non gérés par Villa Brando : les horaires et disponibilités peuvent varier, vérifiez toujours avant de partir."
+  }
 };
 
-let LANG = 'it';
-const LANG_LABELS = { it:'IT', en:'EN', de:'DE', es:'ES', pl:'PL', hu:'HU', ro:'RO' };
+let LANG = localStorage.getItem('vbLang') || 'it';
+const LANG_LABELS = { it:'IT', en:'EN', fr:'FR', de:'DE', es:'ES', hu:'HU', ro:'RO', pl:'PL' };
 
 function itemName(item){
   if(typeof item.name === 'string') return item.name;
@@ -571,6 +579,7 @@ document.addEventListener('click', function(e){
   }
 });
 function setLang(l){
+  localStorage.setItem('vbLang', l);
   LANG = l;
   document.getElementById('langCurrentLabel').textContent = LANG_LABELS[l];
   document.querySelectorAll('.lang-menu button').forEach(b=>{

@@ -288,6 +288,7 @@
         <div class="lang-menu" id="langMenu">
           <button data-lang="it" class="active" onclick="setLang('it')"><span class="code">IT</span>Italiano</button>
           <button data-lang="en" onclick="setLang('en')"><span class="code">EN</span>English</button>
+          <button data-lang="fr" onclick="setLang('fr')"><span class="code">FR</span>Français</button>
           <button data-lang="de" onclick="setLang('de')"><span class="code">DE</span>Deutsch</button>
           <button data-lang="es" onclick="setLang('es')"><span class="code">ES</span>Español</button>
           <button data-lang="hu" onclick="setLang('hu')"><span class="code">HU</span>Magyar</button>
@@ -764,6 +765,22 @@ const I18N = {
     'rules.cta':'Otwórz regulamin',
     'rules.helper':'Ta sekcja ma jedną, wyróżnioną kartę — to najważniejsza strona przewodnika.',
     'nav.general':'Info', 'nav.activities':'Atrakcje', 'nav.services':'Usługi', 'nav.rules':'Zasady'
+  },
+  fr: {
+    eyebrow:'Guide des Hôtes',
+    'tab.general.label':'Infos Générales', 'tab.general.title':"Tout ce qu'il faut, à portée de main",
+    'tab.general.desc':'Wi\u2011Fi, équipements, courses et déplacements — classés par importance.',
+    'tab.activities.label':'Activités', 'tab.activities.title':'La région à explorer',
+    'tab.activities.desc':'Excursions et événements autour de Sabaudia et du Parc National du Circeo.',
+    'tab.services.label':'Services Payants', 'tab.services.title':'Services payants',
+    'tab.services.desc':'Caution, ménage, vélos et autres extras disponibles sur demande.',
+    'tab.rules.label':'Règlement', 'tab.rules.title':'Règlement de la maison',
+    'tab.rules.desc':"Quelques règles claires, pour des vacances sereines pour tous.",
+    'rules.eyebrow':"À lire avant d'arriver", 'rules.title':'Règlement de la Maison',
+    'rules.desc':"Horaires, espaces communs, animaux, tabac et événements — les directives qui rendent le séjour de tous plus agréable.",
+    'rules.cta':'Ouvrir le règlement',
+    'rules.helper':"Cette section a une seule carte bien visible : c'est la page la plus importante du guide.",
+    'nav.general':'Infos', 'nav.activities':'Activités', 'nav.services':'Services', 'nav.rules':'Règles'
   }
 };
 
@@ -915,7 +932,7 @@ function applyI18n(){
   document.documentElement.lang = LANG;
 }
 
-const LANG_LABELS = { it:'IT', en:'EN', de:'DE', es:'ES', pl:'PL', hu:'HU', ro:'RO' };
+const LANG_LABELS = { it:'IT', en:'EN', fr:'FR', de:'DE', es:'ES', hu:'HU', ro:'RO', pl:'PL' };
 
 function toggleLangMenu(){
   const menu = document.getElementById('langMenu');

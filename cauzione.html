@@ -152,6 +152,7 @@
         <div class="lang-menu" id="langMenu">
           <button data-lang="it" class="active" onclick="setLang('it')"><span class="code">IT</span>Italiano</button>
           <button data-lang="en" onclick="setLang('en')"><span class="code">EN</span>English</button>
+          <button data-lang="fr" onclick="setLang('fr')"><span class="code">FR</span>Français</button>
           <button data-lang="de" onclick="setLang('de')"><span class="code">DE</span>Deutsch</button>
           <button data-lang="es" onclick="setLang('es')"><span class="code">ES</span>Español</button>
           <button data-lang="pl" onclick="setLang('pl')"><span class="code">PL</span>Polski</button>
@@ -334,12 +335,24 @@ const I18N = {
     payLabel:'Plată', payBtn:'Continuă cu SumUp',
     payNote:'Plata este gestionată în siguranță de SumUp, într-o filă nouă a browserului.',
     rulesTitle:'Regulile Casei', rulesSub:'Consultați toate regulile sejurului.'
+  },
+  fr: {
+    back:'Guest Guide', eyebrow:'Services', title:'Caution',
+    intro:"À l'arrivée, une pré-autorisation est demandée en garantie de la villa, pour couvrir d'éventuels dommages pendant le séjour. Le montant n'est pas débité et est libéré automatiquement après le check-out, si tout est en ordre.",
+    rateLabel:'Montant Requis', rateUnit:'pré-autorisation, pas un débit',
+    tlLabel:'Comment Ça Marche',
+    step1Title:"Pré-autorisation à l'arrivée", step1Desc:"Au check-in, une pré-autorisation de 300 € est effectuée sur votre carte de crédit. Le montant est bloqué mais non débité.",
+    step2Title:'Pendant le séjour', step2Desc:"La caution couvre les éventuels dommages à la villa, aux meubles ou aux équipements causés pendant le séjour.",
+    step3Title:'Libération après le check-out', step3Desc:"Si la villa est laissée en ordre, la pré-autorisation est libérée dans les quelques jours suivant le départ — aucune action de votre part n'est nécessaire.",
+    payLabel:'Paiement', payBtn:'Continuer avec SumUp',
+    payNote:'Le paiement est géré de façon sécurisée par SumUp, dans un nouvel onglet du navigateur.',
+    rulesTitle:'Règlement de la Maison', rulesSub:'Consultez toutes les règles du séjour.'
   }
 };
 
-let LANG = 'it';
+let LANG = localStorage.getItem('vbLang') || 'it';
 
-const LANG_LABELS = { it:'IT', en:'EN', de:'DE', es:'ES', pl:'PL', hu:'HU', ro:'RO' };
+const LANG_LABELS = { it:'IT', en:'EN', fr:'FR', de:'DE', es:'ES', hu:'HU', ro:'RO', pl:'PL' };
 
 function toggleLangMenu(){
   const menu = document.getElementById('langMenu');
@@ -373,6 +386,7 @@ function applyI18n(){
 }
 
 function setLang(l){
+  localStorage.setItem('vbLang', l);
   LANG = l;
   document.getElementById('langCurrentLabel').textContent = LANG_LABELS[l];
   document.querySelectorAll('.lang-menu button').forEach(b=>{
