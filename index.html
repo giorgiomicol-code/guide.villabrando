@@ -852,24 +852,15 @@ function renderStack(id, items){
     const cls = rankClass(i, item);
     const txt = item[LANG];
     const fit = item.photoFit || 'cover';
-    const photoStyle = item.photo ? ` style="background-image:url('${item.photo}');background-size:${fit};background-position:center;background-repeat:no-repeat;${fit==='contain' ? 'background-color:#0E3A66;' : ''}${item.photoFill ? 'height:200px;flex:none;' : ''}"` : '';
+    const photoStyle = item.photo ? ` style="background-image:url('${item.photo}');background-size:${fit};background-position:center;background-repeat:no-repeat;${fit==='contain' ? 'background-color:#0E3A66;' : ''}${cls==='hero' ? 'height:200px;flex:none;' : ''}"` : '';
     if(cls==='hero'){
-      const tag = i===0
-        ? `<span class="rank-tag">#1 · ${LANG==='it'?'priorità massima':'top priority'}</span>`
-        : `<span class="rank-tag alt">${LANG==='it'?'da non perdere':'don\'t miss'}</span>`;
       const art = item.photo
         ? `<div class="art"${photoStyle}></div>`
         : `<div class="art" style="--fgc:#ffffff;--bgc:rgba(255,255,255,.4)">${svg(item.icon,'lg')}</div>`;
-      const body = item.photoFill
-        ? `<div class="body" style="height:50px;flex:none;padding:0 18px;display:flex;align-items:center;">
+      const body = `<div class="body" style="height:50px;flex:none;padding:0 18px;display:flex;align-items:center;">
           <p class="title" style="margin:0;">${txt.t}</p>
-        </div>`
-        : `<div class="body">
-          ${tag}
-          <p class="title">${txt.t}</p>
-          <p class="sub">${txt.s}</p>
         </div>`;
-      return `<a class="card hero" href="${item.href}" target="_blank" rel="noopener"${item.photoFill ? ' style="height:250px;"' : ''}>
+      return `<a class="card hero" href="${item.href}" target="_blank" rel="noopener" style="height:250px;">
         ${art}
         ${body}
       </a>`;
