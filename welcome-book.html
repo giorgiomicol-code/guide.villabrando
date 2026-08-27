@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+<script>
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  window.addEventListener('pageshow', function(){ window.scrollTo(0, 0); });
+</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Villa Brando — Welcome Book</title>
@@ -273,6 +278,8 @@ window.addEventListener('resize', function(){ goToSlide(currentIndex, false); })
 updateCounter();
 updateStripActive();
 setLangUI(localStorage.getItem('vbLang') === 'it' ? 'it' : 'en');
+
+window.scrollTo(0, 0);
 </script>
 
 </body>

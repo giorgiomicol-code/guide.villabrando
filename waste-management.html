@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+<script>
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  window.addEventListener('pageshow', function(){ window.scrollTo(0, 0); });
+</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Villa Brando — Raccolta Rifiuti</title>
@@ -191,6 +196,12 @@
   footer.brand{
     text-align:center; padding:18px 20px 26px; color:var(--ink-soft); font-size:12px;
   }
+  footer.brand{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 20px 22px; color:var(--ink-soft); font-size:12px;
+  }
+  .footer-back{ display:flex; align-items:center; gap:6px; color:var(--pine); text-decoration:none; font-weight:700; font-size:12.5px; }
+  .footer-back svg{ width:15px; height:15px; }
 </style>
 </head>
 <body>
@@ -210,6 +221,7 @@
         <div class="lang-menu" id="langMenu">
           <button data-lang="it" class="active" onclick="setLang('it')"><span class="code">IT</span>Italiano</button>
           <button data-lang="en" onclick="setLang('en')"><span class="code">EN</span>English</button>
+          <button data-lang="fr" onclick="setLang('fr')"><span class="code">FR</span>Français</button>
           <button data-lang="de" onclick="setLang('de')"><span class="code">DE</span>Deutsch</button>
           <button data-lang="es" onclick="setLang('es')"><span class="code">ES</span>Español</button>
           <button data-lang="pl" onclick="setLang('pl')"><span class="code">PL</span>Polski</button>
@@ -273,7 +285,13 @@
     </div>
   </main>
 
-  <footer class="brand">Villa Brando · Sabaudia, Lazio</footer>
+    <footer class="brand">
+    <a class="footer-back" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+      <span data-i18n="back">Guest Guide</span>
+    </a>
+    <span>Villa Brando &middot; Sabaudia, Lazio</span>
+  </footer>
 </div>
 
 <script>
@@ -427,18 +445,33 @@ const I18N = {
     legendSub:'Calendarul este gestionat de primărie și este disponibil doar în italiană. Iată o traducere a celor mai comuni termeni pe care îi vei găsi în el.',
     legendDaysLabel:'Zilele săptămânii', legendWasteLabel:'Tipuri de deșeuri',
     uploadHint:'📷 În această secțiune poate fi inserată fotografia reală a afișului cu instrucțiuni de sortare ABC, când va fi disponibilă.'
+  },
+  fr: {
+    back:'Guest Guide', eyebrow:'Infos Générales', title:'Gestion des Déchets',
+    intro:"À Latina, <b>le tri des déchets est obligatoire</b>, et il est essentiel de respecter le calendrier de collecte indiqué sur le calendrier affiché dans la cuisine. Pour assurer une bonne collecte, veuillez placer le bac à ordures désigné, contenant le sac approprié, dans la rue devant le portail de la rampe du garage le soir précédant le jour de collecte prévu. Votre coopération est grandement appréciée !",
+    umidoLabel:'Déchets Organiques (Humides)',
+    umidoCaption:"Les déchets alimentaires humides vont dans un sac noué, dans le bac marron du jardin : épluchures de fruits et légumes, restes de repas, coquilles d'œufs, pelures et marc de café.",
+    symbolsLabel:'Comment Trier vos Déchets',
+    symbolsNote:'Suivez les couleurs et symboles sur les bacs pour un tri correct des déchets.',
+    scheduleEyebrow:'Calendrier de Collecte', scheduleTitle:'Calendrier de Collecte — Latina',
+    scheduleText:'Calendrier en direct : affiche les jours de collecte mis à jour pour chaque type de déchet.',
+    legendTitle:'Légende pour lire le calendrier',
+    legendSub:"Le calendrier est géré par la commune et est uniquement en italien. Voici une traduction des termes les plus courants que vous y trouverez.",
+    legendDaysLabel:'Jours de la semaine', legendWasteLabel:'Types de déchets',
+    uploadHint:'📷 Cette section peut accueillir la vraie photo du poster de tri ABC, une fois disponible.'
   }
 };
 
-let LANG = 'it';
+let LANG = localStorage.getItem('vbLang') || 'it';
 
-const LANG_LABELS = { it:'IT', en:'EN', de:'DE', es:'ES', pl:'PL', hu:'HU', ro:'RO' };
+const LANG_LABELS = { it:'IT', en:'EN', fr:'FR', de:'DE', es:'ES', hu:'HU', ro:'RO', pl:'PL' };
 
 function toggleLangMenu(){
   const menu = document.getElementById('langMenu');
   const btn = document.getElementById('langCurrentBtn');
   const isOpen = menu.classList.contains('open');
   if(!isOpen){
+    if(menu.parentElement !== document.body){ document.body.appendChild(menu); }
     const rect = btn.getBoundingClientRect();
     menu.style.top = (rect.bottom + 8) + 'px';
     const rightEdge = window.innerWidth - rect.right;
@@ -451,7 +484,10 @@ function toggleLangMenu(){
 
 document.addEventListener('click', function(e){
   const sel = document.getElementById('langSelect');
-  if(sel && !sel.contains(e.target)){
+  const menu = document.getElementById('langMenu');
+  const clickedInsideSelect = sel && sel.contains(e.target);
+  const clickedInsideMenu = menu && menu.contains(e.target);
+  if(!clickedInsideSelect && !clickedInsideMenu){
     document.getElementById('langMenu').classList.remove('open');
     document.getElementById('langCurrentBtn').classList.remove('open');
   }
@@ -466,6 +502,7 @@ function applyI18n(){
 }
 
 function setLang(l){
+  localStorage.setItem('vbLang', l);
   LANG = l;
   document.getElementById('langCurrentLabel').textContent = LANG_LABELS[l];
   document.querySelectorAll('.lang-menu button').forEach(b=>{
@@ -487,6 +524,8 @@ applyI18n();
 document.getElementById('page-header').style.background =
   `linear-gradient(180deg, rgba(14,58,102,0.55), rgba(10,37,64,0.88) 75%), url('${HEADER_PHOTO}') center/cover`;
 document.getElementById('umido-img').src = UMIDO_PHOTO_IT;
+
+window.scrollTo(0, 0);
 </script>
 </body>
 </html>

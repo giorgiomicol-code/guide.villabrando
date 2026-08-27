@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+<script>
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  window.addEventListener('pageshow', function(){ window.scrollTo(0, 0); });
+</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Villa Brando — Contatti</title>
@@ -184,7 +189,6 @@
         <div class="lang-menu" id="langMenu">
           <button data-lang="it" class="active" onclick="setLang('it')"><span class="code">IT</span>Italiano</button>
           <button data-lang="en" onclick="setLang('en')"><span class="code">EN</span>English</button>
-          <button data-lang="fr" onclick="setLang('fr')"><span class="code">FR</span>Français</button>
           <button data-lang="de" onclick="setLang('de')"><span class="code">DE</span>Deutsch</button>
           <button data-lang="es" onclick="setLang('es')"><span class="code">ES</span>Español</button>
           <button data-lang="hu" onclick="setLang('hu')"><span class="code">HU</span>Magyar</button>
@@ -285,7 +289,7 @@
 </div>
 
 <script>
-const LANG_LABELS = { it:'IT', en:'EN', fr:'FR', de:'DE', es:'ES', hu:'HU', ro:'RO', pl:'PL' };
+const LANG_LABELS = { it:'IT', en:'EN', de:'DE', es:'ES', hu:'HU', ro:'RO', pl:'PL' };
 
 const I18N = {
   it: {
@@ -336,13 +340,6 @@ const I18N = {
     role2:"zarządca willi", note2:"W sprawach rezerwacji i informacji o willi.",
     call:"Zadzwoń", otherTag:"Inne kontakty",
     tip:"W przypadku problemów w domu (Wi‑Fi, prąd, zamek itp.) napisz najpierw do Francesco: odpowiada szybciej."
-  },
-  fr: {
-    title:"Contacts", sub:"Nous sommes là pour vous aider tout au long de votre séjour.",
-    role1:"Assistant", note1:"Pour tout besoin pendant votre séjour.",
-    role2:"Gestionnaire de la villa", note2:"Pour les informations sur la réservation et la villa.",
-    call:"Appeler", otherTag:"Autres contacts",
-    tip:"Pour les problèmes dans la maison (Wi\u2011Fi, électricité, serrure, etc.) écrivez d'abord à Francesco : il répond plus vite."
   }
 };
 
@@ -398,6 +395,8 @@ function setLang(lang){
 }
 
 setLang(localStorage.getItem('vbLang') || 'it');
+
+window.scrollTo(0, 0);
 </script>
 
 </body>

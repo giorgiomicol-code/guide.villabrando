@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+<script>
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  window.addEventListener('pageshow', function(){ window.scrollTo(0, 0); });
+</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Villa Brando — Come Raggiungere Roma</title>
@@ -149,6 +154,12 @@
     position:relative; z-index:1; color:#fff; font-size:16px; font-weight:600; margin:0; padding:0 20px;
     text-shadow:0 2px 10px rgba(0,0,0,0.5); font-style:italic;
   }
+  footer.brand{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 20px 22px; color:var(--ink-soft); font-size:12px;
+  }
+  .footer-back{ display:flex; align-items:center; gap:6px; color:var(--pine); text-decoration:none; font-weight:700; font-size:12.5px; }
+  .footer-back svg{ width:15px; height:15px; }
 </style>
 </head>
 <body>
@@ -168,6 +179,7 @@
         <div class="lang-menu" id="langMenu">
           <button data-lang="it" class="active" onclick="setLang('it')"><span class="code">IT</span>Italiano</button>
           <button data-lang="en" onclick="setLang('en')"><span class="code">EN</span>English</button>
+          <button data-lang="fr" onclick="setLang('fr')"><span class="code">FR</span>Français</button>
           <button data-lang="de" onclick="setLang('de')"><span class="code">DE</span>Deutsch</button>
           <button data-lang="es" onclick="setLang('es')"><span class="code">ES</span>Español</button>
           <button data-lang="hu" onclick="setLang('hu')"><span class="code">HU</span>Magyar</button>
@@ -282,6 +294,13 @@
       <p data-i18n="farewell">Buona visita a Roma!</p>
     </div>
   </main>
+  <footer class="brand">
+    <a class="footer-back" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+      <span data-i18n="back">Guest Guide</span>
+    </a>
+    <span>Villa Brando &middot; Sabaudia, Lazio</span>
+  </footer>
 </div>
 
 <script>
@@ -426,11 +445,29 @@ const I18N = {
     'car.note':'W Rzymie parkowanie na niebieskich liniach jest płatne. Możesz wygodnie zapłacić z telefonu jedną z tych aplikacji:',
     'car.mooneysub':'Dawniej MyCicero — parkowanie na niebieskich liniach', 'car.easysub':'Parkowanie na niebieskich liniach z aplikacji',
     farewell:'Udanej wizyty w Rzymie!'
+  },
+  fr: {
+    back:'Guest Guide', eyebrow:'Infos Générales', title:'Comment Rejoindre Rome',
+    pagesub:"En train ou en voiture, Rome est à un peu plus d'une demi-heure de Villa Brando.",
+    intro:"Rome est facilement accessible en train depuis la gare de <b>Latina Scalo</b>, à 15 minutes en voiture de Villa Brando. Vous pouvez également rejoindre la capitale en voiture en environ une heure.",
+    'train.title':'En Train', 'train.sub':'De Latina Scalo à Roma Termini',
+    'train.f1k':'Gare de départ', 'train.f1v':'Latina Scalo <small>15 min de la villa</small>',
+    'train.f2k':"Gare d'arrivée", 'train.f2v':'Roma Termini <small>centre-ville</small>',
+    'train.f3k':'Durée du trajet', 'train.f3s':'minutes',
+    'train.f4k':'Fréquence', 'train.f4v':'4 trains/heure <small>environ toutes les 15 min</small>',
+    'train.note':'<b>Tarifs :</b> 3 trains régionaux à billet unique (4,10 €) et 1 Intercity, avec 1ère classe (12 €) et 2ème classe (10 €). Service actif approximativement de 6h à 23h.',
+    'train.linksub':'Horaires et billets — site et app (iOS/Android)',
+    'car.title':'En Voiture', 'car.sub':'Environ une heure de Villa Brando',
+    'car.f1k':'Durée du trajet', 'car.f1v':'~1 <small>heure</small>',
+    'car.f2k':'Stationnement', 'car.f2v':'Lignes bleues <small>payant</small>',
+    'car.note':"À Rome, le stationnement sur les lignes bleues est payant. Vous pouvez payer facilement depuis votre smartphone avec l'une de ces applications :",
+    'car.mooneysub':'Ex MyCicero — stationnement lignes bleues', 'car.easysub':'Stationnement lignes bleues via app',
+    farewell:'Bonne visite à Rome!'
   }
 };
 
-let LANG = 'it';
-const LANG_LABELS = { it:'IT', en:'EN', de:'DE', es:'ES', pl:'PL', hu:'HU', ro:'RO' };
+let LANG = localStorage.getItem('vbLang') || 'it';
+const LANG_LABELS = { it:'IT', en:'EN', fr:'FR', de:'DE', es:'ES', hu:'HU', ro:'RO', pl:'PL' };
 
 function applyI18n(){
   document.querySelectorAll('[data-i18n]').forEach(elm=>{
@@ -444,6 +481,7 @@ function toggleLangMenu(){
   const btn = document.getElementById('langCurrentBtn');
   const isOpen = menu.classList.contains('open');
   if(!isOpen){
+    if(menu.parentElement !== document.body){ document.body.appendChild(menu); }
     const rect = btn.getBoundingClientRect();
     menu.style.top = (rect.bottom + 8) + 'px';
     const rightEdge = window.innerWidth - rect.right;
@@ -455,12 +493,16 @@ function toggleLangMenu(){
 }
 document.addEventListener('click', function(e){
   const sel = document.getElementById('langSelect');
-  if(sel && !sel.contains(e.target)){
+  const menu = document.getElementById('langMenu');
+  const clickedInsideSelect = sel && sel.contains(e.target);
+  const clickedInsideMenu = menu && menu.contains(e.target);
+  if(!clickedInsideSelect && !clickedInsideMenu){
     document.getElementById('langMenu').classList.remove('open');
     document.getElementById('langCurrentBtn').classList.remove('open');
   }
 });
 function setLang(l){
+  localStorage.setItem('vbLang', l);
   LANG = l;
   document.getElementById('langCurrentLabel').textContent = LANG_LABELS[l];
   document.querySelectorAll('.lang-menu button').forEach(b=>{
@@ -472,6 +514,8 @@ function setLang(l){
 }
 
 applyI18n();
+
+window.scrollTo(0, 0);
 </script>
 </body>
 </html>

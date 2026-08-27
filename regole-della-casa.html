@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+<script>
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  window.addEventListener('pageshow', function(){ window.scrollTo(0, 0); });
+</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Villa Brando — Regole della Casa</title>
@@ -152,6 +157,12 @@
   footer.brand{
     text-align:center; padding:18px 20px 26px; color:var(--ink-soft); font-size:12px;
   }
+  footer.brand{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 20px 22px; color:var(--ink-soft); font-size:12px;
+  }
+  .footer-back{ display:flex; align-items:center; gap:6px; color:var(--pine); text-decoration:none; font-weight:700; font-size:12.5px; }
+  .footer-back svg{ width:15px; height:15px; }
 </style>
 </head>
 <body>
@@ -171,6 +182,7 @@
         <div class="lang-menu" id="langMenu">
           <button data-lang="it" class="active" onclick="setLang('it')"><span class="code">IT</span>Italiano</button>
           <button data-lang="en" onclick="setLang('en')"><span class="code">EN</span>English</button>
+          <button data-lang="fr" onclick="setLang('fr')"><span class="code">FR</span>Français</button>
           <button data-lang="de" onclick="setLang('de')"><span class="code">DE</span>Deutsch</button>
           <button data-lang="es" onclick="setLang('es')"><span class="code">ES</span>Español</button>
           <button data-lang="pl" onclick="setLang('pl')"><span class="code">PL</span>Polski</button>
@@ -225,7 +237,13 @@
     <p class="accept-note" data-i18n="acceptNote">Con la conferma della prenotazione, le presenti Regole della Casa si intendono accettate. Vi auguriamo un piacevole soggiorno a Villa Brando.</p>
   </main>
 
-  <footer class="brand">Villa Brando · Sabaudia, Lazio</footer>
+    <footer class="brand">
+    <a class="footer-back" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+      <span data-i18n="back">Guest Guide</span>
+    </a>
+    <span>Villa Brando &middot; Sabaudia, Lazio</span>
+  </footer>
 </div>
 
 <script>
@@ -248,7 +266,8 @@ const SECTIONS = {
       es:{ t:'Check‑in', v:'15:00–20:00', d:'Las llegadas después de las 20:00 y hasta la 1:00 son posibles bajo petición y conllevan un suplemento de 40€, que cubre el servicio de recepción fuera de horario.' },
       pl:{ t:'Zameldowanie', v:'15:00–20:00', d:'Przyjazdy po godzinie 20:00 i do 1:00 są możliwe na życzenie i wiążą się z dopłatą 40€, pokrywającą obsługę recepcyjną poza standardowymi godzinami.' },
       hu:{ t:'Bejelentkezés', v:'15:00–20:00', d:'A 20:00 utáni és 1:00-ig tartó érkezés kérésre lehetséges, és 40€ felárral jár, amely a nyitvatartási időn túli fogadás költségét fedezi.' },
-      ro:{ t:'Check‑in', v:'15:00–20:00', d:'Sosirile după ora 20:00 și până la ora 1:00 sunt posibile la cerere și presupun un supliment de 40€, care acoperă serviciul de recepție în afara programului.' } },
+      ro:{ t:'Check‑in', v:'15:00–20:00', d:'Sosirile după ora 20:00 și până la ora 1:00 sunt posibile la cerere și presupun un supliment de 40€, care acoperă serviciul de recepție în afara programului.' },
+      fr:{ t:'Check‑in', v:'15h00–20h00', d:"Les arrivées après 20h00 et jusqu’à 1h00 sont possibles sur demande et sont soumises à des frais de 40€, couvrant le service d’accueil en dehors des horaires." } },
     { accent:1,
       icon:'<path d="M21 12H8M13 6l-6 6 6 6"/><path d="M3 5v14"/>',
       it:{ t:'Check‑out', v:'entro le 10:00', d:'Il rispetto dell\u2019orario consente al nostro staff di preparare accuratamente la villa per gli ospiti successivi.' },
@@ -257,7 +276,8 @@ const SECTIONS = {
       es:{ t:'Check‑out', v:'antes de las 10:00', d:'Respetar este horario permite a nuestro equipo preparar adecuadamente la villa para los próximos huéspedes.' },
       pl:{ t:'Wymeldowanie', v:'do godziny 10:00', d:'Przestrzeganie tej godziny pozwala naszemu personelowi odpowiednio przygotować willę dla kolejnych gości.' },
       hu:{ t:'Kijelentkezés', v:'10:00 óráig', d:'Ennek az időpontnak a betartása lehetővé teszi személyzetünk számára, hogy alaposan felkészítse a villát a következő vendégek számára.' },
-      ro:{ t:'Check‑out', v:'până la ora 10:00', d:'Respectarea acestui orar permite personalului nostru să pregătească în mod corespunzător vila pentru următorii oaspeți.' } },
+      ro:{ t:'Check‑out', v:'până la ora 10:00', d:'Respectarea acestui orar permite personalului nostru să pregătească în mod corespunzător vila pentru următorii oaspeți.' },
+      fr:{ t:'Check‑out', v:'avant 10h00', d:'Le respect de cet horaire permet à notre personnel de préparer la villa pour les prochains hôtes.' } },
     { accent:2,
       icon:'<rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M6 17c.5-2 2-3 3-3s2.5 1 3 3"/><path d="M14 9h4M14 12h4"/>',
       it:{ t:'Registrazione Ospiti', v:'documento richiesto', d:'All\u2019arrivo è richiesta la presentazione di un documento di identità valido per tutti gli ospiti. È possibile anticiparne l\u2019invio per agevolare le procedure di check\u2011in. I dati personali saranno trattati nel pieno rispetto della normativa vigente sulla privacy.' },
@@ -266,7 +286,8 @@ const SECTIONS = {
       es:{ t:'Registro de Huéspedes', v:'documento requerido', d:'A la llegada se requiere la presentación de un documento de identidad válido para todos los huéspedes. Los documentos pueden enviarse con antelación para agilizar el check\u2011in. Los datos personales se tratarán conforme a la normativa vigente sobre privacidad.' },
       pl:{ t:'Rejestracja Gości', v:'wymagany dokument', d:'Po przyjeździe wymagane jest okazanie ważnego dokumentu tożsamości przez wszystkich gości. Dokumenty można przesłać wcześniej, aby ułatwić procedurę zameldowania. Dane osobowe będą przetwarzane zgodnie z obowiązującymi przepisami o ochronie prywatności.' },
       hu:{ t:'Vendégregisztráció', v:'igazolvány szükséges', d:'Érkezéskor minden vendégnek érvényes személyazonosító okmányt kell bemutatnia. A dokumentumok előre is elküldhetők a bejelentkezés megkönnyítése érdekében. A személyes adatokat a hatályos adatvédelmi szabályozásnak megfelelően kezeljük.' },
-      ro:{ t:'Înregistrarea Oaspeților', v:'act de identitate necesar', d:'La sosire este necesară prezentarea unui act de identitate valabil pentru toți oaspeții. Documentele pot fi trimise în avans pentru a facilita procedurile de check\u2011in. Datele personale vor fi prelucrate cu respectarea reglementărilor privind confidențialitatea în vigoare.' } },
+      ro:{ t:'Înregistrarea Oaspeților', v:'act de identitate necesar', d:'La sosire este necesară prezentarea unui act de identitate valabil pentru toți oaspeții. Documentele pot fi trimise în avans pentru a facilita procedurile de check\u2011in. Datele personale vor fi prelucrate cu respectarea reglementărilor privind confidențialitatea în vigoare.' },
+      fr:{ t:'Enregistrement des Hôtes', v:"pièce d’identité requise", d:"À l’arrivée, tous les hôtes doivent présenter une pièce d’identité ou un passeport valide. Les documents peuvent être envoyés à l’avance pour faciliter le check‑in. Les données personnelles seront traitées conformément aux réglementations en vigueur." } },
   ],
   payments: [
     { accent:3,
@@ -277,7 +298,8 @@ const SECTIONS = {
       es:{ t:'Servicio de Limpieza', v:'150€', d:'La villa se entrega limpia y completamente equipada con ropa de cama. El servicio de limpieza final se ofrece a un precio fijo, independientemente de la duración de la estancia. Los cambios adicionales de ropa de cama pueden organizarse bajo petición, sujeto a disponibilidad.' },
       pl:{ t:'Usługa Sprzątania', v:'150€', d:'Willa jest przekazywana czysta i w pełni wyposażona w pościel. Sprzątanie końcowe jest oferowane w stałej cenie, niezależnie od długości pobytu. Dodatkowa wymiana pościeli może zostać zorganizowana na życzenie, w zależności od dostępności.' },
       hu:{ t:'Takarítási Szolgáltatás', v:'150€', d:'A villát tisztán, ágyneművel teljesen felszerelve adjuk át. A végtakarítást fix áron biztosítjuk, a tartózkodás hosszától függetlenül. További ágyneműcsere kérésre, elérhetőség függvényében szervezhető.' },
-      ro:{ t:'Serviciu de Curățenie', v:'150€', d:'Vila este predată curată și complet dotată cu lenjerie. Serviciul de curățenie finală este oferit la un preț fix, indiferent de durata sejurului. Schimburile suplimentare de lenjerie pot fi organizate la cerere, în funcție de disponibilitate.' } },
+      ro:{ t:'Serviciu de Curățenie', v:'150€', d:'Vila este predată curată și complet dotată cu lenjerie. Serviciul de curățenie finală este oferit la un preț fix, indiferent de durata sejurului. Schimburile suplimentare de lenjerie pot fi organizate la cerere, în funcție de disponibilitate.' },
+      fr:{ t:'Service de Nettoyage', v:'150€', d:'La villa est livrée propre et entièrement équipée de linge. Un service de nettoyage final est prévu à un tarif forfaitaire, indépendamment de la durée du séjour. Des changements de linge supplémentaires peuvent être organisés sur demande, selon disponibilité.' } },
     { accent:4,
       icon:'<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h4" stroke-width="1.6"/>',
       it:{ t:'Cauzione', v:'300€', d:'Al momento del check\u2011in è richiesta una pre\u2011autorizzazione su carta di credito. L\u2019importo non verrà addebitato e la pre\u2011autorizzazione sarà rilasciata entro 2 giorni dalla partenza, previa verifica delle condizioni della villa.' },
@@ -286,7 +308,8 @@ const SECTIONS = {
       es:{ t:'Fianza', v:'300€', d:'En el check\u2011in se requiere una preautorización con tarjeta de crédito. El importe no se cobrará y la preautorización se liberará dentro de los 2 días posteriores a la salida, sujeto a la inspección de la propiedad.' },
       pl:{ t:'Kaucja', v:'300€', d:'Przy zameldowaniu wymagana jest preautoryzacja karty kredytowej. Kwota nie zostanie pobrana, a preautoryzacja zostanie zwolniona w ciągu 2 dni od wyjazdu, po weryfikacji stanu nieruchomości.' },
       hu:{ t:'Kaució', v:'300€', d:'A bejelentkezéskor hitelkártyás előzetes jóváhagyás szükséges. Az összeget nem terheljük, és az előzetes jóváhagyás a távozás után 2 napon belül felszabadul, az ingatlan ellenőrzésétől függően.' },
-      ro:{ t:'Garanție', v:'300€', d:'La check\u2011in este necesară o preautorizare pe cardul de credit. Suma nu va fi debitată, iar preautorizarea va fi eliberată în termen de 2 zile de la plecare, sub rezerva inspecției proprietății.' } },
+      ro:{ t:'Garanție', v:'300€', d:'La check\u2011in este necesară o preautorizare pe cardul de credit. Suma nu va fi debitată, iar preautorizarea va fi eliberată în termen de 2 zile de la plecare, sub rezerva inspecției proprietății.' },
+      fr:{ t:'Caution', v:'300€', d:"Au check‑in, une pré‑autorisation par carte de crédit est requise. Le montant ne sera pas débité et la pré‑autorisation sera levée dans les 2 jours suivant le départ, sous réserve d’inspection de la propriété." } },
   ],
   living: [
     { accent:0,
@@ -297,7 +320,8 @@ const SECTIONS = {
       es:{ t:'Silencio', v:'23:00–08:00', d:'Para garantizar el confort de todos los huéspedes, se solicita respetar el horario de silencio, conforme a la normativa local.' },
       pl:{ t:'Cisza Nocna', v:'23:00–08:00', d:'Aby zapewnić komfort wszystkim gościom, prosimy o przestrzeganie ciszy nocnej, zgodnie z lokalnymi przepisami.' },
       hu:{ t:'Csendes Órák', v:'23:00–08:00', d:'Minden vendég kényelme érdekében kérjük a csendes órák betartását, a helyi előírásoknak megfelelően.' },
-      ro:{ t:'Liniște', v:'23:00–08:00', d:'Pentru a asigura confortul tuturor oaspeților, vă rugăm să respectați orele de liniște, conform reglementărilor locale.' } },
+      ro:{ t:'Liniște', v:'23:00–08:00', d:'Pentru a asigura confortul tuturor oaspeților, vă rugăm să respectați orele de liniște, conform reglementărilor locale.' },
+      fr:{ t:'Heures de Silence', v:'23h00–08h00', d:'Pour garantir le confort de tous les hôtes, les heures de silence sont observées conformément aux réglementations locales.' } },
     { accent:1,
       icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
       it:{ t:'Ospiti e Uso della Proprietà', v:'max 10 persone', d:'La capienza massima della villa è di 10 persone, comprensive di tutti gli ospiti presenti; non è consentito superare tale numero, salvo accordi preventivi con la proprietà. La villa è destinata esclusivamente a soggiorni di breve durata a scopo turistico: riprese cinematografiche, produzioni televisive, servizi fotografici o attività commerciali richiedono condizioni e tariffe dedicate, da concordare separatamente.' },
@@ -306,7 +330,8 @@ const SECTIONS = {
       es:{ t:'Ocupación y Uso de la Propiedad', v:'máx. 10 personas', d:'La ocupación máxima de la villa es de 10 personas, incluyendo a todos los presentes; este número no puede superarse salvo acuerdo previo con la propiedad. La villa está destinada exclusivamente a estancias turísticas de corta duración: producciones de cine o televisión, sesiones fotográficas o actividades comerciales requieren condiciones y tarifas específicas, a acordar por separado.' },
       pl:{ t:'Liczba Gości i Wykorzystanie Nieruchomości', v:'maks. 10 osób', d:'Maksymalna liczba osób w willi wynosi 10, wliczając wszystkich obecnych; limitu tego nie można przekroczyć bez wcześniejszej zgody właściciela. Willa jest przeznaczona wyłącznie na krótkoterminowe pobyty turystyczne: produkcje filmowe lub telewizyjne, sesje zdjęciowe lub działalność komercyjna wymagają odrębnych warunków i cen, ustalanych wcześniej.' },
       hu:{ t:'Foglaltság és az Ingatlan Használata', v:'max. 10 fő', d:'A villa maximális befogadóképessége 10 fő, beleértve az összes jelenlévőt; ezt a számot csak az ingatlannal történt előzetes egyeztetés esetén lehet túllépni. A villa kizárólag rövid távú turisztikai tartózkodásra szolgál: film- vagy tévéfelvételek, fotózások vagy kereskedelmi tevékenységek külön feltételeket és árakat igényelnek, amelyeket előre kell egyeztetni.' },
-      ro:{ t:'Ocupare și Utilizarea Proprietății', v:'max. 10 persoane', d:'Capacitatea maximă a vilei este de 10 persoane, incluzând toate persoanele prezente; acest număr nu poate fi depășit decât cu acordul prealabil al proprietății. Vila este destinată exclusiv sejururilor turistice de scurtă durată: producțiile de film sau TV, ședințele foto sau activitățile comerciale necesită condiții și tarife separate, de convenit în prealabil.' } },
+      ro:{ t:'Ocupare și Utilizarea Proprietății', v:'max. 10 persoane', d:'Capacitatea maximă a vilei este de 10 persoane, incluzând toate persoanele prezente; acest număr nu poate fi depășit decât cu acordul prealabil al proprietății. Vila este destinată exclusiv sejururilor turistice de scurtă durată: producțiile de film sau TV, ședințele foto sau activitățile comerciale necesită condiții și tarife separate, de convenit în prealabil.' },
+      fr:{ t:'Occupation & Usage', v:'max 10 personnes', d:"La capacité maximale de la villa est de 10 personnes, y compris toutes les personnes présentes ; ce nombre ne peut être dépassé sans accord préalable avec la propriété. La villa est destinée exclusivement aux séjours touristiques de courte durée : les productions cinématographiques ou télévisées, les séances photo ou les activités commerciales nécessitent des conditions et tarifs séparés à convenir à l’avance." } },
     { accent:2,
       icon:'<path d="M4.5 9.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"/><path d="M9.5 5.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"/><path d="M15 5.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"/><path d="M19 9.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"/><path d="M8 21c-.5-3.5 1.5-6 4-6s4.5 2.5 4 6"/>',
       it:{ t:'Animali', v:'+20€/giorno', d:'Villa Brando accoglie animali domestici, con un supplemento giornaliero. Per il comfort di tutti gli ospiti, si richiede che gli animali:<ul><li>non accedano ai letti e ai piani superiori</li><li>non vengano lasciati soli nella proprietà</li><li>non arrechino disturbo o danni</li></ul>Eventuali danni saranno addebitati.' },
@@ -315,7 +340,8 @@ const SECTIONS = {
       es:{ t:'Política de Mascotas', v:'+20€/día', d:'Villa Brando admite mascotas, con un suplemento diario. Para el confort de todos los huéspedes, se solicita amablemente que las mascotas:<ul><li>no accedan a las camas ni a las plantas superiores</li><li>no se dejen solas en la propiedad</li><li>no causen molestias ni daños</li></ul>Cualquier daño será cobrado en consecuencia.' },
       pl:{ t:'Zasady dotyczące Zwierząt', v:'+20€/dzień', d:'Willa Brando przyjmuje zwierzęta domowe za dodatkową dzienną opłatą. Dla komfortu wszystkich gości prosimy, aby zwierzęta:<ul><li>nie miały dostępu do łóżek i wyższych pięter</li><li>nie były pozostawiane same w willi</li><li>nie powodowały zakłóceń ani szkód</li></ul>Wszelkie szkody zostaną odpowiednio obciążone.' },
       hu:{ t:'Háziállat Szabályzat', v:'+20€/nap', d:'A Villa Brando napi felár ellenében fogad háziállatokat. Minden vendég kényelme érdekében kérjük, hogy az állatok:<ul><li>ne férjenek hozzá az ágyakhoz és a felső szintekhez</li><li>ne maradjanak egyedül az ingatlanban</li><li>ne okozzanak zavart vagy kárt</li></ul>Az esetleges károkat felszámítjuk.' },
-      ro:{ t:'Politica pentru Animale', v:'+20€/zi', d:'Villa Brando acceptă animale de companie, cu un supliment zilnic. Pentru confortul tuturor oaspeților, vă rugăm ca animalele:<ul><li>să nu aibă acces la paturi și la etajele superioare</li><li>să nu fie lăsate singure în proprietate</li><li>să nu provoace deranj sau daune</li></ul>Eventualele daune vor fi taxate corespunzător.' } },
+      ro:{ t:'Politica pentru Animale', v:'+20€/zi', d:'Villa Brando acceptă animale de companie, cu un supliment zilnic. Pentru confortul tuturor oaspeților, vă rugăm ca animalele:<ul><li>să nu aibă acces la paturi și la etajele superioare</li><li>să nu fie lăsate singure în proprietate</li><li>să nu provoace deranj sau daune</li></ul>Eventualele daune vor fi taxate corespunzător.' },
+      fr:{ t:'Politique Animaux', v:'+20€/jour', d:"Villa Brando accepte les animaux de compagnie, avec un supplément journalier. Pour le confort de tous les hôtes, les animaux sont priés de :<ul><li>ne pas accéder aux lits et aux étages supérieurs</li><li>ne pas être laissés seuls dans la propriété</li><li>ne pas causer de dérangement ou de dommages</li></ul>Tout dommage sera facturé en conséquence." } },
     { accent:3,
       icon:'<circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/>',
       it:{ t:'Linee Guida Generali', v:'', d:'Per una migliore esperienza di soggiorno, vi invitiamo a:<ul><li>spegnere luci e climatizzazione quando non necessari</li><li>non spostare i mobili</li><li>non utilizzare il camino</li><li>evitare feste o eventi non autorizzati</li></ul>' },
@@ -324,7 +350,8 @@ const SECTIONS = {
       es:{ t:'Directrices Generales', v:'', d:'Para una mejor estancia, se pide amablemente a los huéspedes que:<ul><li>apaguen las luces y el aire acondicionado cuando no sean necesarios</li><li>eviten mover los muebles</li><li>se abstengan de usar la chimenea</li><li>eviten fiestas o eventos no autorizados</li></ul>' },
       pl:{ t:'Ogólne Wytyczne', v:'', d:'Aby zapewnić lepszy pobyt, prosimy gości o:<ul><li>wyłączanie świateł i klimatyzacji, gdy nie są potrzebne</li><li>niedokonywanie zmian w ustawieniu mebli</li><li>niekorzystanie z kominka</li><li>unikanie nieautoryzowanych imprez lub wydarzeń</li></ul>' },
       hu:{ t:'Általános Irányelvek', v:'', d:'A kellemesebb tartózkodás érdekében kérjük a vendégeket:<ul><li>kapcsolják ki a világítást és a légkondicionálót, ha nincs rájuk szükség</li><li>ne mozdítsák el a bútorokat</li><li>ne használják a kandallót</li><li>kerüljék az engedély nélküli összejöveteleket vagy rendezvényeket</li></ul>' },
-      ro:{ t:'Linii Directoare Generale', v:'', d:'Pentru un sejur mai plăcut, rugăm oaspeții:<ul><li>să stingă luminile și aerul condiționat când nu sunt necesare</li><li>să evite mutarea mobilierului</li><li>să nu folosească șemineul</li><li>să evite petrecerile sau evenimentele neautorizate</li></ul>' } },
+      ro:{ t:'Linii Directoare Generale', v:'', d:'Pentru un sejur mai plăcut, rugăm oaspeții:<ul><li>să stingă luminile și aerul condiționat când nu sunt necesare</li><li>să evite mutarea mobilierului</li><li>să nu folosească șemineul</li><li>să evite petrecerile sau evenimentele neautorizate</li></ul>' },
+      fr:{ t:'Directives Générales', v:'', d:"Pour un meilleur séjour, les hôtes sont priés de :<ul><li>Éteindre les lumières et la climatisation quand elles ne sont pas nécessaires</li><li>ne pas déplacer les meubles</li><li>ne pas utiliser la cheminée</li><li>éviter les fêtes ou événements non autorisés</li></ul>" } },
   ],
   house: [
     { accent:4,
@@ -335,7 +362,8 @@ const SECTIONS = {
       es:{ t:'Acceso', v:'Teclado', d:'El acceso a la villa se realiza mediante teclado electrónico. A la llegada, los huéspedes recibirán un código de acceso válido durante toda la estancia.' },
       pl:{ t:'Dostęp', v:'Klawiatura', d:'Dostęp do willi zapewnia elektroniczna klawiatura. Po przyjeździe goście otrzymają kod dostępu ważny przez cały pobyt.' },
       hu:{ t:'Bejutás', v:'Kódzár', d:'A villába való bejutás elektronikus kódzáron keresztül történik. Érkezéskor a vendégek megkapják a teljes tartózkodásra érvényes bejutási kódot.' },
-      ro:{ t:'Acces', v:'Tastatură', d:'Accesul în vilă se face printr-o tastatură electronică. La sosire, oaspeții vor primi un cod de acces valabil pe toată durata sejurului.' } },
+      ro:{ t:'Acces', v:'Tastatură', d:'Accesul în vilă se face printr-o tastatură electronică. La sosire, oaspeții vor primi un cod de acces valabil pe toată durata sejurului.' },
+      fr:{ t:'Accès', v:'Digicode', d:"L’accès à la villa s’effectue via un digicode électronique. À l’arrivée, les hôtes recevront un code d’accès valable pour toute la durée du séjour." } },
     { accent:0,
       icon:'<rect x="5" y="9" width="14" height="11" rx="1.5"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/>',
       it:{ t:'Effetti Personali', v:'', d:'Gli ospiti sono invitati a custodire con attenzione i propri effetti personali. Si raccomanda di chiudere porte e finestre quando si esce dalla villa.' },
@@ -344,7 +372,8 @@ const SECTIONS = {
       es:{ t:'Objetos Personales', v:'', d:'Se solicita a los huéspedes que cuiden bien de sus objetos personales. Por favor, asegúrense de cerrar puertas y ventanas al salir de la villa.' },
       pl:{ t:'Rzeczy Osobiste', v:'', d:'Prosimy gości o dbanie o swoje rzeczy osobiste. Prosimy o zamykanie drzwi i okien podczas opuszczania willi.' },
       hu:{ t:'Személyes Tárgyak', v:'', d:'Kérjük a vendégeket, hogy vigyázzanak személyes tárgyaikra. Kérjük, a villa elhagyásakor győződjenek meg róla, hogy az ajtók és ablakok zárva vannak.' },
-      ro:{ t:'Obiecte Personale', v:'', d:'Rugăm oaspeții să aibă grijă de obiectele lor personale. Vă rugăm să vă asigurați că ușile și ferestrele sunt închise atunci când părăsiți vila.' } },
+      ro:{ t:'Obiecte Personale', v:'', d:'Rugăm oaspeții să aibă grijă de obiectele lor personale. Vă rugăm să vă asigurați că ușile și ferestrele sunt închise atunci când părăsiți vila.' },
+      fr:{ t:'Effets Personnels', v:'', d:'Les hôtes sont priés de prendre soin de leurs effets personnels. Veuillez vous assurer que les portes et fenêtres sont fermées en quittant la villa.' } },
     { accent:1,
       icon:'<path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/>',
       it:{ t:'Cura della Casa', v:'', d:'Gli ospiti sono invitati a utilizzare con cura la villa, gli arredi e le dotazioni. È richiesto un uso corretto dei servizi igienici e delle attrezzature.' },
@@ -353,7 +382,8 @@ const SECTIONS = {
       es:{ t:'Cuidado de la Casa e Instalaciones', v:'', d:'Se solicita a los huéspedes que cuiden la villa, el mobiliario y las instalaciones. Se requiere un uso adecuado de los baños y las comodidades.' },
       pl:{ t:'Dbałość o Dom i Wyposażenie', v:'', d:'Prosimy gości o dbanie o willę, meble i wyposażenie. Wymagane jest odpowiednie korzystanie z łazienek i udogodnień.' },
       hu:{ t:'A Ház és a Létesítmények Ápolása', v:'', d:'Kérjük a vendégeket, hogy gondosan bánjanak a villával, a berendezéssel és a felszereléssel. A fürdőszobák és a kényelmi eszközök megfelelő használata elvárt.' },
-      ro:{ t:'Îngrijirea Casei și a Dotărilor', v:'', d:'Rugăm oaspeții să folosească cu grijă vila, mobilierul și dotările. Este necesară utilizarea corespunzătoare a băilor și a facilităților.' } },
+      ro:{ t:'Îngrijirea Casei și a Dotărilor', v:'', d:'Rugăm oaspeții să folosească cu grijă vila, mobilierul și dotările. Este necesară utilizarea corespunzătoare a băilor și a facilităților.' },
+      fr:{ t:'Entretien & Équipements', v:'', d:"Les hôtes sont priés d’utiliser la villa, le mobilier et les équipements avec soin. Une utilisation correcte des salles de bain et des commodités est requise." } },
     { accent:2,
       icon:'<path d="M6 2v6a3 3 0 0 0 6 0V2M9 8v14M18 2v9a3 3 0 0 1-3 3v9"/>',
       it:{ t:'Uso della Cucina', v:'', d:'La cucina è a disposizione degli ospiti e deve essere mantenuta in ordine. Al check\u2011out, la cucina dovrà essere lasciata pulita, con stoviglie lavate e riposte.' },
@@ -362,7 +392,8 @@ const SECTIONS = {
       es:{ t:'Uso de la Cocina', v:'', d:'La cocina está a disposición de los huéspedes y debe mantenerse ordenada. Al check\u2011out debe dejarse limpia, con la vajilla lavada y guardada.' },
       pl:{ t:'Korzystanie z Kuchni', v:'', d:'Kuchnia jest dostępna dla gości i powinna być utrzymywana w porządku. Przy wymeldowaniu należy pozostawić ją czystą, z umytymi i schowanymi naczyniami.' },
       hu:{ t:'Konyhahasználat', v:'', d:'A konyha a vendégek rendelkezésére áll, és rendben kell tartani. Kijelentkezéskor tisztán kell hagyni, az edényeket elmosogatva és elpakolva.' },
-      ro:{ t:'Utilizarea Bucătăriei', v:'', d:'Bucătăria este la dispoziția oaspeților și trebuie păstrată în ordine. La check\u2011out trebuie lăsată curată, cu vasele spălate și depozitate.' } },
+      ro:{ t:'Utilizarea Bucătăriei', v:'', d:'Bucătăria este la dispoziția oaspeților și trebuie păstrată în ordine. La check\u2011out trebuie lăsată curată, cu vasele spălate și depozitate.' },
+      fr:{ t:'Usage de la Cuisine', v:'', d:'La cuisine est à la disposition des hôtes et doit être maintenue en ordre. Au check‑out, elle doit être laissée propre, avec la vaisselle lavée et rangée.' } },
     { accent:3,
       icon:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/>',
       it:{ t:'Raccolta Differenziata', v:'', d:'È richiesta la raccolta differenziata dei rifiuti secondo le indicazioni fornite in villa.' },
@@ -371,7 +402,8 @@ const SECTIONS = {
       es:{ t:'Gestión de Residuos', v:'', d:'Se requiere que los huéspedes separen los residuos según las instrucciones proporcionadas en la villa.' },
       pl:{ t:'Segregacja Odpadów', v:'', d:'Prosimy gości o segregowanie odpadów zgodnie z instrukcjami dostępnymi w willi.' },
       hu:{ t:'Hulladékgazdálkodás', v:'', d:'A vendégeknek a villában megadott útmutatás szerint kell szelektálniuk a hulladékot.' },
-      ro:{ t:'Gestionarea Deșeurilor', v:'', d:'Oaspeții trebuie să colecteze selectiv deșeurile conform instrucțiunilor furnizate în vilă.' } },
+      ro:{ t:'Gestionarea Deșeurilor', v:'', d:'Oaspeții trebuie să colecteze selectiv deșeurile conform instrucțiunilor furnizate în vilă.' },
+      fr:{ t:'Gestion des Déchets', v:'', d:'Les hôtes sont tenus de trier les déchets selon les instructions fournies dans la villa.' } },
     { accent:4,
       icon:'<path d="M5 13a10 10 0 0 1 14 0M8 16.5a5.5 5.5 0 0 1 8 0"/><circle cx="12" cy="19.5" r="1" fill="currentColor" stroke="none"/>',
       it:{ t:'Internet & Wi‑Fi', v:'gratuito', d:'La villa è dotata di connessione Wi\u2011Fi gratuita.' },
@@ -380,7 +412,8 @@ const SECTIONS = {
       es:{ t:'Internet y Wi‑Fi', v:'gratis', d:'La villa ofrece acceso a internet Wi\u2011Fi gratuito.' },
       pl:{ t:'Internet i Wi‑Fi', v:'bezpłatne', d:'Willa oferuje bezpłatny dostęp do internetu Wi\u2011Fi.' },
       hu:{ t:'Internet és Wi‑Fi', v:'ingyenes', d:'A villa ingyenes Wi\u2011Fi internet\u2011hozzáférést biztosít.' },
-      ro:{ t:'Internet și Wi‑Fi', v:'gratuit', d:'Vila oferă acces gratuit la internet Wi\u2011Fi.' } },
+      ro:{ t:'Internet și Wi‑Fi', v:'gratuit', d:'Vila oferă acces gratuit la internet Wi\u2011Fi.' },
+      fr:{ t:'Internet & Wi‑Fi', v:'gratuit', d:"La villa offre un accès internet Wi‑Fi gratuit." } },
   ]
 };
 
@@ -433,18 +466,26 @@ const I18N = {
     sec1Label:'Sosire și Plecare', sec2Label:'Plăți', sec3Label:'Conviețuire', sec4Label:'Casă și Servicii',
     sosTitle:'Aveți o întrebare?', sosSub:'Sunați Gazda: +39 351 976 8732',
     acceptNote:'Prin confirmarea rezervării, prezentele Reguli ale Casei se consideră acceptate. Vă dorim un sejur plăcut la Villa Brando.'
+  },
+  fr: {
+    back:'Guest Guide', eyebrow:"À lire avant d'arriver", title:'Règlement de la Maison',
+    intro:"Chers hôtes, bienvenue à Villa Brando. Notre objectif est de vous offrir un séjour confortable, relaxant et bien organisé. Le règlement suivant vise à garantir une expérience agréable pour tous les hôtes et le respect de la réglementation locale.",
+    sec1Label:'Arrivée & Départ', sec2Label:'Paiements', sec3Label:'Vie Commune', sec4Label:'Maison & Équipements',
+    sosTitle:'Vous avez une question ?', sosSub:"Appelez l'hôte : +39 351 976 8732",
+    acceptNote:'En confirmant la réservation, le présent règlement est réputé accepté. Nous vous souhaitons un agréable séjour à Villa Brando.'
   }
 };
 
-let LANG = 'it';
+let LANG = localStorage.getItem('vbLang') || 'it';
 
-const LANG_LABELS = { it:'IT', en:'EN', de:'DE', es:'ES', pl:'PL', hu:'HU', ro:'RO' };
+const LANG_LABELS = { it:'IT', en:'EN', fr:'FR', de:'DE', es:'ES', hu:'HU', ro:'RO', pl:'PL' };
 
 function toggleLangMenu(){
   const menu = document.getElementById('langMenu');
   const btn = document.getElementById('langCurrentBtn');
   const isOpen = menu.classList.contains('open');
   if(!isOpen){
+    if(menu.parentElement !== document.body){ document.body.appendChild(menu); }
     const rect = btn.getBoundingClientRect();
     menu.style.top = (rect.bottom + 8) + 'px';
     const rightEdge = window.innerWidth - rect.right;
@@ -457,7 +498,10 @@ function toggleLangMenu(){
 
 document.addEventListener('click', function(e){
   const sel = document.getElementById('langSelect');
-  if(sel && !sel.contains(e.target)){
+  const menu = document.getElementById('langMenu');
+  const clickedInsideSelect = sel && sel.contains(e.target);
+  const clickedInsideMenu = menu && menu.contains(e.target);
+  if(!clickedInsideSelect && !clickedInsideMenu){
     document.getElementById('langMenu').classList.remove('open');
     document.getElementById('langCurrentBtn').classList.remove('open');
   }
@@ -501,6 +545,7 @@ function applyI18n(){
 }
 
 function setLang(l){
+  localStorage.setItem('vbLang', l);
   LANG = l;
   document.getElementById('langCurrentLabel').textContent = LANG_LABELS[l];
   document.querySelectorAll('.lang-menu button').forEach(b=>{
@@ -516,6 +561,8 @@ renderAll();
 applyI18n();
 document.getElementById('page-header').style.backgroundImage =
   `linear-gradient(180deg, rgba(10,25,45,0.35) 0%, rgba(8,20,38,0.55) 55%, rgba(6,16,30,0.88) 100%), url('${HEADER_PHOTO}')`;
+
+window.scrollTo(0, 0);
 </script>
 </body>
 </html>

@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+<script>
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  window.addEventListener('pageshow', function(){ window.scrollTo(0, 0); });
+</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Villa Brando — Risoluzione Problemi</title>
@@ -190,6 +195,12 @@
   footer.brand{
     text-align:center; padding:18px 20px 26px; color:var(--ink-soft); font-size:12px;
   }
+  footer.brand{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 20px 22px; color:var(--ink-soft); font-size:12px;
+  }
+  .footer-back{ display:flex; align-items:center; gap:6px; color:var(--pine); text-decoration:none; font-weight:700; font-size:12.5px; }
+  .footer-back svg{ width:15px; height:15px; }
 </style>
 </head>
 <body>
@@ -209,6 +220,7 @@
         <div class="lang-menu" id="langMenu">
           <button data-lang="it" class="active" onclick="setLang('it')"><span class="code">IT</span>Italiano</button>
           <button data-lang="en" onclick="setLang('en')"><span class="code">EN</span>English</button>
+          <button data-lang="fr" onclick="setLang('fr')"><span class="code">FR</span>Français</button>
           <button data-lang="de" onclick="setLang('de')"><span class="code">DE</span>Deutsch</button>
           <button data-lang="es" onclick="setLang('es')"><span class="code">ES</span>Español</button>
           <button data-lang="pl" onclick="setLang('pl')"><span class="code">PL</span>Polski</button>
@@ -251,7 +263,13 @@
     <div class="cards" id="cards"></div>
   </main>
 
-  <footer class="brand">Villa Brando · Sabaudia, Lazio</footer>
+    <footer class="brand">
+    <a class="footer-back" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+      <span data-i18n="back">Guest Guide</span>
+    </a>
+    <span>Villa Brando &middot; Sabaudia, Lazio</span>
+  </footer>
 </div>
 
 <script>
@@ -572,20 +590,29 @@ const I18N = {
     quickLabel:'Info Rapide', quickSub:'Atingeți un card pentru răspunsul rapid.',
     sectionLabel:'Rezolvă o Problemă', troubleSub:'Urmați pașii în ordine, unul câte unul.',
     watchVideo:'Vizionează videoclipul'
+  },
+  fr: {
+    back:'Guest Guide', eyebrow:'Infos Générales', title:'Solutions aux Problèmes',
+    intro:"De petits incidents peuvent arriver — vous trouverez ici des solutions rapides pour les problèmes les plus courants dans la maison. Suivez les étapes ci-dessous et, si cela ne se résout pas, <b>contactez l'hôte</b>.",
+    sosTitle:"Besoin d'aide immédiatement ?", sosSub:"Appelez l'hôte : +39 351 976 8732",
+    quickLabel:'Info Rapide', quickSub:'Appuyez sur une carte pour la réponse rapide.',
+    sectionLabel:'Résoudre un Problème', troubleSub:"Suivez les étapes dans l'ordre, une par une.",
+    watchVideo:'Voir la vidéo'
   }
 };
 
-let LANG = 'it';
+let LANG = localStorage.getItem('vbLang') || 'it';
 let openKey = null;
 let openQuick = null;
 
-const LANG_LABELS = { it:'IT', en:'EN', de:'DE', es:'ES', pl:'PL', hu:'HU', ro:'RO' };
+const LANG_LABELS = { it:'IT', en:'EN', fr:'FR', de:'DE', es:'ES', hu:'HU', ro:'RO', pl:'PL' };
 
 function toggleLangMenu(){
   const menu = document.getElementById('langMenu');
   const btn = document.getElementById('langCurrentBtn');
   const isOpen = menu.classList.contains('open');
   if(!isOpen){
+    if(menu.parentElement !== document.body){ document.body.appendChild(menu); }
     const rect = btn.getBoundingClientRect();
     menu.style.top = (rect.bottom + 8) + 'px';
     const rightEdge = window.innerWidth - rect.right;
@@ -598,7 +625,10 @@ function toggleLangMenu(){
 
 document.addEventListener('click', function(e){
   const sel = document.getElementById('langSelect');
-  if(sel && !sel.contains(e.target)){
+  const menu = document.getElementById('langMenu');
+  const clickedInsideSelect = sel && sel.contains(e.target);
+  const clickedInsideMenu = menu && menu.contains(e.target);
+  if(!clickedInsideSelect && !clickedInsideMenu){
     document.getElementById('langMenu').classList.remove('open');
     document.getElementById('langCurrentBtn').classList.remove('open');
   }
@@ -683,6 +713,7 @@ function applyI18n(){
 }
 
 function setLang(l){
+  localStorage.setItem('vbLang', l);
   LANG = l;
   document.getElementById('langCurrentLabel').textContent = LANG_LABELS[l];
   document.querySelectorAll('.lang-menu button').forEach(b=>{
@@ -700,6 +731,8 @@ renderCards();
 applyI18n();
 document.getElementById('page-header').style.backgroundImage =
   `linear-gradient(180deg, rgba(10,25,45,0.35) 0%, rgba(8,20,38,0.55) 55%, rgba(6,16,30,0.88) 100%), url('${HEADER_PHOTO}')`;
+
+window.scrollTo(0, 0);
 </script>
 </body>
 </html>
