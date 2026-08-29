@@ -108,22 +108,22 @@
 
 <script>
 const TITLES = {
-  location:      { it:'La Nostra Posizione', en:'Our Location', de:'Unser Standort', es:'Nuestra Ubicación', hu:'A Mi Helyünk', ro:'Locația Noastră', pl:'Nasza Lokalizacja' },
-  supermarkets:  { it:'Supermercati', en:'Supermarkets', de:'Supermärkte', es:'Supermercados', hu:'Szupermarketek', ro:'Supermarketuri', pl:'Supermarkety' },
-  tours:         { it:'Tour ed Eventi', en:'Tour & Events', de:'Touren & Events', es:'Tours y Eventos', hu:'Túrák és Események', ro:'Tururi și Evenimente', pl:'Wycieczki i Wydarzenia' },
-  eventiLocali:  { it:'Eventi Locali', en:'Local Events', de:'Lokale Veranstaltungen', es:'Eventos Locales', hu:'Helyi Események', ro:'Evenimente Locale', pl:'Wydarzenia Lokalne' },
-  eventiZona:    { it:'Eventi in Zona', en:'Local Events', de:'Veranstaltungen vor Ort', es:'Eventos en la Zona', hu:'Helyi Programok', ro:'Evenimente în Zonă', pl:'Wydarzenia w Okolicy' },
-  maxguests:     { it:'Numero Massimo Ospiti', en:'Maximum Guests', de:'Maximale Gästezahl', es:'Número Máximo de Huéspedes', hu:'Maximális Vendégszám', ro:'Număr Maxim de Oaspeți', pl:'Maksymalna Liczba Gości' },
-  taxi:          { it:'Chiamare un Taxi', en:'Call a Taxi', de:'Ein Taxi Rufen', es:'Llamar a un Taxi', hu:'Taxi Hívása', ro:'Cheamă un Taxi', pl:'Zamów Taksówkę' },
-  relax:         { it:'Come Rilassarsi', en:'How to Relax', de:'Entspannungstipps', es:'Cómo Relajarse', hu:'Hogyan Lazíts', ro:'Cum să te Relaxezi', pl:'Jak Się Zrelaksować' },
-  gygRome:       { it:'Il Meglio di Roma', en:'The Best of Rome', de:'Das Beste von Rom', es:'Lo Mejor de Roma', hu:'Róma Legjava', ro:'Ce e Mai Bun în Roma', pl:'Najlepsze z Rzymu' },
-  gygCoast:      { it:'Latina, Sabaudia e Costa del Circeo', en:'Latina, Sabaudia & Circeo Coast', de:'Latina, Sabaudia & Circeo-Küste', es:'Latina, Sabaudia y Costa del Circeo', hu:'Latina, Sabaudia és a Circeo-part', ro:'Latina, Sabaudia și Coasta Circeo', pl:'Latina, Sabaudia i Wybrzeże Circeo' },
-  gygAmalfi:     { it:'Il Meglio della Costiera Amalfitana', en:'The Best of Amalfi Coast', de:'Das Beste der Amalfiküste', es:'Lo Mejor de la Costa Amalfitana', hu:'Amalfi-part Legjava', ro:'Ce e Mai Bun pe Coasta Amalfi', pl:'Najlepsze z Wybrzeża Amalfi' },
-  gygPompei:     { it:'Il Meglio di Pompei', en:'The Best of Pompeii', de:'Das Beste von Pompeji', es:'Lo Mejor de Pompeya', hu:'Pompeii Legjava', ro:'Ce e Mai Bun în Pompei', pl:'Najlepsze z Pompei' },
-  gygNaples:     { it:'Napoli', en:'Naples', de:'Neapel', es:'Nápoles', hu:'Nápoly', ro:'Napoli', pl:'Neapol' },
-  gygFlorence:   { it:'Firenze', en:'Florence', de:'Florenz', es:'Florencia', hu:'Firenze', ro:'Florența', pl:'Florencja' },
-  gygOrvieto:    { it:'Orvieto', en:'Orvieto', de:'Orvieto', es:'Orvieto', hu:'Orvieto', ro:'Orvieto', pl:'Orvieto' },
-  otherActivities:{ it:'Altre Attività', en:'Other Activities', de:'Weitere Aktivitäten', es:'Otras Actividades', hu:'További Programok', ro:'Alte Activități', pl:'Inne Atrakcje' }
+  location:      { it:'La Nostra Posizione', en:'Our Location', de:'Unser Standort', es:'Nuestra Ubicación', hu:'A Mi Helyünk', ro:'Locația Noastră', pl:'Nasza Lokalizacja', fr:'Notre Position' },
+  supermarkets:  { it:'Supermercati', en:'Supermarkets', de:'Supermärkte', es:'Supermercados', hu:'Szupermarketek', ro:'Supermarketuri', pl:'Supermarkety', fr:'Supermarchés' },
+  tours:         { it:'Tour ed Eventi', en:'Tour & Events', de:'Touren & Events', es:'Tours y Eventos', hu:'Túrák és Események', ro:'Tururi și Evenimente', pl:'Wycieczki i Wydarzenia', fr:'Circuits et Événements' },
+  eventiLocali:  { it:'Eventi Locali', en:'Local Events', de:'Lokale Veranstaltungen', es:'Eventos Locales', hu:'Helyi Események', ro:'Evenimente Locale', pl:'Wydarzenia Lokalne', fr:'Événements Locaux' },
+  eventiZona:    { it:'Eventi in Zona', en:'Local Events', de:'Veranstaltungen vor Ort', es:'Eventos en la Zona', hu:'Helyi Programok', ro:'Evenimente în Zonă', pl:'Wydarzenia w Okolicy', fr:'Événements dans la Zone' },
+  maxguests:     { it:'Numero Massimo Ospiti', en:'Maximum Guests', de:'Maximale Gästezahl', es:'Número Máximo de Huéspedes', hu:'Maximális Vendégszám', ro:'Număr Maxim de Oaspeți', pl:'Maksymalna Liczba Gości', fr:'Nombre Maximum d'Invités' },
+  taxi:          { it:'Chiamare un Taxi', en:'Call a Taxi', de:'Ein Taxi Rufen', es:'Llamar a un Taxi', hu:'Taxi Hívása', ro:'Cheamă un Taxi', pl:'Zamów Taksówkę', fr:'Appeler un Taxi' },
+  relax:         { it:'Come Rilassarsi', en:'How to Relax', de:'Entspannungstipps', es:'Cómo Relajarse', hu:'Hogyan Lazíts', ro:'Cum să te Relaxezi', pl:'Jak Się Zrelaksować', fr:'Comment se Détendre' },
+  gygRome:       { it:'Il Meglio di Roma', en:'The Best of Rome', de:'Das Beste von Rom', es:'Lo Mejor de Roma', hu:'Róma Legjava', ro:'Ce e Mai Bun în Roma', pl:'Najlepsze z Rzymu', fr:'Le Meilleur de Rome' },
+  gygCoast:      { it:'Latina, Sabaudia e Costa del Circeo', en:'Latina, Sabaudia & Circeo Coast', de:'Latina, Sabaudia & Circeo-Küste', es:'Latina, Sabaudia y Costa del Circeo', hu:'Latina, Sabaudia és a Circeo-part', ro:'Latina, Sabaudia și Coasta Circeo', pl:'Latina, Sabaudia i Wybrzeże Circeo', fr:'Latina, Sabaudia et Côte du Circeo' },
+  gygAmalfi:     { it:'Il Meglio della Costiera Amalfitana', en:'The Best of Amalfi Coast', de:'Das Beste der Amalfiküste', es:'Lo Mejor de la Costa Amalfitana', hu:'Amalfi-part Legjava', ro:'Ce e Mai Bun pe Coasta Amalfi', pl:'Najlepsze z Wybrzeża Amalfi', fr:'Le Meilleur de la Côte Amalfitaine' },
+  gygPompei:     { it:'Il Meglio di Pompei', en:'The Best of Pompeii', de:'Das Beste von Pompeji', es:'Lo Mejor de Pompeya', hu:'Pompeii Legjava', ro:'Ce e Mai Bun în Pompei', pl:'Najlepsze z Pompei', fr:'Le Meilleur de Pompéi' },
+  gygNaples:     { it:'Napoli', en:'Naples', de:'Neapel', es:'Nápoles', hu:'Nápoly', ro:'Napoli', pl:'Neapol', fr:'Naples' },
+  gygFlorence:   { it:'Firenze', en:'Florence', de:'Florenz', es:'Florencia', hu:'Firenze', ro:'Florența', pl:'Florencja', fr:'Florence' },
+  gygOrvieto:    { it:'Orvieto', en:'Orvieto', de:'Orvieto', es:'Orvieto', hu:'Orvieto', ro:'Orvieto', pl:'Orvieto', fr:'Orvieto' },
+  otherActivities:{ it:'Altre Attività', en:'Other Activities', de:'Weitere Aktivitäten', es:'Otras Actividades', hu:'További Programok', ro:'Alte Activități', pl:'Inne Atrakcje', fr:'Autres Activités' }
 };
 
 const UI = {
@@ -133,6 +133,7 @@ const UI = {
   es:{ open:'Abrir en el navegador', hint:'Si el contenido no se carga, ábrelo en el navegador.', loading:'Cargando…', empty:'No se proporcionó ningún enlace.' },
   hu:{ open:'Megnyitás böngészőben', hint:'Ha a tartalom nem töltődik be, nyisd meg böngészőben.', loading:'Betöltés…', empty:'Nincs megadva link.' },
   ro:{ open:'Deschide în browser', hint:'Dacă conținutul nu se încarcă, deschide-l în browser.', loading:'Se încarcă…', empty:'Niciun link furnizat.' },
+  fr:{ open:'Ouvrir dans le navigateur', hint:"Si le contenu ne se charge pas, ouvrez-le dans votre navigateur.", loading:'Chargement…', empty:'Aucun lien fourni.' },
   pl:{ open:'Otwórz w przeglądarce', hint:'Jeśli treść się nie ładuje, otwórz ją w przeglądarce.', loading:'Ładowanie…', empty:'Nie podano linku.' }
 };
 
