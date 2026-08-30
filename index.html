@@ -261,21 +261,24 @@
     background: rgba(251,248,241,0.92);
     backdrop-filter: blur(14px);
     border-top:1px solid var(--line);
-    display:flex; padding:8px 8px calc(10px + env(safe-area-inset-bottom));
-    gap:4px;
+    display:flex; padding:8px 4px calc(10px + env(safe-area-inset-bottom));
+    gap:2px;
     z-index:50;
   }
   @media (min-width:560px){
     nav.tabbar{ border-bottom-left-radius:34px; border-bottom-right-radius:34px; }
   }
   nav.tabbar button{
-    flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;
-    background:none; border:none; padding:8px 4px 6px; border-radius:14px;
+    flex:1; min-width:0; display:flex; flex-direction:column; align-items:center; gap:3px;
+    background:none; border:none; padding:8px 2px 6px; border-radius:14px;
     color:var(--ink-soft); cursor:pointer; font-family:'Comfortaa'; font-weight:600;
     transition:.2s;
   }
-  nav.tabbar button svg{ width:21px; height:21px; }
-  nav.tabbar button span{ font-size:10.5px; letter-spacing:.02em; }
+  nav.tabbar button svg{ width:19px; height:19px; flex-shrink:0; }
+  nav.tabbar button span{
+    font-size:9.5px; letter-spacing:.01em; max-width:100%;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
   nav.tabbar button.active{ color:var(--pine); background:var(--stone-2); }
 
   /* scrollbar aesthetics */
@@ -334,6 +337,31 @@
       <div class="stack" id="stack-activities"></div>
     </section>
 
+    <!-- PRIVILEGES -->
+    <section id="panel-privileges" class="panel">
+      <div class="panel-intro">
+        <h2 data-i18n="tab.privileges.title">Il valore riservato agli ospiti</h2>
+        <p data-i18n="tab.privileges.desc">Spazi, comfort e attenzioni pensati per il vostro soggiorno.</p>
+      </div>
+      <a class="rules-feature" id="privileges-card" href="villa-brando-privileges.html">
+        <div class="art" id="privileges-art" style="--fgc:#ffffff;--bgc:rgba(255,255,255,.4)">
+          <svg class="illus" viewBox="0 0 24 24" style="width:56px;height:56px">
+            <circle cx="12" cy="12" r="10" fill="var(--bgc)" opacity=".18"/>
+            <path d="M12 2 15 8.5 22 9.3 17 14.1 18.2 21 12 17.6 5.8 21 7 14.1 2 9.3 9 8.5Z" fill="var(--fgc)"/>
+          </svg>
+        </div>
+        <div class="body">
+          <span class="eyebrow" data-i18n="privileges.eyebrow">Riservato agli ospiti</span>
+          <h2 data-i18n="privileges.title">Villa Brando Privileges</h2>
+          <p data-i18n="privileges.desc">Uno spazio privato di oltre 450 m², lavanderia dedicata, comfort smart e giardino: scoprite tutto ciò che è pensato per voi.</p>
+          <span class="cta">
+            <span data-i18n="privileges.cta">Scopri i privilegi</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+    </section>
+
     <!-- PAID SERVICES -->
     <section id="panel-services" class="panel">
       <div class="panel-intro">
@@ -383,6 +411,10 @@
     <button class="tab-btn" data-tab="activities" onclick="setTab('activities')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
       <span data-i18n="nav.activities">Attività</span>
+    </button>
+    <button class="tab-btn" data-tab="privileges" onclick="setTab('privileges')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 15 8.5 22 9.3 17 14.1 18.2 21 12 17.6 5.8 21 7 14.1 2 9.3 9 8.5Z"/></svg>
+      <span data-i18n="nav.privileges">Privileges</span>
     </button>
     <button class="tab-btn" data-tab="services" onclick="setTab('services')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="3.2"/></svg>
@@ -688,11 +720,16 @@ const I18N = {
     'tab.services.desc':'Cauzione, pulizie, bici e altri extra disponibili su richiesta.',
     'tab.rules.label':'Regole della Casa', 'tab.rules.title':'Regole della casa',
     'tab.rules.desc':"Poche regole chiare, per una vacanza serena per tutti.",
+    'tab.privileges.label':'Privilegi', 'tab.privileges.title':'Il valore riservato agli ospiti',
+    'tab.privileges.desc':'Spazi, comfort e attenzioni pensati per il vostro soggiorno.',
+    'privileges.eyebrow':'Riservato agli ospiti', 'privileges.title':'Villa Brando Privileges',
+    'privileges.desc':"Uno spazio privato di oltre 450 m², lavanderia dedicata, comfort smart e giardino: scoprite tutto ciò che è pensato per voi.",
+    'privileges.cta':'Scopri i privilegi',
     'rules.eyebrow':"Da leggere prima dell'arrivo", 'rules.title':'Regole della Casa',
     'rules.desc':'Orari, spazi comuni, animali, fumo ed eventi: le linee guida che rendono il soggiorno di tutti più piacevole.',
     'rules.cta':'Apri le regole',
     'rules.helper':'Questa sezione ha una card unica e prominente: è la pagina più importante della guida.',
-    'nav.general':'Info', 'nav.activities':'Attività', 'nav.services':'Servizi', 'nav.rules':'Regole'
+    'nav.general':'Info', 'nav.activities':'Attività', 'nav.privileges':'Privilegi', 'nav.services':'Servizi', 'nav.rules':'Regole'
   },
   en:{
     eyebrow:'Guest Guide',
@@ -704,11 +741,16 @@ const I18N = {
     'tab.services.desc':'Deposit, cleaning, bikes and other extras available on request.',
     'tab.rules.label':'House Rules', 'tab.rules.title':'House rules',
     'tab.rules.desc':'A few clear rules, for a stay everyone can enjoy.',
+    'tab.privileges.label':'Privileges', 'tab.privileges.title':'The value reserved for our guests',
+    'tab.privileges.desc':'Space, comfort and thoughtful touches, included with your stay.',
+    'privileges.eyebrow':'Exclusively for guests', 'privileges.title':'Villa Brando Privileges',
+    'privileges.desc':"Over 450 m² of private space, a dedicated laundry room, smart comforts and a garden — discover everything arranged for you.",
+    'privileges.cta':'Discover the privileges',
     'rules.eyebrow':'Read before you arrive', 'rules.title':'House Rules',
     'rules.desc':'Hours, shared spaces, pets, smoking and events — the guidelines that make everyone\'s stay better.',
     'rules.cta':'Open house rules',
     'rules.helper':'This section has one prominent card — it\'s the most important page in the guide.',
-    'nav.general':'Info', 'nav.activities':'Activities', 'nav.services':'Services', 'nav.rules':'Rules'
+    'nav.general':'Info', 'nav.activities':'Activities', 'nav.privileges':'Privileges', 'nav.services':'Services', 'nav.rules':'Rules'
   },
   de:{
     eyebrow:'Gästeführer',
@@ -720,11 +762,16 @@ const I18N = {
     'tab.services.desc':'Kaution, Reinigung, Fahrräder und weitere Extras auf Anfrage.',
     'tab.rules.label':'Hausordnung', 'tab.rules.title':'Hausordnung',
     'tab.rules.desc':'Wenige klare Regeln, für einen angenehmen Aufenthalt für alle.',
+    'tab.privileges.label':'Privilegien', 'tab.privileges.title':'Der Mehrwert für unsere Gäste',
+    'tab.privileges.desc':'Raum, Komfort und Aufmerksamkeiten für Ihren Aufenthalt.',
+    'privileges.eyebrow':'Exklusiv für Gäste', 'privileges.title':'Villa Brando Privileges',
+    'privileges.desc':"Über 450 m² privater Raum, ein eigener Waschraum, smarte Annehmlichkeiten und ein Garten — entdecken Sie, was für Sie vorbereitet wurde.",
+    'privileges.cta':'Privilegien entdecken',
     'rules.eyebrow':'Vor der Anreise lesen', 'rules.title':'Hausordnung',
     'rules.desc':'Zeiten, Gemeinschaftsbereiche, Haustiere, Rauchen und Veranstaltungen — die Richtlinien für einen angenehmen Aufenthalt aller Gäste.',
     'rules.cta':'Hausordnung öffnen',
     'rules.helper':'Dieser Bereich hat eine einzige, zentrale Karte — die wichtigste Seite im Guide.',
-    'nav.general':'Info', 'nav.activities':'Aktivität', 'nav.services':'Services', 'nav.rules':'Regeln'
+    'nav.general':'Info', 'nav.activities':'Aktivität', 'nav.privileges':'Privilegien', 'nav.services':'Services', 'nav.rules':'Regeln'
   },
   es:{
     eyebrow:'Guía del Huésped',
@@ -736,11 +783,16 @@ const I18N = {
     'tab.services.desc':'Fianza, limpieza, bicicletas y otros extras disponibles bajo petición.',
     'tab.rules.label':'Normas de la Casa', 'tab.rules.title':'Normas de la casa',
     'tab.rules.desc':'Pocas normas claras, para unas vacaciones agradables para todos.',
+    'tab.privileges.label':'Privilegios', 'tab.privileges.title':'El valor reservado para los huéspedes',
+    'tab.privileges.desc':'Espacio, confort y detalles pensados para su estancia.',
+    'privileges.eyebrow':'Exclusivo para huéspedes', 'privileges.title':'Villa Brando Privileges',
+    'privileges.desc':"Más de 450 m² de espacio privado, lavandería propia, comodidades inteligentes y jardín: descubra todo lo dispuesto para usted.",
+    'privileges.cta':'Descubrir los privilegios',
     'rules.eyebrow':'Leer antes de llegar', 'rules.title':'Normas de la Casa',
     'rules.desc':'Horarios, espacios comunes, mascotas, fumar y eventos — las pautas que hacen mejor la estancia de todos.',
     'rules.cta':'Ver las normas',
     'rules.helper':'Esta sección tiene una única tarjeta destacada: es la página más importante de la guía.',
-    'nav.general':'Info', 'nav.activities':'Actividad', 'nav.services':'Servicios', 'nav.rules':'Normas'
+    'nav.general':'Info', 'nav.activities':'Actividad', 'nav.privileges':'Privilegios', 'nav.services':'Servicios', 'nav.rules':'Normas'
   },
   hu:{
     eyebrow:'Vendégkalauz',
@@ -752,11 +804,16 @@ const I18N = {
     'tab.services.desc':'Kaució, takarítás, kerékpárok és egyéb extrák kérésre.',
     'tab.rules.label':'Házirend', 'tab.rules.title':'Házirend',
     'tab.rules.desc':'Néhány egyértelmű szabály, hogy mindenki élvezhesse az itt-tartózkodást.',
+    'tab.privileges.label':'Kiváltságok', 'tab.privileges.title':'A vendégeknek fenntartott érték',
+    'tab.privileges.desc':'Tér, kényelem és apró figyelmességek az itt-tartózkodáshoz.',
+    'privileges.eyebrow':'Kizárólag vendégeinknek', 'privileges.title':'Villa Brando Privileges',
+    'privileges.desc':"Több mint 450 m² privát tér, saját mosókonyha, okos kényelmi megoldások és kert — fedezze fel, amit Önnek készítettünk.",
+    'privileges.cta':'Fedezze fel a kiváltságokat',
     'rules.eyebrow':'Érkezés előtt olvasandó', 'rules.title':'Házirend',
     'rules.desc':'Időbeosztás, közös terek, háziállatok, dohányzás és rendezvények — az iránymutatások, amelyek mindenki tartózkodását kellemesebbé teszik.',
     'rules.cta':'Házirend megnyitása',
     'rules.helper':'Ennek a szekciónak egyetlen kiemelt kártyája van — ez a kalauz legfontosabb oldala.',
-    'nav.general':'Info', 'nav.activities':'Programok', 'nav.services':'Szolgáltatások', 'nav.rules':'Szabályok'
+    'nav.general':'Info', 'nav.activities':'Programok', 'nav.privileges':'Kiváltságok', 'nav.services':'Szolgáltatások', 'nav.rules':'Szabályok'
   },
   ro:{
     eyebrow:'Ghidul Oaspeților',
@@ -768,11 +825,16 @@ const I18N = {
     'tab.services.desc':'Garanție, curățenie, biciclete și alte extra disponibile la cerere.',
     'tab.rules.label':'Regulile Casei', 'tab.rules.title':'Regulile casei',
     'tab.rules.desc':'Câteva reguli clare, pentru un sejur plăcut pentru toată lumea.',
+    'tab.privileges.label':'Privilegii', 'tab.privileges.title':'Valoarea rezervată oaspeților',
+    'tab.privileges.desc':'Spațiu, confort și atenții gândite pentru sejurul dumneavoastră.',
+    'privileges.eyebrow':'Exclusiv pentru oaspeți', 'privileges.title':'Villa Brando Privileges',
+    'privileges.desc':"Peste 450 m² de spațiu privat, spălătorie proprie, confort smart și grădină — descoperiți tot ce a fost pregătit pentru dumneavoastră.",
+    'privileges.cta':'Descoperiți privilegiile',
     'rules.eyebrow':'Citiți înainte de sosire', 'rules.title':'Regulile Casei',
     'rules.desc':'Program, spații comune, animale de companie, fumat și evenimente — liniile directoare care fac sejurul tuturor mai plăcut.',
     'rules.cta':'Deschide regulile',
     'rules.helper':'Această secțiune are un singur card important — este cea mai importantă pagină din ghid.',
-    'nav.general':'Info', 'nav.activities':'Activități', 'nav.services':'Servicii', 'nav.rules':'Reguli'
+    'nav.general':'Info', 'nav.activities':'Activități', 'nav.privileges':'Privilegii', 'nav.services':'Servicii', 'nav.rules':'Reguli'
   },
   pl:{
     eyebrow:'Przewodnik dla Gości',
@@ -784,11 +846,16 @@ const I18N = {
     'tab.services.desc':'Kaucja, sprzątanie, rowery i inne dodatki dostępne na życzenie.',
     'tab.rules.label':'Regulamin Domu', 'tab.rules.title':'Regulamin domu',
     'tab.rules.desc':'Kilka jasnych zasad, dla przyjemnego pobytu wszystkich gości.',
+    'tab.privileges.label':'Przywileje', 'tab.privileges.title':'Wartość zarezerwowana dla gości',
+    'tab.privileges.desc':'Przestrzeń, komfort i troska o szczegóły podczas pobytu.',
+    'privileges.eyebrow':'Wyłącznie dla gości', 'privileges.title':'Villa Brando Privileges',
+    'privileges.desc':"Ponad 450 m² prywatnej przestrzeni, własna pralnia, inteligentne udogodnienia i ogród — odkryj wszystko, co przygotowaliśmy dla Ciebie.",
+    'privileges.cta':'Odkryj przywileje',
     'rules.eyebrow':'Przeczytaj przed przyjazdem', 'rules.title':'Regulamin Domu',
     'rules.desc':'Godziny, przestrzenie wspólne, zwierzęta, palenie i wydarzenia — zasady, które poprawiają pobyt wszystkich gości.',
     'rules.cta':'Otwórz regulamin',
     'rules.helper':'Ta sekcja ma jedną, wyróżnioną kartę — to najważniejsza strona przewodnika.',
-    'nav.general':'Info', 'nav.activities':'Atrakcje', 'nav.services':'Usługi', 'nav.rules':'Zasady'
+    'nav.general':'Info', 'nav.activities':'Atrakcje', 'nav.privileges':'Przywileje', 'nav.services':'Usługi', 'nav.rules':'Zasady'
   },
   fr:{
     eyebrow:'Guide des Hôtes',
@@ -800,11 +867,16 @@ const I18N = {
     'tab.services.desc':'Caution, ménage, vélos et autres extras disponibles sur demande.',
     'tab.rules.label':'Règlement Intérieur', 'tab.rules.title':'Règlement intérieur',
     'tab.rules.desc':"Quelques règles claires, pour un séjour agréable pour tous.",
+    'tab.privileges.label':'Privilèges', 'tab.privileges.title':'La valeur réservée à nos hôtes',
+    'tab.privileges.desc':'Espace, confort et attentions pensés pour votre séjour.',
+    'privileges.eyebrow':'Réservé aux hôtes', 'privileges.title':'Villa Brando Privileges',
+    'privileges.desc':"Plus de 450 m² d'espace privé, une buanderie dédiée, un confort connecté et un jardin — découvrez tout ce qui a été pensé pour vous.",
+    'privileges.cta':'Découvrir les privilèges',
     'rules.eyebrow':"À lire avant l'arrivée", 'rules.title':'Règlement Intérieur',
     'rules.desc':"Horaires, espaces communs, animaux, tabac et événements — les consignes qui rendent le séjour de chacun plus agréable.",
     'rules.cta':'Voir le règlement',
     'rules.helper':"Cette section comporte une seule carte proéminente : c'est la page la plus importante du guide.",
-    'nav.general':'Info', 'nav.activities':'Activités', 'nav.services':'Services', 'nav.rules':'Règlement'
+    'nav.general':'Info', 'nav.activities':'Activités', 'nav.privileges':'Privilèges', 'nav.services':'Services', 'nav.rules':'Règlement'
   }
 };
 

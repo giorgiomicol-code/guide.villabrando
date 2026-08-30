@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<script>
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  window.addEventListener('pageshow', function(){ window.scrollTo(0, 0); });
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E3A66">
+<title>Villa Brando — Privileges</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#0E3A66;
+    --pine-2:#154C82;
+    --stone:#FFFFFF;
+    --stone-2:#E5F0FA;
+    --brass:#2E86C1;
+    --brass-light:#8FCBEF;
+    --violet:#7A3FC0;
+    --violet-2:#A473E0;
+    --ink:#122436;
+    --ink-soft:#5A7288;
+    --line:rgba(14,58,102,0.12);
+    --shadow: 0 10px 30px -14px rgba(14,58,102,0.30);
+    --radius: 18px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--stone);
+    font-family:'Comfortaa', sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100svh;
+  }
+  .app{
+    max-width:520px; margin:0 auto; min-height:100svh;
+    background:var(--stone); position:relative;
+    display:flex; flex-direction:column;
+    box-shadow:0 0 60px rgba(0,0,0,0.08);
+  }
+  @media (min-width:560px){
+    body{ background: linear-gradient(180deg,#DCD3BC, #C9BE9F 60%, #b9ad8c); padding:28px 0; }
+    .app{ border-radius:34px; overflow:hidden; min-height:calc(100svh - 56px); box-shadow: 0 30px 80px -20px rgba(20,26,20,0.55); }
+  }
+
+  header.top{
+    background:var(--pine); color:#fff; padding:18px 20px 34px; position:relative;
+  }
+  header.top::before{
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgba(164,115,224,0.30), transparent 55%),
+      radial-gradient(90% 90% at 0% 100%, rgba(14,58,102,0.35), transparent 55%);
+    pointer-events:none;
+  }
+  .back-row{ position:relative; z-index:1; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .back-link{
+    display:flex; align-items:center; gap:6px; color:#fff; text-decoration:none;
+    font-weight:600; font-size:13px; opacity:0.9;
+  }
+  .back-link svg{ width:16px; height:16px; }
+  .eyebrow-top{
+    position:relative; z-index:1; display:block; margin:18px 0 2px;
+    font-size:11px; text-transform:uppercase; letter-spacing:0.16em; font-weight:700; color:var(--brass-light);
+  }
+  h1.page-title{
+    position:relative; z-index:1; margin:4px 0 6px; font-size:25px; font-weight:500; color:#fff; line-height:1.15;
+  }
+  .page-sub{ position:relative; z-index:1; margin:0; font-size:13px; color:rgba(255,255,255,0.78); font-weight:500; letter-spacing:0.01em; max-width:340px; line-height:1.5; font-style:italic; }
+
+  .lang-select{ position:relative; z-index:20; flex-shrink:0; }
+  .lang-current{
+    display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.22);
+    border-radius:999px; padding:8px 12px; color:#fff; font-family:'Comfortaa'; font-weight:700; font-size:12px; cursor:pointer;
+  }
+  .lang-current svg{ width:13px; height:13px; transition:transform .2s; }
+  .lang-current.open svg{ transform:rotate(180deg); }
+  .lang-menu{
+    position:fixed; background:#fff; border-radius:14px;
+    box-shadow:0 14px 34px -10px rgba(14,58,102,0.4); border:1px solid var(--line);
+    padding:6px; display:none; min-width:160px; max-height:70vh; overflow-y:auto;
+    z-index:999;
+  }
+  .lang-menu.open{ display:block; }
+  .lang-menu button{
+    display:flex; align-items:center; gap:10px; width:100%; text-align:left; border:none; background:none;
+    padding:9px 10px; border-radius:9px; font-family:'Comfortaa'; font-weight:600; font-size:13px;
+    color:var(--ink); cursor:pointer;
+  }
+  .lang-menu button:hover{ background:var(--stone-2); }
+  .lang-menu button.active{ background:var(--brass); color:#0A2540; }
+  .lang-menu button .code{
+    width:24px; height:18px; border-radius:4px; background:var(--stone-2); color:var(--pine);
+    font-size:9.5px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .lang-menu button.active .code{ background:rgba(10,37,64,0.15); color:#0A2540; }
+
+  main{ flex:1; padding:0 16px 28px; margin-top:-18px; position:relative; z-index:2; }
+
+  .intro-line{
+    background:#fff; border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow);
+    padding:16px 18px; margin-bottom:20px; font-size:13.5px; color:var(--ink-soft); line-height:1.55;
+    text-align:center; font-style:italic;
+  }
+
+  .section-tag{
+    display:flex; align-items:center; gap:8px; margin:22px 4px 10px;
+    font-size:11.5px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft);
+  }
+  .section-tag::after{ content:""; flex:1; height:1px; background:var(--line); }
+  .section-tag.courtesy{ color:#B8791A; }
+  .section-tag.courtesy::after{ background:#F0C878; }
+
+  .courtesy-intro{
+    font-size:12.5px; color:var(--ink-soft); line-height:1.55; margin:0 4px 12px; font-style:italic;
+  }
+
+  .priv-card{
+    background:#fff; border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow);
+    padding:18px 18px; margin-bottom:12px; display:flex; gap:14px; align-items:flex-start;
+  }
+  .priv-icon{
+    width:46px; height:46px; border-radius:14px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--icon-grad, linear-gradient(135deg,#A473E0,#7A3FC0));
+    box-shadow:0 8px 18px -6px rgba(122,63,192,0.45);
+  }
+  .priv-icon svg{ width:22px; height:22px; color:#fff; }
+  .priv-body{ flex:1; min-width:0; }
+  .priv-body h3{ margin:0 0 4px; font-size:15px; font-weight:700; color:var(--ink); }
+  .priv-body p{ margin:0; font-size:13px; color:var(--ink-soft); line-height:1.5; }
+  .priv-badge{
+    display:inline-block; margin-top:8px; font-size:10.5px; font-weight:700; letter-spacing:0.03em;
+    color:var(--pine); background:var(--stone-2); border-radius:999px; padding:4px 10px;
+  }
+
+  .priv-card.courtesy{
+    background:#FFFBF3; border:1px solid #F0C878;
+  }
+  .priv-card.courtesy .priv-badge{ color:#8a5c14; background:#FFF1D6; }
+
+  .closing-note{
+    text-align:center; font-size:13px; color:var(--ink-soft); line-height:1.6; font-style:italic;
+    margin:26px 6px 6px;
+  }
+
+  .back-link-bottom{
+    display:flex; align-items:center; justify-content:center; gap:6px; color:var(--pine); text-decoration:none;
+    font-weight:600; font-size:13px; opacity:0.85; margin-top:14px; padding:10px 0;
+  }
+  .back-link-bottom svg{ width:16px; height:16px; }
+
+  footer.contact-bar{
+    background:var(--stone-2); padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .contact-bar .brandline{ font-size:13px; font-weight:700; color:var(--pine); }
+  .contact-bar .brandline small{ display:block; font-weight:500; color:var(--ink-soft); font-size:11px; }
+  .contact-bar a.phone{
+    display:flex; align-items:center; gap:8px; background:var(--pine); color:#fff; text-decoration:none;
+    padding:9px 14px; border-radius:999px; font-weight:700; font-size:12.5px;
+  }
+  .contact-bar a.phone svg{ width:14px; height:14px; }
+
+  ::-webkit-scrollbar{ width:0; height:0; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="top">
+    <div class="back-row">
+      <a class="back-link" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        Guest Guide
+      </a>
+      <div class="lang-select" id="langSelect">
+        <button class="lang-current" id="langCurrentBtn" onclick="toggleLangMenu()">
+          <span id="langCurrentLabel">IT</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="lang-menu" id="langMenu">
+          <button data-lang="it" class="active" onclick="setLang('it')"><span class="code">IT</span>Italiano</button>
+          <button data-lang="en" onclick="setLang('en')"><span class="code">EN</span>English</button>
+          <button data-lang="de" onclick="setLang('de')"><span class="code">DE</span>Deutsch</button>
+          <button data-lang="es" onclick="setLang('es')"><span class="code">ES</span>Español</button>
+          <button data-lang="hu" onclick="setLang('hu')"><span class="code">HU</span>Magyar</button>
+          <button data-lang="ro" onclick="setLang('ro')"><span class="code">RO</span>Română</button>
+          <button data-lang="pl" onclick="setLang('pl')"><span class="code">PL</span>Polski</button>
+          <button data-lang="fr" onclick="setLang('fr')"><span class="code">FR</span>Français</button>
+        </div>
+      </div>
+    </div>
+    <span class="eyebrow-top" id="pageEyebrow">Villa Brando Privileges</span>
+    <h1 class="page-title" id="pageTitle">Included with your stay</h1>
+    <p class="page-sub" id="pageSub">Thoughtful comforts, included for our guests.</p>
+  </header>
+
+  <main>
+
+    <div class="section-tag" id="tagIncluded">Included with your stay</div>
+
+    <div class="priv-card">
+      <div class="priv-icon" style="--icon-grad: linear-gradient(135deg,#4FA8E8,#0E3A66);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 9h1"/><path d="M14 9h1"/><path d="M9 13h1"/><path d="M14 13h1"/><path d="M9 21v-4h6v4"/></svg>
+      </div>
+      <div class="priv-body">
+        <h3 id="villaTitle">Your Private Villa</h3>
+        <p id="villaDesc">450 m² of private indoor living space, reserved for your group throughout the stay.</p>
+      </div>
+    </div>
+
+    <div class="priv-card">
+      <div class="priv-icon" style="--icon-grad: linear-gradient(135deg,#8FCBEF,#2E86C1);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="13" r="4"/><path d="M7 6h.01"/></svg>
+      </div>
+      <div class="priv-body">
+        <h3 id="laundryTitle">Private Laundry</h3>
+        <p id="laundryDesc">Dedicated laundry room with washer &amp; dryer.</p>
+        <span class="priv-badge" id="laundryNote">Included for Villa Brando guests</span>
+      </div>
+    </div>
+
+    <div class="priv-card">
+      <div class="priv-icon" style="--icon-grad: linear-gradient(135deg,#A473E0,#7A3FC0);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5a7 7 0 0 1 14 0"/><path d="M3 12.5h18"/><path d="M7.5 12.5a4.5 4.5 0 0 1 9 0"/><circle cx="12" cy="12.5" r="2"/><path d="M12 4v1.5M4 20h16"/></svg>
+      </div>
+      <div class="priv-body">
+        <h3 id="comfortTitle">Smart Comfort</h3>
+        <p id="comfortDesc">Wi-Fi throughout the villa and air conditioning for every season.</p>
+      </div>
+    </div>
+
+    <div class="priv-card">
+      <div class="priv-icon" style="--icon-grad: linear-gradient(135deg,#6FBF8B,#1F7A4D);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4-2 7-5.5 7-10a7 7 0 0 0-14 0c0 4.5 3 8 7 10Z"/><path d="M12 12v6"/><path d="M12 12 8 9M12 12l4-4"/></svg>
+      </div>
+      <div class="priv-body">
+        <h3 id="outdoorTitle">Outdoor Living</h3>
+        <p id="outdoorDesc">A private garden to relax, dine and enjoy the outdoors.</p>
+      </div>
+    </div>
+
+    <div class="priv-card">
+      <div class="priv-icon" style="--icon-grad: linear-gradient(135deg,#F0C878,#D9A441);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 22H4a1 1 0 0 1-1-1V10a9 9 0 0 1 18 0v11a1 1 0 0 1-1 1Z"/><path d="M12 6v3M9 4.5v2M15 4.5v2"/><circle cx="9" cy="14" r="1" fill="currentColor" stroke="none"/><circle cx="14.5" cy="15.5" r="1" fill="currentColor" stroke="none"/><circle cx="11" cy="18" r="1" fill="currentColor" stroke="none"/></svg>
+      </div>
+      <div class="priv-body">
+        <h3 id="welcomeTitle">A Warm Welcome</h3>
+        <p id="welcomeDesc">Welcome coffee, biscuits and herbal teas, olive oil and vinegar, water and a bottle of sparkling wine, and a bathroom amenity kit — waiting for you on arrival.</p>
+      </div>
+    </div>
+
+    <div class="section-tag courtesy" id="tagCourtesy">Selected Courtesy Benefits</div>
+    <p class="courtesy-intro" id="courtesyIntro">Additional touches Villa Brando may offer, at the host's discretion, during selected stays.</p>
+
+    <div class="priv-card courtesy">
+      <div class="priv-icon" style="--icon-grad: linear-gradient(135deg,#F0C878,#B8791A);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="17" r="3.4"/><circle cx="18" cy="17" r="3.4"/><path d="M6 17 9.5 8h4l3 5M9.5 8H8M12.5 8l3 9M13 17h5"/></svg>
+      </div>
+      <div class="priv-body">
+        <h3 id="bikesTitle">Bicycles</h3>
+        <p id="bikesDesc">8 bicycles available at the villa. Complimentary for stays of 7 nights or more; otherwise available as a paid rental.</p>
+      </div>
+    </div>
+
+    <div class="priv-card courtesy">
+      <div class="priv-icon" style="--icon-grad: linear-gradient(135deg,#F0C878,#B8791A);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8Z"/><path d="M17 9h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 2c0 1-1 1-1 2M12 2c0 1-1 1-1 2"/></svg>
+      </div>
+      <div class="priv-body">
+        <h3 id="breakfastTitle">Breakfast Courtesy</h3>
+        <p id="breakfastDesc">When offered with your stay, this is a complimentary Villa Brando courtesy.</p>
+      </div>
+    </div>
+
+    <p class="closing-note" id="closingNote">Everything has been thoughtfully arranged to make your stay at Villa Brando as comfortable and enjoyable as possible.</p>
+
+    <a class="back-link-bottom" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      <span id="backLabel">Guest Guide</span>
+    </a>
+  </main>
+
+  <footer class="contact-bar">
+    <div class="brandline">Villa Brando<small>Guest Guide</small></div>
+    <a class="phone" href="tel:+393519768732">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      +39 351 976 8732
+    </a>
+  </footer>
+
+</div>
+
+<script>
+const LANG_LABELS = { it:'IT', en:'EN', de:'DE', es:'ES', hu:'HU', ro:'RO', pl:'PL', fr:'FR' };
+
+const I18N = {
+  it: {
+    sub:"Incluso nel vostro soggiorno", intro:"Comfort pensati con cura, riservati ai nostri ospiti.",
+    tagIncluded:"Incluso nel soggiorno",
+    villaTitle:"La Vostra Villa Privata", villaDesc:"450 m² di spazio abitativo interno privato, riservato al vostro gruppo per tutta la durata del soggiorno.",
+    laundryTitle:"Lavanderia Privata", laundryDesc:"Locale lavanderia dedicato, con lavatrice e asciugatrice.", laundryNote:"Incluso per gli ospiti di Villa Brando",
+    comfortTitle:"Comfort Smart", comfortDesc:"Wi-Fi in tutta la villa e aria condizionata per ogni stagione.",
+    outdoorTitle:"Vita all'Aperto", outdoorDesc:"Un giardino privato dove rilassarsi, cenare e godersi l'aria aperta.",
+    welcomeTitle:"Un Caloroso Benvenuto", welcomeDesc:"Caffè di benvenuto, biscotti e tisane, olio e aceto, acqua e una bottiglia di spumante, kit da bagno: ad aspettarvi al vostro arrivo.",
+    tagCourtesy:"Attenzioni Riservate Selezionate", courtesyIntro:"Ulteriori attenzioni che Villa Brando può offrire, a discrezione dell'host, in alcuni soggiorni.",
+    bikesTitle:"Biciclette", bikesDesc:"8 biciclette disponibili in villa. Gratuite per soggiorni di 7 notti o più; altrimenti disponibili a noleggio.",
+    breakfastTitle:"Colazione di Cortesia", breakfastDesc:"Quando offerta con il soggiorno, è una cortesia gratuita di Villa Brando.",
+    closing:"Ogni dettaglio è stato pensato con cura per rendere il vostro soggiorno a Villa Brando il più confortevole e piacevole possibile.",
+    back:"Guida Ospiti"
+  },
+  en: {
+    sub:"Included with your stay", intro:"Thoughtful comforts, included for our guests.",
+    tagIncluded:"Included with your stay",
+    villaTitle:"Your Private Villa", villaDesc:"450 m² of private indoor living space, reserved for your group throughout the stay.",
+    laundryTitle:"Private Laundry", laundryDesc:"Dedicated laundry room with washer & dryer.", laundryNote:"Included for Villa Brando guests",
+    comfortTitle:"Smart Comfort", comfortDesc:"Wi-Fi throughout the villa and air conditioning for every season.",
+    outdoorTitle:"Outdoor Living", outdoorDesc:"A private garden to relax, dine and enjoy the outdoors.",
+    welcomeTitle:"A Warm Welcome", welcomeDesc:"Welcome coffee, biscuits and herbal teas, olive oil and vinegar, water and a bottle of sparkling wine, and a bathroom amenity kit — waiting for you on arrival.",
+    tagCourtesy:"Selected Courtesy Benefits", courtesyIntro:"Additional touches Villa Brando may offer, at the host's discretion, during selected stays.",
+    bikesTitle:"Bicycles", bikesDesc:"8 bicycles available at the villa. Complimentary for stays of 7 nights or more; otherwise available as a paid rental.",
+    breakfastTitle:"Breakfast Courtesy", breakfastDesc:"When offered with your stay, this is a complimentary Villa Brando courtesy.",
+    closing:"Everything has been thoughtfully arranged to make your stay at Villa Brando as comfortable and enjoyable as possible.",
+    back:"Guest Guide"
+  },
+  de: {
+    sub:"Im Aufenthalt inbegriffen", intro:"Durchdachter Komfort, exklusiv für unsere Gäste.",
+    tagIncluded:"Im Aufenthalt inbegriffen",
+    villaTitle:"Ihre private Villa", villaDesc:"450 m² privater Wohnraum, während des gesamten Aufenthalts exklusiv für Ihre Gruppe reserviert.",
+    laundryTitle:"Private Waschküche", laundryDesc:"Eigener Waschraum mit Waschmaschine und Trockner.", laundryNote:"Inbegriffen für Gäste von Villa Brando",
+    comfortTitle:"Smarter Komfort", comfortDesc:"WLAN in der gesamten Villa und Klimaanlage für jede Jahreszeit.",
+    outdoorTitle:"Leben im Freien", outdoorDesc:"Ein privater Garten zum Entspannen, Essen und Genießen im Freien.",
+    welcomeTitle:"Ein herzliches Willkommen", welcomeDesc:"Begrüßungskaffee, Kekse und Kräutertees, Olivenöl und Essig, Wasser und eine Flasche Sekt sowie ein Bad-Set erwarten Sie bei der Ankunft.",
+    tagCourtesy:"Ausgewählte Aufmerksamkeiten", courtesyIntro:"Zusätzliche Aufmerksamkeiten, die Villa Brando nach Ermessen des Gastgebers bei ausgewählten Aufenthalten anbieten kann.",
+    bikesTitle:"Fahrräder", bikesDesc:"8 Fahrräder in der Villa verfügbar. Kostenlos bei Aufenthalten ab 7 Nächten, sonst gegen Gebühr mietbar.",
+    breakfastTitle:"Frühstück als Aufmerksamkeit", breakfastDesc:"Wenn im Aufenthalt angeboten, handelt es sich um eine kostenlose Aufmerksamkeit von Villa Brando.",
+    closing:"Alles wurde sorgfältig arrangiert, damit Ihr Aufenthalt in Villa Brando so komfortabel und angenehm wie möglich ist.",
+    back:"Gästeführer"
+  },
+  es: {
+    sub:"Incluido en su estancia", intro:"Comodidades pensadas con esmero, reservadas para nuestros huéspedes.",
+    tagIncluded:"Incluido en la estancia",
+    villaTitle:"Su Villa Privada", villaDesc:"450 m² de espacio interior privado, reservado para su grupo durante toda la estancia.",
+    laundryTitle:"Lavandería Privada", laundryDesc:"Zona de lavandería propia, con lavadora y secadora.", laundryNote:"Incluido para los huéspedes de Villa Brando",
+    comfortTitle:"Confort Inteligente", comfortDesc:"Wi-Fi en toda la villa y aire acondicionado para cada estación.",
+    outdoorTitle:"Vida al Aire Libre", outdoorDesc:"Un jardín privado donde relajarse, cenar y disfrutar del aire libre.",
+    welcomeTitle:"Una Cálida Bienvenida", welcomeDesc:"Café de bienvenida, galletas e infusiones, aceite de oliva y vinagre, agua y una botella de espumante, y un kit de baño le esperan a su llegada.",
+    tagCourtesy:"Detalles de Cortesía Seleccionados", courtesyIntro:"Detalles adicionales que Villa Brando puede ofrecer, a discreción del anfitrión, en estancias seleccionadas.",
+    bikesTitle:"Bicicletas", bikesDesc:"8 bicicletas disponibles en la villa. Gratuitas para estancias de 7 noches o más; de lo contrario, disponibles en alquiler.",
+    breakfastTitle:"Desayuno de Cortesía", breakfastDesc:"Cuando se ofrece con la estancia, es una cortesía gratuita de Villa Brando.",
+    closing:"Todo ha sido cuidadosamente dispuesto para que su estancia en Villa Brando sea lo más cómoda y agradable posible.",
+    back:"Guía del Huésped"
+  },
+  hu: {
+    sub:"Az itt-tartózkodás része", intro:"Gondosan kialakított kényelem, kizárólag vendégeinknek.",
+    tagIncluded:"Az itt-tartózkodás része",
+    villaTitle:"Az Ön Privát Villája", villaDesc:"450 m² privát belső tér, amely a teljes tartózkodás alatt az Ön csoportjának van fenntartva.",
+    laundryTitle:"Saját Mosókonyha", laundryDesc:"Külön mosókonyha mosógéppel és szárítógéppel.", laundryNote:"Villa Brando vendégei számára biztosítva",
+    comfortTitle:"Okos Kényelem", comfortDesc:"Wi-Fi az egész villában és légkondicionálás minden évszakban.",
+    outdoorTitle:"Kültéri Élmény", outdoorDesc:"Privát kert a pihenéshez, étkezéshez és a kültéri élmény élvezetéhez.",
+    welcomeTitle:"Meleg Fogadtatás", welcomeDesc:"Üdvözlő kávé, keksz és gyógyteák, olívaolaj és ecet, víz és egy üveg pezsgő, valamint fürdőszobai kellékcsomag várja Önt érkezéskor.",
+    tagCourtesy:"Kiválasztott Figyelmességek", courtesyIntro:"További figyelmességek, amelyeket a Villa Brando a házigazda belátása szerint egyes tartózkodások alkalmával biztosíthat.",
+    bikesTitle:"Kerékpárok", bikesDesc:"8 kerékpár áll rendelkezésre a villában. 7 éjszaka vagy hosszabb tartózkodás esetén ingyenes, egyébként bérelhető.",
+    breakfastTitle:"Reggeli mint Figyelmesség", breakfastDesc:"Ha az itt-tartózkodáshoz kínálják, ez a Villa Brando ingyenes figyelmessége.",
+    closing:"Mindent gondosan úgy alakítottunk ki, hogy a Villa Brando-i tartózkodása a lehető legkényelmesebb és legkellemesebb legyen.",
+    back:"Vendégkalauz"
+  },
+  ro: {
+    sub:"Inclus în sejurul dumneavoastră", intro:"Confort gândit cu grijă, rezervat oaspeților noștri.",
+    tagIncluded:"Inclus în sejur",
+    villaTitle:"Vila Dumneavoastră Privată", villaDesc:"450 m² de spațiu interior privat, rezervat grupului dumneavoastră pe toată durata sejurului.",
+    laundryTitle:"Spălătorie Privată", laundryDesc:"Spălătorie proprie, cu mașină de spălat și uscător.", laundryNote:"Inclus pentru oaspeții Villa Brando",
+    comfortTitle:"Confort Smart", comfortDesc:"Wi-Fi în toată vila și aer condiționat pentru fiecare anotimp.",
+    outdoorTitle:"Viață în Aer Liber", outdoorDesc:"O grădină privată unde vă puteți relaxa, lua masa și bucura de aerul liber.",
+    welcomeTitle:"Un Bun Venit Călduros", welcomeDesc:"Cafea de bun venit, biscuiți și ceaiuri, ulei de măsline și oțet, apă și o sticlă de spumant, plus un kit de baie vă așteaptă la sosire.",
+    tagCourtesy:"Atenții Speciale Selectate", courtesyIntro:"Atenții suplimentare pe care Villa Brando le poate oferi, la discreția gazdei, în anumite sejururi.",
+    bikesTitle:"Biciclete", bikesDesc:"8 biciclete disponibile la vilă. Gratuite pentru sejururi de 7 nopți sau mai mult; altfel disponibile la închiriere.",
+    breakfastTitle:"Mic Dejun ca Atenție", breakfastDesc:"Atunci când este oferit împreună cu sejurul, este o atenție gratuită din partea Villa Brando.",
+    closing:"Totul a fost pregătit cu grijă pentru ca sejurul dumneavoastră la Villa Brando să fie cât mai confortabil și plăcut posibil.",
+    back:"Ghidul Oaspetelui"
+  },
+  pl: {
+    sub:"Wliczone w pobyt", intro:"Starannie przemyślany komfort, zarezerwowany dla naszych gości.",
+    tagIncluded:"Wliczone w pobyt",
+    villaTitle:"Twoja Prywatna Willa", villaDesc:"450 m² prywatnej przestrzeni wewnętrznej, zarezerwowanej dla Twojej grupy przez cały pobyt.",
+    laundryTitle:"Prywatna Pralnia", laundryDesc:"Osobne pomieszczenie pralni z pralką i suszarką.", laundryNote:"Wliczone dla gości Villa Brando",
+    comfortTitle:"Inteligentny Komfort", comfortDesc:"Wi-Fi w całej willi oraz klimatyzacja na każdą porę roku.",
+    outdoorTitle:"Życie na Zewnątrz", outdoorDesc:"Prywatny ogród do relaksu, posiłków i cieszenia się otwartą przestrzenią.",
+    welcomeTitle:"Ciepłe Powitanie", welcomeDesc:"Kawa powitalna, ciastka i herbaty ziołowe, oliwa z oliwek i ocet, woda oraz butelka wina musującego, a także zestaw kosmetyków łazienkowych czekają na Ciebie po przyjeździe.",
+    tagCourtesy:"Wybrane Dodatkowe Atrakcje", courtesyIntro:"Dodatkowe udogodnienia, które Villa Brando może zaoferować według uznania gospodarza podczas wybranych pobytów.",
+    bikesTitle:"Rowery", bikesDesc:"8 rowerów dostępnych w willi. Bezpłatne przy pobycie 7 nocy lub dłuższym; w innym przypadku dostępne za opłatą.",
+    breakfastTitle:"Śniadanie w Ramach Uprzejmości", breakfastDesc:"Jeśli jest oferowane w ramach pobytu, jest to bezpłatna uprzejmość ze strony Villa Brando.",
+    closing:"Wszystko zostało starannie zaplanowane, aby pobyt w Villa Brando był jak najbardziej komfortowy i przyjemny.",
+    back:"Przewodnik Gościa"
+  },
+  fr: {
+    sub:"Inclus dans votre séjour", intro:"Des attentions pensées avec soin, réservées à nos hôtes.",
+    tagIncluded:"Inclus dans le séjour",
+    villaTitle:"Votre Villa Privée", villaDesc:"450 m² d'espace de vie intérieur privé, réservé à votre groupe pendant toute la durée du séjour.",
+    laundryTitle:"Buanderie Privée", laundryDesc:"Buanderie dédiée avec lave-linge et sèche-linge.", laundryNote:"Inclus pour les hôtes de Villa Brando",
+    comfortTitle:"Confort Connecté", comfortDesc:"Wi-Fi dans toute la villa et climatisation pour chaque saison.",
+    outdoorTitle:"Vie en Extérieur", outdoorDesc:"Un jardin privé pour se détendre, dîner et profiter du plein air.",
+    welcomeTitle:"Un Accueil Chaleureux", welcomeDesc:"Café de bienvenue, biscuits et tisanes, huile d'olive et vinaigre, eau et une bouteille de vin mousseux, ainsi qu'un kit de salle de bain vous attendent à votre arrivée.",
+    tagCourtesy:"Attentions Sélectionnées", courtesyIntro:"Attentions supplémentaires que Villa Brando peut offrir, à la discrétion de l'hôte, lors de certains séjours.",
+    bikesTitle:"Vélos", bikesDesc:"8 vélos disponibles à la villa. Gratuits pour les séjours de 7 nuits ou plus ; sinon disponibles à la location.",
+    breakfastTitle:"Petit-déjeuner de Courtoisie", breakfastDesc:"Lorsqu'il est proposé avec le séjour, il s'agit d'une attention gratuite offerte par Villa Brando.",
+    closing:"Tout a été pensé avec soin pour rendre votre séjour à Villa Brando aussi confortable et agréable que possible.",
+    back:"Guide des Hôtes"
+  }
+};
+
+const menu = document.getElementById('langMenu');
+const btn = document.getElementById('langCurrentBtn');
+
+function toggleLangMenu(){
+  const isOpen = menu.classList.contains('open');
+  if(!isOpen){
+    if(menu.parentElement !== document.body){ document.body.appendChild(menu); }
+    const rect = btn.getBoundingClientRect();
+    menu.style.top = (rect.bottom + 8) + 'px';
+    const rightEdge = window.innerWidth - rect.right;
+    menu.style.right = rightEdge + 'px';
+    menu.style.left = 'auto';
+  }
+  menu.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+document.addEventListener('click', function(e){
+  const sel = document.getElementById('langSelect');
+  const clickedInsideSelect = sel && sel.contains(e.target);
+  const clickedInsideMenu = menu && menu.contains(e.target);
+  if(!clickedInsideSelect && !clickedInsideMenu){
+    menu.classList.remove('open');
+    btn.classList.remove('open');
+  }
+});
+
+function setLang(lang){
+  const d = I18N[lang] || I18N.en;
+  localStorage.setItem('vbLang', lang);
+  document.getElementById('langCurrentLabel').textContent = LANG_LABELS[lang];
+  document.querySelectorAll('.lang-menu button').forEach(function(b){
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  menu.classList.remove('open');
+  btn.classList.remove('open');
+
+  document.getElementById('pageTitle').textContent = d.sub;
+  document.getElementById('pageSub').textContent = d.intro;
+  document.getElementById('tagIncluded').textContent = d.tagIncluded;
+  document.getElementById('villaTitle').textContent = d.villaTitle;
+  document.getElementById('villaDesc').textContent = d.villaDesc;
+  document.getElementById('laundryTitle').textContent = d.laundryTitle;
+  document.getElementById('laundryDesc').textContent = d.laundryDesc;
+  document.getElementById('laundryNote').textContent = d.laundryNote;
+  document.getElementById('comfortTitle').textContent = d.comfortTitle;
+  document.getElementById('comfortDesc').textContent = d.comfortDesc;
+  document.getElementById('outdoorTitle').textContent = d.outdoorTitle;
+  document.getElementById('outdoorDesc').textContent = d.outdoorDesc;
+  document.getElementById('welcomeTitle').textContent = d.welcomeTitle;
+  document.getElementById('welcomeDesc').textContent = d.welcomeDesc;
+  document.getElementById('tagCourtesy').textContent = d.tagCourtesy;
+  document.getElementById('courtesyIntro').textContent = d.courtesyIntro;
+  document.getElementById('bikesTitle').textContent = d.bikesTitle;
+  document.getElementById('bikesDesc').textContent = d.bikesDesc;
+  document.getElementById('breakfastTitle').textContent = d.breakfastTitle;
+  document.getElementById('breakfastDesc').textContent = d.breakfastDesc;
+  document.getElementById('closingNote').textContent = d.closing;
+  document.getElementById('backLabel').textContent = d.back;
+
+  document.documentElement.lang = lang;
+}
+
+setLang(localStorage.getItem('vbLang') || 'it');
+
+window.scrollTo(0, 0);
+</script>
+
+</body>
+</html>
