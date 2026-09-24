@@ -453,7 +453,26 @@ function setLang(lang){
   localStorage.setItem('vbLang', lang);
 }
 
-setLang(localStorage.getItem('vbLang') || 'it');
+(function(){
+  var q=new URLSearchParams(location.search);
+  var urlLang=q.get('lang');
+  var startLang=(urlLang && typeof I18N!=='undefined' && I18N[urlLang]) ? urlLang : (localStorage.getItem('vbLang') || 'it');
+  setLang(startLang);
+  /* Aperta dal sito web: il link di ritorno porta al sito, non alla guida ospiti */
+  if(q.get('from')==='sito'){
+    var siteBack=(startLang==='it')
+      ? 'https://giorgiomicol-code.github.io/villa-brando-v2/elegance/it/esperienze/'
+      : 'https://giorgiomicol-code.github.io/villa-brando-v2/elegance/en/experiences/';
+    document.querySelectorAll('a.back-link, a.back-link-bottom').forEach(function(a){
+      a.href=siteBack;
+      var svg=a.querySelector('svg');
+      a.textContent=' Villa Brando';
+      if(svg) a.insertBefore(svg,a.firstChild);
+    });
+    var small=document.querySelector('.contact-bar .brandline small');
+    if(small) small.textContent='Tour & Experiences';
+  }
+})();
 
 window.scrollTo(0, 0);
 </script>
