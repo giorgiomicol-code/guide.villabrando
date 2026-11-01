@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<script>
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  window.addEventListener('pageshow', function(){ window.scrollTo(0, 0); });
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Villa Brando — Come Rilassarsi</title>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#0E3A66; --pine-2:#154C82; --stone:#FFFFFF; --stone-2:#E5F0FA;
+    --paper:#FFFFFF; --brass:#2E86C1; --brass-light:#8FCBEF; --sea:#1F6F9C; --clay:#3E7CB1;
+    --ink:#122436; --ink-soft:#5A7288; --line:rgba(14,58,102,0.12);
+    --shadow: 0 10px 30px -14px rgba(14,58,102,0.30); --radius: 18px;
+    --warn:#B3261E; --warn-bg:#FDECEA;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{ background:var(--stone); font-family:'Comfortaa', sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased; min-height:100svh; }
+  h1,h2,h3{ font-family:'Comfortaa', sans-serif; font-weight:500; letter-spacing:-0.01em; }
+  .app{ max-width:560px; margin:0 auto; min-height:100svh; background:var(--stone); display:flex; flex-direction:column; }
+  @media (min-width:600px){
+    body{ background: linear-gradient(180deg,#DCE8F5, #C7DCF0 60%, #b7d0ea); padding:28px 0; }
+    .app{ border-radius:34px; overflow:hidden; min-height:calc(100svh - 56px); box-shadow: 0 30px 80px -20px rgba(14,58,102,0.35); }
+  }
+
+  header.top{
+    position:relative; overflow:hidden; color:#fff; padding:18px 20px 30px;
+    min-height:210px; display:flex; flex-direction:column; justify-content:space-between;
+    background: linear-gradient(150deg, #050B1A 0%, #0E2A52 45%, #1B1650 100%);
+    background-size:cover; background-position:center;
+  }
+  .top-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; position:relative; z-index:2; }
+  .back-link{ display:flex; align-items:center; gap:6px; color:#fff; text-decoration:none; font-size:13px; font-weight:600; text-shadow:0 1px 4px rgba(0,0,0,0.5); }
+  .back-link svg{ width:16px; height:16px; }
+  .lang-select{ position:relative; flex-shrink:0; z-index:20; }
+  .lang-current{
+    display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.22);
+    border-radius:999px; padding:8px 12px; color:#fff; font-family:'Comfortaa'; font-weight:700; font-size:12px; cursor:pointer; backdrop-filter:blur(4px);
+  }
+  .lang-current svg{ width:13px; height:13px; transition:transform .2s; }
+  .lang-current.open svg{ transform:rotate(180deg); }
+  .lang-menu{
+    position:fixed; background:#fff; border-radius:14px;
+    box-shadow:0 14px 34px -10px rgba(14,58,102,0.4); border:1px solid var(--line);
+    padding:6px; display:none; min-width:160px; max-height:70vh; overflow-y:auto;
+    z-index:999;
+  }
+  .lang-menu.open{ display:block; }
+  .lang-menu button{
+    display:flex; align-items:center; gap:10px; width:100%; text-align:left; border:none; background:none;
+    padding:9px 10px; border-radius:9px; font-family:'Comfortaa'; font-weight:600; font-size:13px;
+    color:var(--ink); cursor:pointer;
+  }
+  .lang-menu button:hover{ background:var(--stone-2); }
+  .lang-menu button.active{ background:#4FD8FF; color:#04263f; }
+  .lang-menu button .code{
+    width:24px; height:18px; border-radius:4px; background:var(--stone-2); color:var(--sea);
+    font-size:9.5px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .lang-menu button.active .code{ background:rgba(4,38,63,0.15); color:#04263f; }
+  h1.page-title{ margin:0; font-size:24px; color:#fff; position:relative; z-index:2; text-shadow:0 2px 14px rgba(0,0,0,0.5); }
+  .eyebrow{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#8FE3FF; font-weight:700; margin-bottom:4px; display:block; position:relative; z-index:2; text-shadow:0 1px 6px rgba(0,0,0,0.5); }
+  .header-bottom{ position:relative; z-index:2; }
+
+  main{ flex:1; padding:22px 20px 40px; }
+  .intro-text{ background:var(--stone-2); border-radius:var(--radius); padding:18px 20px; font-size:14.5px; line-height:1.6; color:var(--ink); margin-bottom:22px; }
+  .intro-text b{ color:var(--pine); }
+
+  .section-header{ display:flex; align-items:center; gap:8px; margin:26px 0 14px; }
+  .section-header:first-of-type{ margin-top:0; }
+  .section-header .dot{ width:7px; height:7px; border-radius:50%; background:var(--brass); flex-shrink:0; }
+  .section-header .label{ font-size:12px; text-transform:uppercase; letter-spacing:.1em; font-weight:700; color:var(--sea); }
+
+  .card{ background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:20px; }
+  .card + .card{ margin-top:12px; }
+  .ic{
+    width:50px; height:50px; border-radius:15px; flex-shrink:0; color:#fff;
+    background:linear-gradient(160deg, var(--pine) 0%, #0A2A4A 100%);
+    display:flex; align-items:center; justify-content:center; box-shadow:0 8px 18px -8px rgba(14,58,102,0.5);
+  }
+  .ic svg{ width:24px; height:24px; }
+  .photo{ display:block; width:100%; border-radius:20px; box-shadow:var(--shadow); }
+
+  .note-box{
+    margin-top:22px; background:var(--stone-2); border-radius:14px; padding:14px 16px;
+    font-size:12px; color:var(--ink-soft); line-height:1.55; display:flex; gap:10px; align-items:flex-start;
+  }
+  .note-box svg{ width:17px; height:17px; color:var(--sea); flex-shrink:0; margin-top:1px; }
+
+  .hot-card{ display:flex; align-items:center; gap:16px; background:linear-gradient(135deg,#FFF6DA 0%,#FFE7B0 100%); border:1px solid rgba(245,166,35,0.3); }
+  .hot-card img{ width:92px; height:92px; object-fit:cover; border-radius:16px; flex-shrink:0; }
+  .hot-card .q{ font-size:18px; font-weight:700; color:#B4500A; }
+  .hot-card .t{ font-size:13.5px; line-height:1.5; color:var(--ink); margin-top:6px; font-weight:600; }
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .tile{ background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:18px 14px; display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center; }
+  .tile .lbl{ font-size:13.5px; font-weight:700; color:var(--ink); }
+  .garden{ margin-top:16px; display:flex; align-items:center; gap:14px; background:linear-gradient(135deg,#E8F5E9 0%,#C8E6C9 100%); border:1px solid rgba(56,142,60,0.22); }
+  .garden .ic{ background:linear-gradient(160deg,#66BB6A 0%,#2E7D32 100%); box-shadow:0 8px 18px -8px rgba(46,125,50,0.5); }
+  .garden .t{ font-size:14px; font-weight:700; color:#1B5E20; line-height:1.45; }
+
+  footer.brand{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 20px 22px; color:var(--ink-soft); font-size:12px;
+  }
+  .footer-back{ display:flex; align-items:center; gap:6px; color:var(--pine); text-decoration:none; font-weight:700; font-size:12.5px; }
+  .footer-back svg{ width:15px; height:15px; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="top" id="page-header">
+
+    <div class="top-row">
+      <a class="back-link" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+        <span data-i18n="back">Guest Guide</span>
+      </a>
+      <div class="lang-select" id="langSelect">
+        <button class="lang-current" id="langCurrentBtn" onclick="toggleLangMenu()">
+          <span id="langCurrentLabel">IT</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="lang-menu" id="langMenu">
+          <button data-lang="it" class="active" onclick="setLang('it')"><span class="code">IT</span>Italiano</button>
+          <button data-lang="en" onclick="setLang('en')"><span class="code">EN</span>English</button>
+          <button data-lang="fr" onclick="setLang('fr')"><span class="code">FR</span>Français</button>
+          <button data-lang="de" onclick="setLang('de')"><span class="code">DE</span>Deutsch</button>
+          <button data-lang="es" onclick="setLang('es')"><span class="code">ES</span>Español</button>
+          <button data-lang="pl" onclick="setLang('pl')"><span class="code">PL</span>Polski</button>
+          <button data-lang="hu" onclick="setLang('hu')"><span class="code">HU</span>Magyar</button>
+          <button data-lang="ro" onclick="setLang('ro')"><span class="code">RO</span>Română</button>
+        </div>
+      </div>
+    </div>
+    <div class="header-bottom">
+      <span class="eyebrow" data-i18n="eyebrow">Relax</span>
+      <h1 class="page-title" data-i18n="title">Come Rilassarsi</h1>
+    </div>
+  </header>
+
+  <main>
+    <div class="card hot-card">
+      <img src="data:image/jpeg;base64,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" alt="">
+      <div>
+        <div class="q" data-i18n="hotQ">Fa caldo?</div>
+        <div class="t" data-i18n="hotT">Goditi la nostra Sala Relax e la Sala Giochi al piano seminterrato!</div>
+      </div>
+    </div>
+
+    <div class="section-header" style="margin-top:26px">
+      <span class="dot"></span>
+      <span class="label" data-i18n="roomLabel">Sala Relax e Sala Giochi</span>
+    </div>
+    <div class="grid">
+      <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="13" rx="2"/><path d="M8 21h8M12 18v3"/></svg></div><div class="lbl" data-i18n="tv">TV</div></div>
+      <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h4M8 9v4M15 12h.01M18 10h.01"/><path d="M17.3 5H6.7a4 4 0 0 0-4 3.6l-.6 5.6A3 3 0 0 0 5.1 17.5c1 0 1.9-.5 2.4-1.3L8.5 15h7l1 1.2c.5.8 1.4 1.3 2.4 1.3a3 3 0 0 0 3-3.3l-.6-5.6A4 4 0 0 0 17.3 5z"/></svg></div><div class="lbl" data-i18n="games">Videogiochi</div></div>
+      <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="9.5" r="6.5"/><path d="M14.2 14.2L20 20"/><circle cx="19" cy="5" r="2"/></svg></div><div class="lbl" data-i18n="pong">Ping Pong</div></div>
+      <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h18M12 3v18"/></svg></div><div class="lbl" data-i18n="mats">Tappetini da gioco</div></div>
+    </div>
+
+    <div class="card garden">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z"/><path d="M2 21c0-3 1.9-5.4 5.1-6"/></svg></div>
+      <div class="t" data-i18n="garden">Tutto in un’atmosfera fresca e con vista sul giardino!</div>
+    </div>
+  </main>
+
+  <footer class="brand">
+    <a class="footer-back" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+      <span data-i18n="back">Guest Guide</span>
+    </a>
+    <span>Villa Brando &middot; Sabaudia, Lazio</span>
+  </footer>
+</div>
+
+<script>
+const HEADER_PHOTO = null;
+
+const I18N = {
+ "it": {
+  "back": "Guest Guide",
+  "eyebrow": "Relax",
+  "title": "Come Rilassarsi",
+  "hotQ": "Fa caldo?",
+  "hotT": "Goditi la nostra Sala Relax e la Sala Giochi al piano seminterrato!",
+  "roomLabel": "Sala Relax e Sala Giochi",
+  "tv": "TV",
+  "games": "Videogiochi",
+  "pong": "Ping Pong",
+  "mats": "Tappetini da gioco",
+  "garden": "Tutto in un’atmosfera fresca e con vista sul giardino!"
+ },
+ "en": {
+  "back": "Guest Guide",
+  "eyebrow": "Relax",
+  "title": "How to Relax",
+  "hotQ": "Is it a hot day?",
+  "hotT": "Enjoy our Relax Room and Game Room on the basement level!",
+  "roomLabel": "Relax Room & Game Room",
+  "tv": "TV",
+  "games": "Video games",
+  "pong": "Ping pong",
+  "mats": "Play mats",
+  "garden": "Everything in a cool, fresh atmosphere with a view of the garden!"
+ },
+ "de": {
+  "back": "Guest Guide",
+  "eyebrow": "Entspannung",
+  "title": "Entspannungstipps",
+  "hotQ": "Ist es heiß heute?",
+  "hotT": "Genießen Sie unseren Entspannungsraum und das Spielzimmer im Untergeschoss!",
+  "roomLabel": "Entspannungs- & Spielraum",
+  "tv": "Fernseher",
+  "games": "Videospiele",
+  "pong": "Tischtennis",
+  "mats": "Spielmatten",
+  "garden": "Alles in angenehm kühler Atmosphäre und mit Blick auf den Garten!"
+ },
+ "es": {
+  "back": "Guest Guide",
+  "eyebrow": "Relax",
+  "title": "Cómo Relajarse",
+  "hotQ": "¿Hace calor hoy?",
+  "hotT": "¡Disfruta de nuestra Sala de Relax y Sala de Juegos en el semisótano!",
+  "roomLabel": "Sala de Relax y de Juegos",
+  "tv": "TV",
+  "games": "Videojuegos",
+  "pong": "Ping pong",
+  "mats": "Alfombras de juego",
+  "garden": "¡Todo en un ambiente fresco y con vistas al jardín!"
+ },
+ "pl": {
+  "back": "Guest Guide",
+  "eyebrow": "Relaks",
+  "title": "Jak Się Zrelaksować",
+  "hotQ": "Upalny dzień?",
+  "hotT": "Skorzystaj z naszego Pokoju Relaksu i Pokoju Gier w suterenie!",
+  "roomLabel": "Pokój Relaksu i Gier",
+  "tv": "TV",
+  "games": "Gry wideo",
+  "pong": "Ping-pong",
+  "mats": "Maty do zabawy",
+  "garden": "Wszystko w przyjemnie chłodnej atmosferze i z widokiem na ogród!"
+ },
+ "hu": {
+  "back": "Guest Guide",
+  "eyebrow": "Pihenés",
+  "title": "Hogyan Lazíts",
+  "hotQ": "Forró nap van?",
+  "hotT": "Élvezze pihenőszobánkat és játékszobánkat az alagsorban!",
+  "roomLabel": "Pihenő- és Játékszoba",
+  "tv": "TV",
+  "games": "Videojátékok",
+  "pong": "Pingpong",
+  "mats": "Játszószőnyegek",
+  "garden": "Mindez kellemesen hűvös légkörben, kilátással a kertre!"
+ },
+ "ro": {
+  "back": "Guest Guide",
+  "eyebrow": "Relaxare",
+  "title": "Cum să te Relaxezi",
+  "hotQ": "E o zi caniculară?",
+  "hotT": "Bucurați-vă de Camera de Relaxare și Camera de Jocuri de la demisol!",
+  "roomLabel": "Cameră de Relaxare și Jocuri",
+  "tv": "TV",
+  "games": "Jocuri video",
+  "pong": "Ping-pong",
+  "mats": "Covorașe de joacă",
+  "garden": "Totul într-o atmosferă răcoroasă și cu vedere spre grădină!"
+ },
+ "fr": {
+  "back": "Guest Guide",
+  "eyebrow": "Détente",
+  "title": "Comment se Détendre",
+  "hotQ": "Il fait chaud ?",
+  "hotT": "Profitez de notre Salle de Détente et de notre Salle de Jeux au sous-sol !",
+  "roomLabel": "Salle de Détente et de Jeux",
+  "tv": "TV",
+  "games": "Jeux vidéo",
+  "pong": "Ping-pong",
+  "mats": "Tapis de jeu",
+  "garden": "Le tout dans une atmosphère fraîche, avec vue sur le jardin !"
+ }
+};
+
+let LANG = 'it';
+try { LANG = localStorage.getItem('vbLang') || 'it'; } catch(e) {}
+if (!I18N[LANG]) LANG = 'it';
+
+const LANG_LABELS = { it:'IT', en:'EN', fr:'FR', de:'DE', es:'ES', hu:'HU', ro:'RO', pl:'PL' };
+
+function toggleLangMenu(){
+  const menu = document.getElementById('langMenu');
+  const btn = document.getElementById('langCurrentBtn');
+  const isOpen = menu.classList.contains('open');
+  if(!isOpen){
+    if(menu.parentElement !== document.body){ document.body.appendChild(menu); }
+    const rect = btn.getBoundingClientRect();
+    menu.style.top = (rect.bottom + 8) + 'px';
+    const rightEdge = window.innerWidth - rect.right;
+    menu.style.right = rightEdge + 'px';
+    menu.style.left = 'auto';
+  }
+  menu.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+document.addEventListener('click', function(e){
+  const sel = document.getElementById('langSelect');
+  const menu = document.getElementById('langMenu');
+  const clickedInsideSelect = sel && sel.contains(e.target);
+  const clickedInsideMenu = menu && menu.contains(e.target);
+  if(!clickedInsideSelect && !clickedInsideMenu){
+    document.getElementById('langMenu').classList.remove('open');
+    document.getElementById('langCurrentBtn').classList.remove('open');
+  }
+});
+
+function applyI18n(){
+  document.querySelectorAll('[data-i18n]').forEach(elm=>{
+    const key = elm.getAttribute('data-i18n');
+    if(I18N[LANG][key]) elm.innerHTML = I18N[LANG][key];
+  });
+  document.documentElement.lang = LANG;
+  document.title = 'Villa Brando — ' + I18N[LANG].title;
+  document.getElementById('langCurrentLabel').textContent = LANG_LABELS[LANG];
+  document.querySelectorAll('.lang-menu button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.lang === LANG);
+  });
+}
+
+function setLang(l){
+  try { localStorage.setItem('vbLang', l); } catch(e) {}
+  LANG = l;
+  document.getElementById('langMenu').classList.remove('open');
+  document.getElementById('langCurrentBtn').classList.remove('open');
+  applyI18n();
+}
+
+applyI18n();
+if (HEADER_PHOTO) {
+  document.getElementById('page-header').style.backgroundImage =
+    `linear-gradient(180deg, rgba(10,25,45,0.30) 0%, rgba(8,20,38,0.5) 55%, rgba(6,16,30,0.85) 100%), url('${HEADER_PHOTO}')`;
+}
+
+window.scrollTo(0, 0);
+</script>
+</body>
+</html>
