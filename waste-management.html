@@ -147,10 +147,11 @@
   .schedule-card p.desc{ margin:0 0 16px; font-size:13.5px; line-height:1.55; color:rgba(255,255,255,0.82); }
   .calendar-frame-wrap{
     background:#fff; border-radius:14px 14px 0 0; overflow:hidden;
-    max-height:640px; overflow-y:auto;
   }
+  .calendar-frame-wrap{ position:relative; }
   .calendar-frame-wrap iframe{
-    width:100%; height:1400px; border:0; display:block;
+    width:640px; height:1250px; border:0; display:block;
+    transform-origin:0 0;
   }
   .calendar-source{
     text-align:center; padding:10px 0 16px; font-size:11px; color:rgba(255,255,255,0.55);
@@ -526,6 +527,22 @@ document.getElementById('page-header').style.background =
 document.getElementById('umido-img').src = UMIDO_PHOTO_IT;
 
 window.scrollTo(0, 0);
+</script>
+<script>
+(function(){
+  var W=640,H=1250;
+  function fit(){
+    var wrap=document.querySelector('.calendar-frame-wrap');
+    var fr=wrap&&wrap.querySelector('iframe'); if(!fr) return;
+    var w=wrap.clientWidth||W, k=Math.min(1,w/W);
+    fr.style.transform='scale('+k+')';
+    wrap.style.height=Math.round(H*k)+'px';
+  }
+  window.addEventListener('resize',fit);
+  window.addEventListener('load',fit);
+  document.addEventListener('DOMContentLoaded',fit);
+  setTimeout(fit,300);
+})();
 </script>
 </body>
 </html>
